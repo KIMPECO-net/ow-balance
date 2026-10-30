@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>오버워치 내전 팀 밸런서 & 맵 선택기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef0f4; --panel:#ffffff; --panel2:#f6f7fa; --border:#d6dae2;
+  --text:#171a21; --dim:#656d7d; --accent:#c97a1f;
+  --tank:#2f6fd1; --damage:#c7402f; --support:#1f8a5c;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1016; --panel:#161b24; --panel2:#1b212c; --border:#2a3140;
+    --text:#e9ebf1; --dim:#8991a3; --accent:#e6a23c;
+    --tank:#5b8def; --damage:#e8594f; --support:#4caf7d;
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'Inter',system-ui,sans-serif;
+  padding:20px 10px 60px;
+}
+h1,h2,.num,button{font-family:'Chakra Petch',system-ui,sans-serif;}
+main{max-width:1320px; margin:0 auto;}
+
+/* 헤더 및 우측 상단 워크샵 코드 상자 레이아웃 */
+header{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:15px; flex-wrap:wrap;}
+.header-titles{flex:1; min-width:280px;}
+h1{font-size:26px; font-weight:700; margin:0 0 6px;}
+.sub{color:var(--dim); font-size:14px; line-height:1.5; margin:0;}
+
+/* 우측 상단 워크샵 코드 박스 스타일 */
+.workshop-box{
+  background:var(--panel); border:1px solid var(--border); border-radius:8px;
+  padding:10px 16px; display:flex; align-items:center; gap:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+.workshop-info .ws-label{font-size:11.5px; color:var(--dim); font-weight:600; margin-bottom:2px;}
+.workshop-info .ws-code{font-family:'Chakra Petch', sans-serif; font-size:18px; font-weight:700; color:var(--accent); letter-spacing:1px;}
+.workshop-info .ws-maker{font-size:11px; color:var(--dim); margin-top:2px;}
+.workshop-box .btn-ws-copy{
+  background:var(--panel2); border:1px solid var(--border); color:var(--text);
+  font-size:12px; font-weight:600; padding:6px 10px; border-radius:4px; cursor:pointer; transition:all 0.2s;
+}
+.workshop-box .btn-ws-copy:hover{background:var(--accent); color:#17120a; border-color:var(--accent);}
+
+/* Guide Box */
+.guide-box{
+  background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent);
+  padding:14px 18px; border-radius:6px; margin-bottom:18px; font-size:13.5px; line-height:1.6;
+}
+.guide-box h3{margin:0 0 6px; font-size:15px; color:var(--accent);}
+.guide-box ul{margin:0; padding-left:20px; color:var(--dim);}
+
+.toolbar{display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;}
+.btn{
+  font-weight:600; font-size:13.5px; padding:8px 14px; border-radius:4px;
+  border:1px solid var(--border); background:var(--panel2); color:var(--text);
+  cursor:pointer; transition:all 0.2s;
+}
+.btn:hover{border-color:var(--accent); background:var(--panel);}
+.btn-primary{
+  display:block; margin:24px auto 4px; padding:13px 40px; font-size:16px; font-weight:700;
+  background:var(--accent); color:#17120a; border:none; border-radius:4px; cursor:pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition:transform 0.1s, filter 0.2s;
+}
+.btn-primary:hover{filter:brightness(1.1); transform:translateY(-1px);}
+
+.table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:6px; background:var(--panel); min-height:220px; display:flex; flex-direction:column; justify-content:center;}
+table{border-collapse:collapse; width:100%; min-width:1240px;}
+th{
+  text-align:left; font-size:12px; font-weight:600; color:var(--dim);
+  padding:12px 8px; border-bottom:1px solid var(--border); background:var(--panel2); white-space:nowrap;
+}
+td{padding:8px 6px; border-bottom:1px solid var(--border); vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr.pos-tank td:nth-child(2){border-left:4px solid var(--tank);}
+tr.pos-damage td:nth-child(2){border-left:4px solid var(--damage);}
+tr.pos-support td:nth-child(2){border-left:4px solid var(--support);}
+
+.empty-placeholder{
+  padding:60px 20px; text-align:center; color:var(--dim);
+}
+.empty-placeholder h3{margin:0 0 8px; font-size:18px; color:var(--text);}
+.empty-placeholder p{margin:0 0 16px; font-size:14px;}
+.empty-placeholder .btn-group{display:flex; gap:10px; justify-content:center;}
+
+input,select{
+  width:100%; background:var(--panel2); color:var(--text);
+  border:1px solid var(--border); border-radius:4px; padding:6px 8px; font-size:13px;
+  font-family:inherit; outline:none; transition:border-color 0.2s;
+}
+input:focus,select:focus{border-color:var(--accent);}
+input.bt{min-width:100px; font-weight:600;}
+input.most{min-width:115px;}
+select.tier{min-width:105px;}
+
+.center-check{text-align:center;}
+.center-check input[type="checkbox"]{width:18px; height:18px; cursor:pointer;}
+
+.btn-del{
+  background:#ffebee; color:#c62828; border:1px solid #ef9a9a; padding:4px 8px; font-size:11.5px; border-radius:3px; cursor:pointer;
+}
+.btn-del:hover{background:#ffcdd2;}
+
+.role-picker{display:flex; gap:3px; background:var(--panel2); padding:2px; border-radius:4px; border:1px solid var(--border);}
+.role-picker label{
+  flex:1; text-align:center; font-size:11.5px; font-weight:700; padding:4px 0; border-radius:3px;
+  cursor:pointer; user-select:none; color:var(--dim); transition:all 0.15s;
+}
+.role-picker input[type="radio"]{display:none;}
+.role-picker label:hover{background:rgba(255,255,255,0.1);}
+.role-picker input[value="tank"]:checked + label{background:var(--tank); color:#fff;}
+.role-picker input[value="damage"]:checked + label{background:var(--damage); color:#fff;}
+.role-picker input[value="support"]:checked + label{background:var(--support); color:#fff;}
+
+.modal{
+  display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.6); z-index:1000; align-items:center; justify-content:center;
+}
+.modal-content{
+  background:var(--panel); border:1px solid var(--border); border-radius:8px;
+  width:90%; max-width:680px; padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+.modal-content h3{margin:0 0 10px; font-size:17px; color:var(--accent);}
+.modal-content textarea{
+  width:100%; height:200px; background:var(--panel2); color:var(--text);
+  border:1px solid var(--border); border-radius:4px; padding:10px; font-family:monospace; font-size:12px;
+  resize:vertical; outline:none; margin-bottom:12px;
+}
+.modal-btns{display:flex; justify-content:flex-end; gap:8px;}
+
+#error{color:#e8594f; font-size:14px; text-align:center; margin:14px 0; display:none; font-weight:600;}
+
+/* Tier Badges */
+.tier-badge{
+  display:inline-block; padding:3px 8px; border-radius:4px; font-size:11.5px; font-weight:700; text-align:center;
+}
+.tier-badge.bronze{background:#cd7f32; color:#fff;}
+.tier-badge.silver{background:#95a5a6; color:#fff;}
+.tier-badge.gold{background:#d4ac0d; color:#fff;}
+.tier-badge.plat{background:#16a085; color:#fff;}
+.tier-badge.emerald{background:#27ae60; color:#fff;}
+.tier-badge.diamond{background:#3498db; color:#fff;}
+.tier-badge.master{background:#f39c12; color:#fff;}
+.tier-badge.gm{background:#c0392b; color:#fff;}
+.tier-badge.champ{background:#8e44ad; color:#fff;}
+.tier-badge.top500{background:#d35400; color:#fff; border:1px solid #f1c40f;}
+
+/* Results */
+#results{margin-top:30px; display:none;}
+.diff-line{text-align:center; font-size:15px; color:var(--dim); margin-bottom:18px; line-height:1.6;}
+.diff-line b{color:var(--text);}
+.teams{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+@media(max-width:768px){.teams{grid-template-columns:1fr;}}
+.team{background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.team-head{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:14px 18px; border-bottom:1px solid var(--border); background:var(--panel2);
+}
+.team-head h2{font-size:18px; margin:0;}
+.team-sub-diff{font-size:12.5px; color:var(--dim); font-weight:600;}
+.player-row{display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--border);}
+.player-row:last-child{border-bottom:none;}
+.role-tag{
+  width:40px; flex:0 0 40px; font-size:11.5px; font-weight:700; text-align:center;
+  padding:4px 0; border-radius:4px; color:#fff;
+}
+.role-tag.tank{background:var(--tank);}
+.role-tag.damage{background:var(--damage);}
+.role-tag.support{background:var(--support);}
+
+.p-info{flex:1; min-width:0;}
+.p-bt{font-size:14.5px; font-weight:600;}
+.p-mosts{display:flex; gap:4px; margin-top:3px; flex-wrap:wrap;}
+.hero-tag{
+  font-size:11px; background:var(--panel2); border:1px solid var(--border);
+  padding:1px 5px; border-radius:3px; color:var(--dim);
+}
+.p-right{text-align:right;}
+.copy-btn-wrap{text-align:center; margin-top:20px;}
+
+/* 맵 선택기 섹션 스타일 */
+.map-picker-section{
+  margin-top:50px; padding-top:30px; border-top:2px dashed var(--border);
+}
+.map-picker-card{
+  background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:24px; text-align:center;
+  box-shadow:0 4px 16px rgba(0,0,0,0.06); max-width:720px; margin:0 auto;
+}
+.map-picker-card h2{margin:0 0 16px; font-size:22px; color:var(--accent);}
+.mode-tabs{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:16px;}
+.mode-btn{
+  background:var(--panel2); border:1px solid var(--border); color:var(--text); font-weight:600;
+  padding:8px 16px; border-radius:20px; cursor:pointer; transition:all 0.2s; font-size:13.5px;
+}
+.mode-btn.active{background:var(--accent); color:#17120a; border-color:var(--accent);}
+
+.map-list-info{
+  background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:12px 16px;
+  margin-bottom:20px; text-align:left; font-size:13px; line-height:1.5;
+}
+.map-list-info h4{margin:0 0 6px; font-size:13.5px; color:var(--accent); font-weight:700;}
+.map-tags{display:flex; flex-wrap:wrap; gap:6px;}
+.map-tag-item{
+  background:var(--panel); border:1px solid var(--border); padding:3px 8px; border-radius:4px; font-size:12px; font-weight:500;
+}
+
+.slot-container{
+  width:100%; max-width:380px; height:70px; margin:10px auto 20px; overflow:hidden;
+  border:3px solid var(--accent); border-radius:8px; background:var(--panel2);
+  position:relative; box-shadow:inset 0 0 10px rgba(0,0,0,0.15);
+}
+.slot-container::before, .slot-container::after{
+  content:''; position:absolute; left:0; right:0; height:18px; z-index:2; pointer-events:none;
+}
+.slot-container::before{top:0; background:linear-gradient(to bottom, rgba(0,0,0,0.25), transparent);}
+.slot-container::after{bottom:0; background:linear-gradient(to top, rgba(0,0,0,0.25), transparent);}
+
+.slot-strip{
+  display:flex; flex-direction:column; position:absolute; width:100%; top:0; left:0;
+  transition:transform 0.1s linear;
+}
+.slot-item{
+  height:70px; display:flex; align-items:center; justify-content:center;
+  font-size:22px; font-weight:700; color:var(--text); font-family:'Chakra Petch', sans-serif;
+  text-shadow:0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* 최하단 제작자 크레딧 스타일 */
+footer{
+  margin-top:60px; text-align:center; color:var(--dim); font-size:13px; border-top:1px solid var(--border); padding-top:20px;
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="header-titles">
+    <h1>오버워치 내전 팀 밸런서</h1>
+    <p class="sub">탱커 2명, 딜러 4명, 힐러 4명(1/2/2 조합)을 기준으로 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.</p>
+  </div>
+  <!-- 우측 상단 워크샵 코드 상자 -->
+  <div class="workshop-box">
+    <div class="workshop-info">
+      <div class="ws-label">경쟁전 워크샵 코드</div>
+      <div class="ws-code" id="wsCodeText">GGTG0</div>
+      <div class="ws-maker">제작자: 운밥&찬밥</div>
+    </div>
+    <button class="btn-ws-copy" id="wsCopyBtn">코드 복사</button>
+  </div>
+</header>
+
+<div class="guide-box">
+  <h3>📋 데이터 입력 안내사항 (작성자 가이드)</h3>
+  <ul>
+    <li><b>라인별 격차 과열 방지:</b> 한 라인 내에서 티어 격차가 크게 벌어지는 조합에 강한 페널티를 주어 저티어 유저가 무너지는 현상을 막습니다.</li>
+    <li><b>11명 이상 출전 시:</b> 출전 체크 인원이 10명을 초과하면, <b>[탱커 강제]</b> 지정자를 우선 포함한 뒤 무작위(랜덤)로 10명을 뽑아 팀을 구성합니다.</li>
+  </ul>
+</div>
+
+<div class="toolbar">
+<button class="btn" id="addRowBtn">➕ 유저 직접 추가</button>
+<button class="btn" id="openImportBtn">📋 메모장 데이터 일괄 입력</button>
+<button class="btn" id="demoBtn">예시 데이터 채우기</button>
+<button class="btn" id="resetBtn">전체 초기화</button>
+</div>
+
+<div class="table-wrap" id="tableWrap">
+  <div class="empty-placeholder" id="emptyPlaceholder">
+    <h3>📌 입력된 플레이어 데이터가 없습니다</h3>
+    <p>여기에 데이터를 추가해 주세요! 위 버튼을 눌러 직접 추가하거나 메모장 데이터를 일괄 입력할 수 있습니다.</p>
+    <div class="btn-group">
+      <button class="btn" onclick="document.getElementById('addRowBtn').click()">➕ 유저 직접 추가</button>
+      <button class="btn" onclick="document.getElementById('openImportBtn').click()" style="background:var(--accent); color:#17120a; border:none;">📋 메모장 데이터 일괄 입력</button>
+    </div>
+  </div>
+
+  <table id="playerTable" style="display:none;">
+    <thead><tr>
+    <th class="center-check" style="width:50px;">출전</th>
+    <th>이름</th>
+    <th style="min-width:120px;">주 포지션</th>
+    <th style="min-width:120px;">경기 포지션</th>
+    <th class="center-check" title="반드시 탱커로 고정할 유저 선택 (최대 2명)">탱커 강제</th>
+    <th>탱커 티어</th><th>딜러 티어</th><th>힐러 티어</th>
+    <th>탱커 모스트</th><th>딜러 모스트</th><th>힐러 모스트</th>
+    <th>관리</th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<button class="btn-primary" id="balanceBtn">자동 팀 구성</button>
+<p id="error"></p>
+
+<section id="results">
+<div class="diff-line" id="diffLine"></div>
+<div class="teams">
+<div class="team" id="teamA"></div>
+<div class="team" id="teamB"></div>
+</div>
+<div class="copy-btn-wrap">
+  <button class="btn" id="copyBtn">📋 결과 텍스트 복사</button>
+</div>
+</section>
+
+<!-- 세로 룰렛 맵 선택기 섹션 -->
+<section class="map-picker-section">
+  <div class="map-picker-card">
+    <h2>🎲 전장(맵) 랜덤 선택기</h2>
+    <div class="mode-tabs" id="modeTabs">
+      <button class="mode-btn active" data-mode="payload">🚚 화물</button>
+      <button class="mode-btn" data-mode="hybrid">🏰 혼합</button>
+      <button class="mode-btn" data-mode="control">🚩 쟁탈</button>
+      <button class="mode-btn" data-mode="flashpoint">⚡ 플래시포인트</button>
+      <button class="mode-btn" data-mode="push">🤖 밀기</button>
+    </div>
+
+    <div class="map-list-info">
+      <h4 id="modeMapTitle">🚚 화물 전장 목록 (총 9개)</h4>
+      <div class="map-tags" id="mapTags"></div>
+    </div>
+
+    <div class="slot-container">
+      <div class="slot-strip" id="slotStrip">
+        <div class="slot-item">모드를 선택하고 돌려주세요!</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="spinBtn" style="margin-top:10px; width:220px; padding:11px 0;">전장 추첨하기 🎰</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  만든사람: 망고페코 / 망고코코넛칵테일#3574
+</footer>
+
+<div class="modal" id="importModal">
+  <div class="modal-content">
+    <h3>메모장 데이터 일괄 붙여넣기</h3>
+    <p style="font-size:12.5px; color:var(--dim); margin-bottom:8px;">
+      형식에 맞춰 데이터를 여러 줄 붙여넣으세요.<br>
+      <b>예시:</b> 망고, 탱, 탱 : 그마2, 딜 : 다1, 힐 : 에3, 탱(윈스턴), 딜(소전), 힐(아나)
+    </p>
+    <textarea id="importText" placeholder="망고, 탱, 탱 : 그마2, 딜 : 다1, 힐 : 에3, 탱(윈스턴,자리야,둠피스트), 딜(위도우메이커,소전,캐서디), 힐(아나,메르시,젠야타)&#10;한빛, 딜, 탱:다2, 딜:마1, 힐:골3, 탱(라인), 딜(겐지,트레이서), 힐(키리코)"></textarea>
+    <div class="modal-btns">
+      <button class="btn" id="closeImportBtn">취소</button>
+      <button class="btn" id="applyImportBtn" style="background:var(--accent); color:#17120a; border:none;">추가 및 적용</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const TIERS=['브론즈','실버','골드','플래티넘','에메랄드','다이아몬드','마스터','그랜드마스터','챔피언'];
+
+const SHORT_TIER_NAMES = {
+  '브론즈': '브론즈', '실버': '실버', '골드': '골드', '플래티넘': '플래',
+  '에메랄드': '에메', '다이아몬드': '다이아', '마스터': '마스터',
+  '그랜드마스터': '그마', '챔피언': '챔피언'
+};
+
+const ROLE_LABEL={tank:'탱',damage:'딜',support:'힐'};
+
+const MAIN_DAMAGE = ['솔저', '소전', '바스티온', '시에라', '애쉬', '엠레', '위도우메이커', '캐서디', '토르비욘', '프레야', '한조', '솔저: 76'];
+const SUB_DAMAGE = ['겐지', '리퍼', '메이', '벤데타', '벤쳐', '시메트라', '시온', '안란', '에코', '정크랫', '트레이서', '파라'];
+
+const MAP_DATA = {
+  payload: ['66번 국도', '감시 기지: 지브롤터', '도라도', '리알토', '샴발리 수도원', '서킷 로얄', '쓰레기촌', '하바나', '그림스뵈튼'],
+  hybrid: ['눔바니', '블리자드 월드', '아이헨발데', '왕의 길', '할리우드'],
+  control: ['네팔', '리장 타워', '부산', '오아시스', '일리오스', '사모아'],
+  flashpoint: ['뉴 정크 시티', '수라바사', '아틀리스'],
+  push: ['뉴 퀸 스트리트', '루나사피', '이스페란사', '콜로세오']
+};
+
+const MODE_NAMES = {
+  payload: '🚚 화물',
+  hybrid: '🏰 혼합',
+  control: '🚩 쟁탈',
+  flashpoint: '⚡ 플래시포인트',
+  push: '🤖 밀기'
+};
+
+const DEMO_DATA = [
+  "망고, 탱, 탱 : 다이아2, 딜 : 플래티넘1, 힐 : 다이아3, 탱(윈스턴, 자리야, 둠피스트), 딜(위도우메이커, 소전, 캐서디), 힐(아나, 메르시, 젠야타)",
+  "프로핏, 딜, 탱 : 골드3, 딜 : 다이아1, 힐 : 실버1, 탱(오리사, 로드호그), 딜(겐지, 트레이서, 에코), 힐(루시우, 모이라)",
+  "플레타, 딜, 탱 : 실버2, 딜 : 다이아3, 힐 : 골드2, 탱(디바, 정커퀸), 딜(위도우메이커, 한조, 소전), 힐(모이라, 아나)",
+  "립, 딜, 탱 : 플래티넘1, 딜 : 다이아1, 힐 : 에메랄드4, 탱(정커퀸, 디바), 딜(캐서디, 솔저: 76, 트레이서), 힐(키리코, 바티스트)",
+  "스토커, 딜, 탱 : 골드1, 딜 : 다이아2, 힐 : 골드3, 탱(로드호그, 라인하르트), 딜(리퍼, 메이, 솔저: 76), 힐(메르시, 루시우)",
+  "바이올렛, 힐, 탱 : 실버3, 딜 : 플래티넘4, 힐 : 다이아2, 탱(시그마, 오리사), 딜(에코, 소전), 힐(아나, 키리코, 바티스트)",
+  "슈, 힐, 탱 : 골드2, 딜 : 플래티넘2, 힐 : 다이아1, 탱(라인하르트, 윈스턴), 딜(파라, 메이), 힐(바티스트, 브리기테, 일리오스)",
+  "스머프, 탱, 탱 : 다이아3, 딜 : 플래티넘3, 힐 : 실버2, 탱(윈스턴, 오리사, 시그마), 딜(리퍼, 메이), 힐(모이라, 키리코)",
+  "트와일라잇, 힐, 탱 : 실버1, 딜 : 골드1, 힐 : 다이아2, 탱(자리야, D.Va), 딜(메이, 트레이서), 힐(젠야타, 메르시, 주노)",
+  "학살, 딜, 탱 : 골드2, 딜 : 다이아2, 힐 : 실버3, 탱(둠피스트, 윈스턴), 딜(겐지, 둠피스트, 파라), 힐(루시우, 아나)"
+];
+
+// 우측 상단 워크샵 코드 복사 기능
+document.getElementById('wsCopyBtn').onclick = () => {
+  const code = document.getElementById('wsCodeText').textContent.trim();
+  navigator.clipboard.writeText(code).then(() => {
+    alert('경쟁전 워크샵 코드(GGTG0)가 클립보드에 복사되었습니다!');
+  }).catch(() => {
+    alert('복사에 실패했습니다.');
+  });
+};
+
+function stepToTierInfo(step){
+  if(step >= 45) return { ti: 8, div: 1, label: '탑 500', shortName: '탑500' };
+  const ti = Math.floor(step / 5);
+  const div = 5 - (step % 5);
+  const tName = TIERS[ti] || '골드';
+  const shortName = SHORT_TIER_NAMES[tName] || tName;
+  return { ti, div, label: `${shortName} ${div}`, shortName };
+}
+
+function renderTierBadgeByStep(step){
+  const info = stepToTierInfo(step);
+  if(info.ti === 8) return `<span class="tier-badge top500">탑 500</span>`;
+  
+  let cls = 'bronze';
+  if(info.ti === 1) cls = 'silver';
+  else if(info.ti === 2) cls = 'gold';
+  else if(info.ti === 3) cls = 'plat';
+  else if(info.ti === 4) cls = 'emerald';
+  else if(info.ti === 5) cls = 'diamond';
+  else if(info.ti === 6) cls = 'master';
+  else if(info.ti === 7) cls = 'gm';
+  else if(info.ti === 8) cls = 'champ';
+  
+  return `<span class="tier-badge ${cls}">${info.label}</span>`;
+}
+
+function parseTierStringToStep(str){
+  if(!str) return 12; // 기본 골드3
+  const s = str.toString().trim().replace(/\s+/g, '');
+  if(s.includes('500')) return 45;
+
+  const tierMap = [
+    { keys: ['브'], idx: 0 }, { keys: ['실'], idx: 1 }, { keys: ['골'], idx: 2 },
+    { keys: ['플'], idx: 3 }, { keys: ['에', '에메'], idx: 4 }, { keys: ['다', '다이아'], idx: 5 },
+    { keys: ['마', '마스'], idx: 6 }, { keys: ['그마', '그랜드', '그'], idx: 7 }, { keys: ['챔', '챔피'], idx: 8 }
+  ];
+
+  for(const item of tierMap){
+    for(const key of item.keys){
+      if(s.startsWith(key) || s.includes(key)){
+        const numMatch = s.match(/[1-5]/);
+        const div = numMatch ? parseInt(numMatch[0]) : 3;
+        return (item.idx * 5) + (5 - div);
+      }
+    }
+  }
+
+  return 12;
+}
+
+function tierOptions(selectedStep){
+  let html='';
+  for(let step=0; step<=44; step++){
+    const info = stepToTierInfo(step);
+    html+=`<option value="${step}" ${step===selectedStep?'selected':''}>${info.label}</option>`;
+  }
+  html+=`<option value="45" ${selectedStep===45?'selected':''}>탑 500</option>`;
+  return html;
+}
+
+function renderRolePicker(nameGroup, selectedValue){
+  return `
+    <div class="role-picker">
+      <input type="radio" id="${nameGroup}_tank" name="${nameGroup}" value="tank" ${selectedValue==='tank'?'checked':''}>
+      <label for="${nameGroup}_tank">탱</label>
+      <input type="radio" id="${nameGroup}_damage" name="${nameGroup}" value="damage" ${selectedValue==='damage'?'checked':''}>
+      <label for="${nameGroup}_damage">딜</label>
+      <input type="radio" id="${nameGroup}_support" name="${nameGroup}" value="support" ${selectedValue==='support'?'checked':''}>
+      <label for="${nameGroup}_support">힐</label>
+    </div>
+  `;
+}
+
+let rowIdxCounter = 0;
+const tbody=document.getElementById('tbody');
+const playerTable = document.getElementById('playerTable');
+const emptyPlaceholder = document.getElementById('emptyPlaceholder');
+
+function checkTableVisibility(){
+  if(tbody.children.length === 0){
+    playerTable.style.display = 'none';
+    emptyPlaceholder.style.display = 'block';
+  } else {
+    playerTable.style.display = 'table';
+    emptyPlaceholder.style.display = 'none';
+  }
+}
+
+function addPlayerRow(data = {}){
+  const i = rowIdxCounter++;
+  const tr = document.createElement('tr');
+  tr.className = 'pos-tank';
+  tr.setAttribute('data-row-id', i);
+  
+  const mainPos = data.main || 'tank';
+  const matchPos = data.match || mainPos;
+  const isChecked = data.active !== false;
+
+  const defT = parseTierStringToStep(data.tankStr || '골드3');
+  const defD = parseTierStringToStep(data.damageStr || '골드3');
+  const defS = parseTierStringToStep(data.supportStr || '골드3');
+  
+  tr.innerHTML = `
+   <td class="center-check"><input type="checkbox" class="player-active" ${isChecked ? 'checked' : ''} title="체크 시 밸런스 매칭 대상"></td>
+   <td><input class="bt" placeholder="이름" value="${data.bt || ''}"></td>
+   <td>${renderRolePicker(`main_${i}`, mainPos)}</td>
+   <td>${renderRolePicker(`match_${i}`, matchPos)}</td>
+   <td class="center-check"><input type="checkbox" class="tank-lock" ${data.lock ? 'checked' : ''} title="탱커 강제 고정"></td>
+   <td><select class="tier tier-tank">${tierOptions(defT)}</select></td>
+   <td><select class="tier tier-damage">${tierOptions(defD)}</select></td>
+   <td><select class="tier tier-support">${tierOptions(defS)}</select></td>
+   <td><input class="most most-tank" placeholder="예: 윈스턴, 디바" value="${data.mostT || ''}"></td>
+   <td><input class="most most-damage" placeholder="예: 겐지, 트레이서" value="${data.mostD || ''}"></td>
+   <td><input class="most most-support" placeholder="예: 아나, 키리코" value="${data.mostS || ''}"></td>
+   <td style="text-align:center;"><button type="button" class="btn-del" onclick="this.closest('tr').remove(); checkTableVisibility();">삭제</button></td>
+  `;
+  
+  tbody.appendChild(tr);
+  updateRowStyle(tr);
+  checkTableVisibility();
+}
+
+document.getElementById('addRowBtn').onclick = () => addPlayerRow();
+
+function updateRowStyle(row){
+  const matchRadio = row.querySelector('input[name^="match_"]:checked');
+  const matchPos = matchRadio ? matchRadio.value : 'tank';
+  row.classList.remove('pos-tank','pos-damage','pos-support');
+  row.classList.add(`pos-${matchPos}`);
+}
+
+function setRadioValue(row, groupPrefix, val){
+  const radio = row.querySelector(`input[name^="${groupPrefix}_"][value="${val}"]`);
+  if(radio) radio.checked = true;
+}
+
+tbody.addEventListener('change',e=>{
+  const row=e.target.closest('tr');
+  if(!row) return;
+  if(e.target.name && e.target.name.startsWith('main_')){
+    const val = e.target.value;
+    if(!row.querySelector('.tank-lock').checked){
+      setRadioValue(row, 'match', val);
+      updateRowStyle(row);
+    }
+  } else if(e.target.name && e.target.name.startsWith('match_')){
+    updateRowStyle(row);
+  } else if(e.target.classList.contains('tank-lock')){
+    if(e.target.checked){
+      setRadioValue(row, 'match', 'tank');
+    } else {
+      const mainVal = row.querySelector('input[name^="main_"]:checked').value;
+      setRadioValue(row, 'match', mainVal);
+    }
+    updateRowStyle(row);
+  }
+});
+
+function parseComplexLine(line){
+  const parts = line.split(',').map(p => p.trim());
+  const name = parts[0] || '플레이어';
+  
+  let main = 'tank';
+  let tStr = '골드3', dStr = '골드3', sStr = '골드3';
+  let tMost = '', dMost = '', sMost = '';
+
+  if(parts[1]){
+    const pStr = parts[1].toLowerCase();
+    if(pStr.includes('딜') || pStr.includes('damage')) main = 'damage';
+    else if(pStr.includes('힐') || pStr.includes('support')) main = 'support';
+  }
+
+  for(let i=2; i<parts.length; i++){
+    const p = parts[i];
+    if(p.includes('탱') && p.includes(':')){
+      tStr = p.split(':')[1].trim();
+    } else if(p.includes('딜') && p.includes(':')){
+      dStr = p.split(':')[1].trim();
+    } else if(p.includes('힐') && p.includes(':')){
+      sStr = p.split(':')[1].trim();
+    }
+  }
+
+  const tankMatch = line.match(/탱\s*\(([^)]+)\)/);
+  if(tankMatch) tMost = tankMatch[1].trim();
+
+  const dmgMatch = line.match(/딜\s*\(([^)]+)\)/);
+  if(dmgMatch) dMost = dmgMatch[1].trim();
+
+  const supMatch = line.match(/힐\s*\(([^)]+)\)/);
+  if(supMatch) sMost = supMatch[1].trim();
+
+  return { bt: name, main: main, match: main, tankStr: tStr, damageStr: dStr, supportStr: sStr, mostT: tMost, mostD: dMost, mostS: sMost, lock: false, active: true };
+}
+
+const importModal = document.getElementById('importModal');
+document.getElementById('openImportBtn').onclick = () => importModal.style.display = 'flex';
+document.getElementById('closeImportBtn').onclick = () => importModal.style.display = 'none';
+
+document.getElementById('applyImportBtn').onclick = () => {
+  const text = document.getElementById('importText').value.trim();
+  if(!text) return;
+  
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  lines.forEach(line => {
+    const parsedData = parseComplexLine(line);
+    addPlayerRow(parsedData);
+  });
+
+  importModal.style.display = 'none';
+  document.getElementById('importText').value = '';
+};
+
+document.getElementById('resetBtn').onclick=()=>{
+  tbody.innerHTML = '';
+  checkTableVisibility();
+  document.getElementById('results').style.display='none';
+  document.getElementById('error').style.display='none';
+};
+
+document.getElementById('demoBtn').onclick=()=>{
+  tbody.innerHTML = '';
+  DEMO_DATA.forEach((line) => {
+    const parsedData = parseComplexLine(line);
+    addPlayerRow(parsedData);
+  });
+};
+
+function combinations(arr,k){
+  const res=[];
+  (function helper(start,combo){
+    if(combo.length===k){res.push(combo.slice()); return;}
+    for(let i=start;i<arr.length;i++){combo.push(arr[i]); helper(i+1,combo); combo.pop();}
+  })(0,[]);
+  return res;
+}
+
+function countDamageType(mostStr){
+  if(!mostStr) return {main:0, sub:0};
+  const heroes = mostStr.split(',').map(s=>s.trim());
+  let main = 0, sub = 0;
+  heroes.forEach(h=>{
+    if(MAIN_DAMAGE.some(md => h.includes(md))) main++;
+    if(SUB_DAMAGE.some(sd => h.includes(sd))) sub++;
+  });
+  return {main, sub};
+}
+
+let currentBestResult = null;
+
+document.getElementById('balanceBtn').onclick=()=>{
+  const errEl=document.getElementById('error');
+  const resEl=document.getElementById('results');
+  errEl.style.display='none'; resEl.style.display='none';
+
+  const rows = [...tbody.querySelectorAll('tr')];
+  if(rows.length === 0){
+    errEl.textContent=`입력된 플레이어가 없습니다. 유저를 추가하거나 메모장 데이터를 입력해 주세요.`;
+    errEl.style.display='block';
+    return;
+  }
+
+  let activeRows = rows.filter(row => row.querySelector('.player-active').checked);
+
+  if(activeRows.length < 10){
+    errEl.textContent=`출전 체크된 유저가 총 ${activeRows.length}명입니다. 밸런스 매칭을 위해서는 최소 10명의 출전 유저가 필요합니다.`;
+    errEl.style.display='block';
+    return;
+  }
+
+  let randomSelectionMessage = "";
+
+  if(activeRows.length > 10){
+    const lockedRows = activeRows.filter(row => row.querySelector('.tank-lock').checked);
+    const nonLockedRows = activeRows.filter(row => !row.querySelector('.tank-lock').checked);
+
+    if(lockedRows.length > 10){
+      errEl.textContent=`탱커 강제 지정된 유저가 10명을 초과합니다. 강제 고정을 줄여주세요.`;
+      errEl.style.display='block';
+      return;
+    }
+
+    const shuffledNonLocked = [...nonLockedRows].sort(() => Math.random() - 0.5);
+    const neededCount = 10 - lockedRows.length;
+    
+    const selectedNonLocked = shuffledNonLocked.slice(0, neededCount);
+    const excludedRows = shuffledNonLocked.slice(neededCount);
+
+    activeRows = [...lockedRows, ...selectedNonLocked];
+
+    const selectedNames = activeRows.map(r => r.querySelector('.bt').value.trim() || '플레이어');
+    const excludedNames = excludedRows.map(r => r.querySelector('.bt').value.trim() || '플레이어');
+
+    randomSelectionMessage = `🎲 <b>10명 초과 인원 무작위 추첨 완료:</b><br>` +
+      `- 선발 인원: [${selectedNames.join(', ')}]<br>` +
+      `- 벤치 인원: [${excludedNames.join(', ')}]`;
+  }
+
+  let curTanks = [], curDamages = [], curSupports = [];
+  activeRows.forEach(row => {
+    const isTankLock = row.querySelector('.tank-lock').checked;
+    let matchPos = row.querySelector('input[name^="match_"]:checked').value;
+    if(isTankLock) matchPos = 'tank';
+    
+    if(matchPos === 'tank') curTanks.push(row);
+    else if(matchPos === 'damage') curDamages.push(row);
+    else if(matchPos === 'support') curSupports.push(row);
+  });
+
+  let swappedInfoMessage = "";
+
+  if(curDamages.length > 4){
+    const neededSupports = 4 - curSupports.length;
+    const neededTanks = 2 - curTanks.length;
+
+    let eligibleDamages = [...curDamages].sort(() => Math.random() - 0.5);
+    let swappedNames = [];
+
+    if(neededSupports > 0){
+      for(let k=0; k<neededSupports && eligibleDamages.length > 0; k++){
+        const targetRow = eligibleDamages.pop();
+        setRadioValue(targetRow, 'match', 'support');
+        updateRowStyle(targetRow);
+        const name = targetRow.querySelector('.bt').value.trim() || '플레이어';
+        swappedNames.push(`${name}(힐러로 이동)`);
+      }
+    }
+
+    if(neededTanks > 0){
+      for(let k=0; k<neededTanks && eligibleDamages.length > 0; k++){
+        const targetRow = eligibleDamages.pop();
+        setRadioValue(targetRow, 'match', 'tank');
+        updateRowStyle(targetRow);
+        const name = targetRow.querySelector('.bt').value.trim() || '플레이어';
+        swappedNames.push(`${name}(탱커로 이동)`);
+      }
+    }
+
+    if(swappedNames.length > 0){
+      swappedInfoMessage = `🔄 딜러 초과로 인한 무작위 포지션 변경: <b>[${swappedNames.join(', ')}]</b>`;
+    }
+  }
+
+  const players = activeRows.map((row)=>{
+    const bt=row.querySelector('.bt').value.trim()||`플레이어`;
+    const mainPos=row.querySelector('input[name^="main_"]:checked').value;
+    const isTankLock=row.querySelector('.tank-lock').checked;
+    
+    let matchPos = row.querySelector('input[name^="match_"]:checked').value;
+    if(isTankLock){
+      matchPos = 'tank';
+    }
+
+    const tier={
+      tank: Number(row.querySelector('.tier-tank').value),
+      damage: Number(row.querySelector('.tier-damage').value),
+      support: Number(row.querySelector('.tier-support').value),
+    };
+    const most={
+      tank:row.querySelector('.most-tank').value.trim(),
+      damage:row.querySelector('.most-damage').value.trim(),
+      support:row.querySelector('.most-support').value.trim(),
+    };
+    return {
+      bt, mainPos, matchPos, isTankLock, tier, most,
+      matchStep: tier[matchPos]
+    };
+  });
+
+  const tanks=players.filter(p=>p.matchPos==='tank');
+  const damages=players.filter(p=>p.matchPos==='damage');
+  const supports=players.filter(p=>p.matchPos==='support');
+
+  const lockedTanks = tanks.filter(p=>p.isTankLock);
+  if(lockedTanks.length > 2){
+    errEl.textContent=`탱커 강제 지정은 최종 출전 10명 중 최대 2명까지만 가능합니다. (현재 ${lockedTanks.length}명)`;
+    errEl.style.display='block';
+    return;
+  }
+
+  if(tanks.length!==2||damages.length!==4||supports.length!==4){
+    errEl.textContent=`선발 인원의 포지션 비율이 맞지 않습니다 (현재 선발 탱커:${tanks.length}/2, 딜러:${damages.length}/4, 힐러:${supports.length}/4).`;
+    errEl.style.display='block';
+    return;
+  }
+
+  let best=null;
+  let tankPairs = [];
+  if(lockedTanks.length === 2){
+    tankPairs = [[lockedTanks[0], lockedTanks[1]]];
+  } else if(lockedTanks.length === 1){
+    const otherTanks = tanks.filter(p=>p!==lockedTanks[0]);
+    tankPairs = otherTanks.map(ot => [lockedTanks[0], ot]);
+  } else {
+    tankPairs = [[tanks[0], tanks[1]], [tanks[1], tanks[0]]];
+  }
+
+  for(const [tankA, tankB] of tankPairs){
+    const tankStepDiff = Math.abs(tankA.matchStep - tankB.matchStep);
+
+    for(const dmgA of combinations(damages,2)){
+      const dmgB=damages.filter(p=>!dmgA.includes(p));
+      const dmgStepA = dmgA.reduce((s,p)=>s+p.matchStep,0);
+      const dmgStepB = dmgB.reduce((s,p)=>s+p.matchStep,0);
+      const dmgStepDiff = Math.abs(dmgStepA - dmgStepB);
+
+      const dmgMainSubA = dmgA.reduce((acc, p) => {
+        const counts = countDamageType(p.most.damage);
+        return {main: acc.main + counts.main, sub: acc.sub + counts.sub};
+      }, {main:0, sub:0});
+      const dmgMainSubB = dmgB.reduce((acc, p) => {
+        const counts = countDamageType(p.most.damage);
+        return {main: acc.main + counts.main, sub: acc.sub + counts.sub};
+      }, {main:0, sub:0});
+      const dmgTypeDiff = Math.abs(dmgMainSubA.main - dmgMainSubB.main);
+
+      for(const supA of combinations(supports,2)){
+        const supB=supports.filter(p=>!supA.includes(p));
+        const supStepA = supA.reduce((s,p)=>s+p.matchStep,0);
+        const supStepB = supB.reduce((s,p)=>s+p.matchStep,0);
+        const supStepDiff = Math.abs(supStepA - supStepB);
+
+        const supInternalGapA = Math.abs(supA[0].matchStep - supA[1].matchStep);
+        const supInternalGapB = Math.abs(supB[0].matchStep - supB[1].matchStep);
+        const maxSupGap = Math.max(supInternalGapA, supInternalGapB);
+
+        const dmgInternalGapA = Math.abs(dmgA[0].matchStep - dmgA[1].matchStep);
+        const dmgInternalGapB = Math.abs(dmgB[0].matchStep - dmgB[1].matchStep);
+        const maxDmgGap = Math.max(dmgInternalGapA, dmgInternalGapB);
+
+        let gapPenalty = 0;
+        if(maxSupGap > 6) gapPenalty += Math.pow(maxSupGap - 6, 3);
+        if(maxDmgGap > 8) gapPenalty += Math.pow(maxDmgGap - 8, 3);
+
+        const restScoreA = dmgStepA + supStepA;
+        const restScoreB = dmgStepB + supStepB;
+        const restTotalDiff = Math.abs(restScoreA - restScoreB);
+
+        const evaluationScore = (dmgStepDiff * 4) + (supStepDiff * 4) + (restTotalDiff * 2) + (dmgTypeDiff * 2) + gapPenalty;
+
+        const teamA=[tankA,...dmgA,...supA];
+        const teamB=[tankB,...dmgB,...supB];
+
+        if(!best || evaluationScore < best.evaluationScore){
+          best={
+            teamA, teamB,
+            tankStepDiff, dmgStepDiff, supStepDiff, restTotalDiff,
+            evaluationScore
+          };
+        }
+      }
+    }
+  }
+
+  if(!best){
+    errEl.textContent=`조건에 맞는 팀 조합을 찾지 못했습니다. 인원 배치를 다시 확인해 주세요.`;
+    errEl.style.display='block';
+    return;
+  }
+
+  const order={tank:0,damage:1,support:2};
+  [best.teamA,best.teamB].forEach(t=>t.sort((a,b)=>order[a.matchPos]-order[b.matchPos]));
+  currentBestResult = best;
+
+  // 팀 내 티어 편차 계산 함수 (최고 단계 - 최저 단계)
+  function getTeamTierSpread(team){
+    const steps = team.map(p => p.matchStep);
+    const max = Math.max(...steps);
+    const min = Math.min(...steps);
+    return max - min;
+  }
+
+  function renderMosts(p){
+    const mostStr = p.most[p.matchPos];
+    if(!mostStr) return '<span class="hero-tag">모스트 미입력</span>';
+    const items = mostStr.split(',').map(s=>s.trim()).filter(Boolean);
+    if(items.length === 0) return '<span class="hero-tag">모스트 미입력</span>';
+    return items.slice(0, 3).map(h => `<span class="hero-tag">${h}</span>`).join('');
+  }
+
+  function teamHTML(team,label){
+    const spread = getTeamTierSpread(team);
+    const rows=team.map(p=>`
+      <div class="player-row">
+        <span class="role-tag ${p.matchPos}">${ROLE_LABEL[p.matchPos]}</span>
+        <div class="p-info">
+          <div class="p-bt">${p.bt}</div>
+          <div class="p-mosts">${renderMosts(p)}</div>
+        </div>
+        <div class="p-right">
+          <div>${renderTierBadgeByStep(p.matchStep)}</div>
+        </div>
+      </div>`).join('');
+    return `<div class="team-head"><h2>${label}</h2><span class="team-sub-diff">티어 편차: ${spread}단계</span></div>${rows}`;
+  }
+
+  document.getElementById('teamA').innerHTML=teamHTML(best.teamA,'A팀');
+  document.getElementById('teamB').innerHTML=teamHTML(best.teamB,'B팀');
+
+  let diffText = `<b>🎯 개별 라인 무너짐 방지 최적화 결과</b><br>`+
+    `- 탱커 격차: <b>${best.tankStepDiff}단계</b> / 딜러 격차: <b>${best.dmgStepDiff}단계</b> / 힐러 격차: <b>${best.supStepDiff}단계</b><br>`;
+  if(randomSelectionMessage){
+    diffText += `${randomSelectionMessage}<br>`;
+  }
+  if(swappedInfoMessage){
+    diffText += `${swappedInfoMessage}<br>`;
+  }
+  diffText += `<span style="color:var(--accent); font-weight:600;">✨ 각 팀 이름 오른쪽 끝에 팀 내부 티어 편차가 표시됩니다.</span>`;
+
+  document.getElementById('diffLine').innerHTML = diffText;
+  
+  resEl.style.display='block';
+  resEl.scrollIntoView({behavior:'smooth', block:'start'});
+};
+
+document.getElementById('copyBtn').onclick=()=>{
+  if(!currentBestResult) return;
+  const {teamA, teamB} = currentBestResult;
+  
+  // 클립보드 복사 시에도 팀 편차 추가
+  function getSpread(t){
+    const steps = t.map(p => p.matchStep);
+    return Math.max(...steps) - Math.min(...steps);
+  }
+
+  let text = `[오버워치 내전 팀 구성 결과]\n\n`;
+  text += `🔵 A팀 (티어 편차: ${getSpread(teamA)}단계)\n`;
+  teamA.forEach(p => {
+    text += `- [${ROLE_LABEL[p.matchPos]}] ${p.bt} (${stepToTierInfo(p.matchStep).label})\n`;
+  });
+  
+  text += `\n🔴 B팀 (티어 편차: ${getSpread(teamB)}단계)\n`;
+  teamB.forEach(p => {
+    text += `- [${ROLE_LABEL[p.matchPos]}] ${p.bt} (${stepToTierInfo(p.matchStep).label})\n`;
+  });
+
+  navigator.clipboard.writeText(text).then(()=>{
+    alert('결과가 클립보드에 복사되었습니다!');
+  }).catch(()=>{
+    alert('복사에 실패했습니다.');
+  });
+};
+
+/* --- 맵 선택기 및 전장 리스트 표시 로직 --- */
+let currentMode = 'payload';
+let isSpinning = false;
+
+function updateMapListDisplay(modeKey){
+  const maps = MAP_DATA[modeKey];
+  const modeName = MODE_NAMES[modeKey];
+  
+  document.getElementById('modeMapTitle').textContent = `${modeName} 전장 목록 (총 ${maps.length}개)`;
+  document.getElementById('mapTags').innerHTML = maps.map(m => `<span class="map-tag-item">${m}</span>`).join('');
+}
+
+updateMapListDisplay('payload');
+
+document.getElementById('modeTabs').addEventListener('click', e => {
+  if(e.target.classList.contains('mode-btn') && !isSpinning){
+    document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+    e.target.classList.add('active');
+    currentMode = e.target.getAttribute('data-mode');
+    
+    updateMapListDisplay(currentMode);
+
+    const strip = document.getElementById('slotStrip');
+    strip.style.transition = 'none';
+    strip.style.transform = 'translateY(0px)';
+    strip.innerHTML = `<div class="slot-item">버튼을 눌러 ${e.target.textContent} 추첨</div>`;
+  }
+});
+
+document.getElementById('spinBtn').onclick = () => {
+  if(isSpinning) return;
+  isSpinning = true;
+
+  const maps = MAP_DATA[currentMode];
+  const strip = document.getElementById('slotStrip');
+  
+  const targetMap = maps[Math.floor(Math.random() * maps.length)];
+
+  let reel = [];
+  for(let i=0; i<25; i++){
+    reel.push(maps[Math.floor(Math.random() * maps.length)]);
+  }
+  reel.push(targetMap);
+
+  strip.style.transition = 'none';
+  strip.style.transform = 'translateY(0px)';
+  strip.innerHTML = reel.map(m => `<div class="slot-item">${m}</div>`).join('');
+
+  setTimeout(() => {
+    const itemHeight = 70;
+    const targetY = -(reel.length - 1) * itemHeight;
+    strip.style.transition = 'transform 2.5s cubic-bezier(0.15, 0.85, 0.35, 1)';
+    strip.style.transform = `translateY(${targetY}px)`;
+  }, 50);
+
+  setTimeout(() => {
+    isSpinning = false;
+  }, 2600);
+};
+</script>
+</body>
+</html>
