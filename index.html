@@ -121,7 +121,7 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .tier-input-wrap select{flex:2.6; font-weight:600; padding:7px 6px;}
 .tier-input-wrap input.tier-num{flex:1; min-width:44px; text-align:center; font-weight:600; padding:7px 2px;}
 
-/* 포지션 고정 드롭다운 독립 스타일링 (색상 번짐 방지) */
+/* 포지션 고정 드롭다운 독립 스타일링 */
 .lock-select{
   font-weight:700; text-align:center; padding:6px 4px; cursor:pointer;
 }
@@ -202,9 +202,28 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .tier-badge.top500{background:#d35400; color:#fff; border:1px solid #f1c40f;}
 .tier-badge.unranked{background:#6c757d; color:#fff;}
 
-#results{margin-top:30px; display:none;}
-.diff-line{text-align:center; font-size:17px; color:var(--dim); margin-bottom:18px; line-height:1.6;}
+/* 결과 영역 상단 여백 및 배치 수정 */
+#results{
+  margin-top: 50px; 
+  padding-top: 20px; 
+  border-top: 2px dashed var(--border); 
+  display:none; 
+  scroll-margin-top: 40px;
+}
+
+.result-top-bar{
+  display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; flex-wrap:wrap; gap:15px;
+}
+.diff-line{font-size:17px; color:var(--dim); line-height:1.6; flex:1; min-width:280px;}
 .diff-line b{color:var(--text); font-size:19px;}
+
+.history-container{
+  background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:8px 14px;
+  display:flex; align-items:center; gap:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04);
+}
+.history-container label{font-size:12.5px; font-weight:600; color:var(--dim);}
+.history-select{width:auto; min-width:170px; padding:6px 8px; font-weight:600; font-size:13px;}
+
 .warn-box{
   background:#fff3cd; color:#856404; border:1px solid #ffeeba; border-radius:6px;
   padding:8px 12px; margin-top:8px; font-size:14px; font-weight:600; display:inline-block;
@@ -337,7 +356,7 @@ footer{
 <main>
 <header>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.5.10</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.5.11</h1>
     <p class="sub">
       탱커 2명, 딜러 4명, 힐러 4명(1/2/2 조합)을 기준으로 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-highlight">⚠️ 아래 팀 구성은 참고용으로 사용해주십시오.</span>
@@ -347,7 +366,7 @@ footer{
     <div class="workshop-info">
       <div class="ws-label">경쟁전 워크샵 코드</div>
       <div class="ws-code" id="wsCodeText">GGTG0</div>
-      <div class="ws-maker">제작자: 망고페코 / 망고코코넛칵테일#3574 (v1.5.10)</div>
+      <div class="ws-maker">제작자: 망고페코 / 망고코코넛칵테일#3574 (v1.5.11)</div>
     </div>
     <button class="btn-ws-copy" id="wsCopyBtn">코드 복사</button>
   </div>
@@ -359,6 +378,7 @@ footer{
     <li><b>포지션 고정 (최우선 순위):</b> 포지션 고정이 선택된 유저는 해당 포지션으로 최우선 배정되며, 전체 팀 조합의 핵심 제어 기준이 됩니다.</li>
     <li><b>가능 포지션 참고:</b> 팀 분배 알고리즘은 유저의 '가능 포지션' 목록을 최대한 존중하여 배정합니다.</li>
     <li><b>티어 입력:</b> 드롭다운에서 티어를 선택하고 세부 단계 숫자를 직접 입력할 수 있습니다. (언랭인 경우 숫자 칸에 자동으로 0이 입력되며 해당 역할군으로 배치되지 않습니다.)</li>
+    <li><b>마스터 이상 인원 제한:</b> 마스터 이상 티어 유저는 양 팀에 공정하게 분배되어야 하므로 홀수 명(1명 등)일 경우 팀을 구성할 수 없습니다.</li>
     <li><b>모스트 영웅:</b> 주력 영웅이 특별히 없다면 <b>'상관없음'</b>을 입력할 수 있습니다.</li>
   </ul>
 </div>
@@ -402,7 +422,14 @@ footer{
 <p id="error"></p>
 
 <section id="results">
-<div class="diff-line" id="diffLine"></div>
+<div class="result-top-bar">
+  <div class="diff-line" id="diffLine"></div>
+  <div class="history-container">
+    <label for="historySelect">📁 구성 이력:</label>
+    <select id="historySelect" class="history-select"></select>
+  </div>
+</div>
+
 <div class="teams">
 <div class="team" id="teamA"></div>
 <div class="team" id="teamB"></div>
@@ -465,7 +492,7 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.5.10)
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.5.11)
 </footer>
 
 <div class="modal" id="importModal">
@@ -640,9 +667,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let rowIdxCounter = 0;
-  let previousSignature = "";
+  let historyTeams = []; // 구성 이력 배열 저장
 
   const tbody = document.getElementById('tbody'), playerTable = document.getElementById('playerTable'), emptyPlaceholder = document.getElementById('emptyPlaceholder');
+  const historySelect = document.getElementById('historySelect');
 
   function checkTableVisibility(){
     const hasRows = tbody.children.length > 0;
@@ -807,7 +835,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('importText').value = '';
   };
 
-  document.getElementById('resetBtn').onclick = () => { tbody.innerHTML = ''; checkTableVisibility(); document.getElementById('results').style.display = 'none'; document.getElementById('error').style.display = 'none'; previousSignature = ""; };
+  document.getElementById('resetBtn').onclick = () => { 
+    tbody.innerHTML = ''; 
+    checkTableVisibility(); 
+    document.getElementById('results').style.display = 'none'; 
+    document.getElementById('error').style.display = 'none'; 
+    historyTeams = [];
+    historySelect.innerHTML = '';
+  };
   
   document.getElementById('demoBtn').onclick = () => { 
     tbody.innerHTML = ''; 
@@ -829,11 +864,57 @@ document.addEventListener("DOMContentLoaded", () => {
     return res;
   }
 
-  let currentBestResult = null;
+  function getTeamSignature(teamA, teamB){
+    const aNames = teamA.map(p => p.bt).sort().join(',');
+    const bNames = teamB.map(p => p.bt).sort().join(',');
+    return `A[${aNames}]|B[${bNames}]`;
+  }
 
-  function executeBalancing(isRebalance = false){
+  function renderResult(best){
+    const getRange = (team) => {
+      const steps = team.map(p => p.tier[p.assignedPos]);
+      return `${stepToTierInfo(Math.min(...steps)).label} ~ ${stepToTierInfo(Math.max(...steps)).label}`;
+    };
+
+    const renderTeamHTML = (team, name) => `
+      <div class="team-head">
+        <h2>${name}</h2>
+        <div class="team-meta-info">
+          <span class="team-sub-score">평점: ${Math.round(team.reduce((s,p)=>s+p.scores[p.assignedPos],0))}점</span>
+          <span class="team-rank-range">매칭 구간: ${getRange(team)}</span>
+        </div>
+      </div>
+      ${team.map(p => `
+        <div class="player-row">
+          <span class="role-tag ${p.assignedPos}">${ROLE_LABEL[p.assignedPos]}</span>
+          <div class="p-info">
+            <div class="p-bt">${p.bt}</div>
+            <div class="p-mosts">${p.most[p.assignedPos] ? p.most[p.assignedPos].split(',').slice(0, 5).map(h=>`<span class="hero-tag">${h.trim()}</span>`).join('') : '<span class="hero-tag empty">상관없음</span>'}</div>
+          </div>
+          <div class="p-right">${renderTierBadgeByStep(p.tier[p.assignedPos])}</div>
+        </div>`).join('')}
+    `;
+
+    document.getElementById('teamA').innerHTML = renderTeamHTML(best.teamA, 'A팀');
+    document.getElementById('teamB').innerHTML = renderTeamHTML(best.teamB, 'B팀');
+
+    const roundedDiff = Math.round(best.scoreDiff);
+    let warnMsg = "";
+    if(roundedDiff > 100){
+      warnMsg += `<br><div class="warn-box">⚠️ 양 팀 간의 평점 격차가 커서(${roundedDiff}점) 밸런스에 차이가 발생할 수 있으니 참고해 주세요!</div>`;
+    }
+    if(best.tankDiff >= 3){
+      warnMsg += `<br><div class="warn-box" style="background:#f8d7da; color:#721c24; border-color:#f5c6cb;">🛡️ 양 팀 탱커 간의 티어 차이가 너무 심합니다! (${best.tankDiff}단계 차이 발생)</div>`;
+    }
+
+    document.getElementById('diffLine').innerHTML = `<b>🎯 자동 밸런스 매칭 결과</b><br>양 팀 평점 격차: <b>${roundedDiff}점</b> (A팀: ${Math.round(best.scoreA)}점 vs B팀: ${Math.round(best.scoreB)}점)${warnMsg}`;
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function executeBalancing(isNewFresh = true){
     const errEl = document.getElementById('error'), resEl = document.getElementById('results');
-    errEl.style.display = 'none'; resEl.style.display = 'none';
+    errEl.style.display = 'none'; 
 
     const rows = [...tbody.querySelectorAll('tr')];
     if(rows.length < 10){
@@ -871,11 +952,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       return { 
         bt, mainPos, multi, lockTank, lockDamage, lockSupport, tier, most, hasHighTier,
-        scores: { tank: stepToTierInfo(tier.tank).score, damage: stepToTierInfo(tier.damage).score, support: stepToTierInfo(tier.support).score } 
+        scores: { tank: stepToTierInfo(tier.tier?.tank || tier.tank).score, damage: stepToTierInfo(tier.damage).score, support: stepToTierInfo(tier.support).score } 
       };
     });
 
+    // 마스터 이상 인원 홀수(혼자 등) 체크 검증
     const masterUsers = players.filter(p => p.hasHighTier);
+    if(masterUsers.length > 0 && masterUsers.length % 2 !== 0){
+      errEl.textContent = `마스터 이상 티어 유저는 양 팀에 공정하게 분배되어야 하므로 홀수 명(${masterUsers.length}명)일 경우 팀을 구성할 수 없습니다. (짝수 명이어야 합니다)`;
+      errEl.style.display = 'block';
+      return;
+    }
+
     let randomMsg = "";
     let filteredPlayers = [...players];
 
@@ -902,8 +990,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const uniqueLocked = [...new Set(totalLocked)];
       const unlocked = filteredPlayers.filter(p => !uniqueLocked.includes(p)).sort(() => Math.random() - 0.5);
       filteredPlayers = [...uniqueLocked, ...unlocked.slice(0, 10 - uniqueLocked.length)];
-      randomMsg += `<br>🎲 <b>10명 선발 추첨 완료:</b> [${filteredPlayers.map(p=>p.bt).join(', ')}]`;
     }
+
+    if(isNewFresh){
+      historyTeams = [];
+      historySelect.innerHTML = '';
+    }
+
+    const existingSignatures = new Set(historyTeams.map(h => h.signature));
 
     let best = null;
     const validTankCandidates = filteredPlayers.filter(p => !p.lockTank && p.tier.tank !== -1);
@@ -953,6 +1047,9 @@ document.addEventListener("DOMContentLoaded", () => {
               });
               if(invalidLock) continue;
 
+              const sig = getTeamSignature(teamA, teamB);
+              if(existingSignatures.has(sig)) continue; // 이미 생성된 이력이 있는 조합은 제외
+
               const sA_score = teamA.reduce((sum, p) => sum + p.scores[p.assignedPos], 0);
               const sB_score = teamB.reduce((sum, p) => sum + p.scores[p.assignedPos], 0);
               const scoreDiff = Math.abs(sA_score - sB_score);
@@ -967,11 +1064,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(!p.multi.includes(p.assignedPos)) penalty += 500;
               });
 
-              const randomJitter = Math.random() * (isRebalance ? 60 : 35);
+              const randomJitter = Math.random() * 50;
               const totalEval = scoreDiff + penalty + randomJitter;
 
               if(!best || totalEval < best.totalEval){
-                best = { teamA, teamB, scoreA: sA_score, scoreB: sB_score, scoreDiff, totalEval, tankDiff };
+                best = { teamA, teamB, scoreA: sA_score, scoreB: sB_score, scoreDiff, totalEval, tankDiff, signature: sig };
               }
             }
           }
@@ -980,80 +1077,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(!best){
-      errEl.textContent = `조건에 맞는 팀 조합을 찾지 못했습니다. (가능 포지션 설정 및 포지션 고정 조건을 확인해주세요)`;
+      if(historyTeams.length > 0){
+        errEl.innerHTML = `⚠️ 더 이상 새로운 팀 조합이 없습니다. (밸런스된 모든 팀 조합이 출력되었습니다.)`;
+      } else {
+        errEl.textContent = `조건에 맞는 팀 조합을 찾지 못했습니다. (가능 포지션 설정 및 포지션 고정 조건을 확인해주세요)`;
+      }
       errEl.style.display = 'block';
       return;
     }
 
     const order = {tank:0, damage:1, support:2};
     best.teamA.sort((a,b) => order[a.assignedPos] - order[b.assignedPos]);
-    best.teamB.sort((a,b) => order[b.assignedPos] - order[b.assignedPos]);
+    best.teamB.sort((a,b) => order[a.assignedPos] - order[b.assignedPos]);
 
-    const currentSignature = JSON.stringify({
-      A: best.teamA.map(p => `${p.bt}:${p.assignedPos}`),
-      B: best.teamB.map(p => `${p.bt}:${p.assignedPos}`)
-    });
-
-    if(isRebalance && currentSignature === previousSignature){
-      errEl.innerHTML = `⚠️ 가능한 모든 최적 조합 중 가장 균형 잡힌 구성이 동일하여 기존 팀 결과가 유지됩니다.`;
-      errEl.style.display = 'block';
-    }
-    previousSignature = currentSignature;
-    currentBestResult = best;
-
-    const getRange = (team) => {
-      const steps = team.map(p => p.tier[p.assignedPos]);
-      return `${stepToTierInfo(Math.min(...steps)).label} ~ ${stepToTierInfo(Math.max(...steps)).label}`;
-    };
-
-    const renderTeamHTML = (team, name) => `
-      <div class="team-head">
-        <h2>${name}</h2>
-        <div class="team-meta-info">
-          <span class="team-sub-score">평점: ${Math.round(team.reduce((s,p)=>s+p.scores[p.assignedPos],0))}점</span>
-          <span class="team-rank-range">매칭 구간: ${getRange(team)}</span>
-        </div>
-      </div>
-      ${team.map(p => `
-        <div class="player-row">
-          <span class="role-tag ${p.assignedPos}">${ROLE_LABEL[p.assignedPos]}</span>
-          <div class="p-info">
-            <div class="p-bt">${p.bt}</div>
-            <div class="p-mosts">${p.most[p.assignedPos] ? p.most[p.assignedPos].split(',').slice(0, 5).map(h=>`<span class="hero-tag">${h.trim()}</span>`).join('') : '<span class="hero-tag empty">상관없음</span>'}</div>
-          </div>
-          <div class="p-right">${renderTierBadgeByStep(p.tier[p.assignedPos])}</div>
-        </div>`).join('')}
-    `;
-
-    document.getElementById('teamA').innerHTML = renderTeamHTML(best.teamA, 'A팀');
-    document.getElementById('teamB').innerHTML = renderTeamHTML(best.teamB, 'B팀');
-
-    const roundedDiff = Math.round(best.scoreDiff);
-    let warnMsg = "";
-    if(roundedDiff > 100){
-      warnMsg += `<br><div class="warn-box">⚠️ 양 팀 간의 평점 격차가 커서(${roundedDiff}점) 밸런스에 차이가 발생할 수 있으니 참고해 주세요!</div>`;
-    }
-
-    if(best.tankDiff >= 3){
-      warnMsg += `<br><div class="warn-box" style="background:#f8d7da; color:#721c24; border-color:#f5c6cb;">🛡️ 양 팀 탱커 간의 티어 차이가 너무 심합니다! (${best.tankDiff}단계 차이 발생)</div>`;
-    }
-
-    document.getElementById('diffLine').innerHTML = `<b>🎯 자동 밸런스 매칭 결과</b><br>양 팀 평점 격차: <b>${roundedDiff}점</b> (A팀: ${Math.round(best.scoreA)}점 vs B팀: ${Math.round(best.scoreB)}점)${warnMsg}${randomMsg}`;
+    historyTeams.push(best);
+    const historyIndex = historyTeams.length - 1;
     
-    resEl.style.display = 'block';
-    resEl.scrollIntoView({behavior:'smooth', block:'start'});
+    const opt = document.createElement('option');
+    opt.value = historyIndex;
+    opt.textContent = `구성 #${historyTeams.length} (격차: ${Math.round(best.scoreDiff)}점)`;
+    historySelect.appendChild(opt);
+    historySelect.value = historyIndex;
+
+    renderResult(best);
   }
 
   document.getElementById('balanceBtn').onclick = () => {
-    const overlay = document.getElementById('loadingOverlay');
-    overlay.style.display = 'flex';
-    setTimeout(() => {
-      executeBalancing(false);
-      overlay.style.display = 'none';
-    }, 450);
-  };
-
-  document.getElementById('rebalanceBtn').onclick = () => {
     const overlay = document.getElementById('loadingOverlay');
     overlay.style.display = 'flex';
     setTimeout(() => {
@@ -1062,14 +1111,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 450);
   };
 
+  document.getElementById('rebalanceBtn').onclick = () => {
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      executeBalancing(false);
+      overlay.style.display = 'none';
+    }, 450);
+  };
+
+  historySelect.onchange = (e) => {
+    const idx = parseInt(e.target.value);
+    if(!isNaN(idx) && historyTeams[idx]){
+      renderResult(historyTeams[idx]);
+    }
+  };
+
   document.getElementById('copyBtn').onclick = () => {
-    if(!currentBestResult) return;
+    const idx = parseInt(historySelect.value);
+    const targetResult = historyTeams[idx];
+    if(!targetResult) return;
+
     const formatTeam = (team, name, score) => {
       const steps = team.map(p => p.tier[p.assignedPos]);
       const range = `${stepToTierInfo(Math.min(...steps)).label} ~ ${stepToTierInfo(Math.max(...steps)).label}`;
       return `[${name} 팀] (평점: ${Math.round(score)}점 | 구간: ${range})\n` + team.map(p => `- [${ROLE_LABEL[p.assignedPos]}] ${p.bt} (${stepToTierInfo(p.tier[p.assignedPos]).label})`).join('\n');
     };
-    navigator.clipboard.writeText(`[오버워치 내전 팀 구성 결과]\n\n${formatTeam(currentBestResult.teamA, 'A', currentBestResult.scoreA)}\n\n${formatTeam(currentBestResult.teamB, 'B', currentBestResult.scoreB)}`).then(() => alert('결과가 복사되었습니다!'));
+    navigator.clipboard.writeText(`[오버워치 내전 팀 구성 결과]\n\n${formatTeam(targetResult.teamA, 'A', targetResult.scoreA)}\n\n${formatTeam(targetResult.teamB, 'B', targetResult.scoreB)}`).then(() => alert('선택한 팀 구성 결과가 복사되었습니다!'));
   };
 
   let currentMode = 'payload', isSpinning = false;
