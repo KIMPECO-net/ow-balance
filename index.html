@@ -29,7 +29,7 @@ body{
   padding:20px 14px 60px;
 }
 h1,h2,.num,button{font-family:'Chakra Petch',system-ui,sans-serif;}
-main{max-width:1600px; margin:0 auto;}
+main{max-width:1620px; margin:0 auto;}
 
 header{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:15px; flex-wrap:wrap;}
 .header-titles{flex:1; min-width:280px;}
@@ -73,53 +73,57 @@ h1{font-size:26px; font-weight:700; margin:0 0 6px;}
 .btn-primary:hover{filter:brightness(1.1); transform:translateY(-1px);}
 
 .table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:6px; background:var(--panel); min-height:220px; display:flex; flex-direction:column; justify-content:center;}
-table{border-collapse:collapse; width:100%; min-width:1450px;}
+table{border-collapse:collapse; width:100%; min-width:1480px;}
 
-th, td {
-  border-right: 1px solid var(--col-border);
-}
-th:last-child, td:last-child {
-  border-right: none;
-}
+th, td { border-right: 1px solid var(--col-border); }
+th:last-child, td:last-child { border-right: none; }
 
 th{
-  text-align:left; font-size:12.5px; font-weight:600; color:var(--dim);
-  padding:14px 10px; border-bottom:1px solid var(--border); background:var(--panel2); white-space:nowrap;
+  text-align:center; font-size:12.5px; font-weight:600; color:var(--dim);
+  padding:14px 6px; border-bottom:1px solid var(--border); background:var(--panel2); white-space:nowrap;
 }
-td{padding:10px 8px; border-bottom:1px solid var(--border); vertical-align:middle;}
+td{padding:10px 6px; border-bottom:1px solid var(--border); vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tr.pos-tank td:nth-child(2){border-left:4px solid var(--tank);}
 tr.pos-damage td:nth-child(2){border-left:4px solid var(--damage);}
 tr.pos-support td:nth-child(2){border-left:4px solid var(--support);}
 
-.empty-placeholder{
-  padding:60px 20px; text-align:center; color:var(--dim);
-}
+.empty-placeholder{ padding:60px 20px; text-align:center; color:var(--dim); }
 .empty-placeholder h3{margin:0 0 8px; font-size:18px; color:var(--text);}
 .empty-placeholder p{margin:0 0 16px; font-size:14px;}
 .empty-placeholder .btn-group{display:flex; gap:10px; justify-content:center;}
 
 input,select,textarea{
   width:100%; background:var(--panel2); color:var(--text);
-  border:1px solid var(--border); border-radius:4px; padding:7px 10px; font-size:13px;
+  border:1px solid var(--border); border-radius:4px; padding:7px 8px; font-size:13px;
   font-family:inherit; outline:none; transition:border-color 0.2s;
 }
 input:focus,select:focus,textarea:focus{border-color:var(--accent);}
-input.bt{min-width:100px; font-weight:600;}
-input.most{min-width:130px;}
-select.tier{min-width:110px;}
+input.bt{min-width:95px; font-weight:600;}
+input.most{min-width:135px;}
+
+.tier-input-wrap{display:flex; gap:4px; align-items:center;}
+.tier-input-wrap select{flex:2.6; font-weight:600; padding:7px 6px;}
+.tier-input-wrap input.tier-num{flex:1; min-width:44px; text-align:center; font-weight:600; padding:7px 2px;}
+
+.lock-select{
+  font-weight:700; text-align:center; padding:6px 4px; cursor:pointer;
+}
+.lock-select.locked-tank{background:var(--tank); color:#fff; border-color:var(--tank);}
+.lock-select.locked-damage{background:var(--damage); color:#fff; border-color:var(--damage);}
+.lock-select.locked-support{background:var(--support); color:#fff; border-color:var(--support);}
 
 .center-check{text-align:center;}
 .center-check input[type="checkbox"]{width:18px; height:18px; cursor:pointer;}
 
 .btn-del{
-  background:#ffebee; color:#c62828; border:1px solid #ef9a9a; padding:5px 10px; font-size:11.5px; border-radius:3px; cursor:pointer;
+  background:#ffebee; color:#c62828; border:1px solid #ef9a9a; padding:5px 8px; font-size:11.5px; border-radius:3px; cursor:pointer;
 }
 .btn-del:hover{background:#ffcdd2;}
 
-.role-picker{display:flex; gap:3px; background:var(--panel2); padding:2px; border-radius:4px; border:1px solid var(--border);}
+.role-picker{display:flex; gap:2px; background:var(--panel2); padding:2px; border-radius:4px; border:1px solid var(--border);}
 .role-picker label{
-  flex:1; text-align:center; font-size:11.5px; font-weight:700; padding:5px 0; border-radius:3px;
+  flex:1; text-align:center; font-size:11px; font-weight:700; padding:5px 2px; border-radius:3px;
   cursor:pointer; user-select:none; color:var(--dim); transition:all 0.15s;
 }
 .role-picker input[type="radio"]{display:none;}
@@ -128,22 +132,15 @@ select.tier{min-width:110px;}
 .role-picker input[value="damage"]:checked + label{background:var(--damage); color:#fff;}
 .role-picker input[value="support"]:checked + label{background:var(--support); color:#fff;}
 
-.multi-role-group{display:flex; gap:6px; justify-content:center;}
+.multi-role-group{display:flex; gap:2px; justify-content:center;}
 .multi-role-group label{
-  font-size:11px; font-weight:700; padding:4px 8px; border-radius:3px; border:1px solid var(--border);
+  font-size:10.5px; font-weight:700; padding:4px 5px; border-radius:3px; border:1px solid var(--border);
   background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s;
 }
 .multi-role-group input[type="checkbox"]{display:none;}
 .multi-role-group input[value="tank"]:checked + label{background:var(--tank); color:#fff; border-color:var(--tank);}
 .multi-role-group input[value="damage"]:checked + label{background:var(--damage); color:#fff; border-color:var(--damage);}
 .multi-role-group input[value="support"]:checked + label{background:var(--support); color:#fff; border-color:var(--support);}
-
-.lock-group{display:flex; gap:4px; justify-content:center;}
-.lock-group label{font-size:10.5px; font-weight:700; padding:3px 5px; border-radius:3px; border:1px solid var(--border); background:var(--panel2); color:var(--dim); cursor:pointer;}
-.lock-group input[type="checkbox"]{display:none;}
-.lock-group input.lock-t:checked + label{background:var(--tank); color:#fff; border-color:var(--tank);}
-.lock-group input.lock-d:checked + label{background:var(--damage); color:#fff; border-color:var(--damage);}
-.lock-group input.lock-s:checked + label{background:var(--support); color:#fff; border-color:var(--support);}
 
 .modal{
   display:none; position:fixed; top:0; left:0; width:100%; height:100%;
@@ -161,39 +158,15 @@ select.tier{min-width:110px;}
 }
 .modal-btns{display:flex; justify-content:flex-end; gap:8px;}
 
-.import-guide-wrap {
-  width: 100%;
-  overflow-x: auto;
-  margin-bottom: 8px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-}
-.import-guide-table{
-  width: 100%;
-  min-width: 650px;
-  border-collapse: collapse;
-  font-size: 11.5px;
-  text-align: center;
-}
-.import-guide-table th, .import-guide-table td{
-  border: 1px solid var(--border);
-  padding: 6px 4px;
-  background: var(--panel2);
-  white-space: nowrap;
-}
+.import-guide-wrap { width: 100%; overflow-x: auto; margin-bottom: 8px; border: 1px solid var(--border); border-radius: 4px; }
+.import-guide-table{ width: 100%; min-width: 650px; border-collapse: collapse; font-size: 11.5px; text-align: center; }
+.import-guide-table th, .import-guide-table td{ border: 1px solid var(--border); padding: 6px 4px; background: var(--panel2); white-space: nowrap; }
 .import-guide-table th{color:var(--accent); font-weight:700;}
 
 .copy-example-box {
-  background: var(--panel2);
-  border: 1px dashed var(--accent);
-  border-radius: 4px;
-  padding: 6px 10px;
-  font-family: monospace;
-  font-size: 11.5px;
-  color: var(--text);
-  margin-bottom: 10px;
-  user-select: all;
-  word-break: break-all;
+  background: var(--panel2); border: 1px dashed var(--accent); border-radius: 4px;
+  padding: 6px 10px; font-family: monospace; font-size: 11.5px; color: var(--text);
+  margin-bottom: 10px; user-select: all; word-break: break-all;
 }
 
 #error{color:#e8594f; font-size:14px; text-align:center; margin:14px 0; display:none; font-weight:600;}
@@ -211,13 +184,14 @@ select.tier{min-width:110px;}
 .tier-badge.gm{background:#c0392b; color:#fff;}
 .tier-badge.champ{background:#8e44ad; color:#fff;}
 .tier-badge.top500{background:#d35400; color:#fff; border:1px solid #f1c40f;}
+.tier-badge.unranked{background:#6c757d; color:#fff;}
 
 #results{margin-top:30px; display:none;}
-.diff-line{text-align:center; font-size:15px; color:var(--dim); margin-bottom:18px; line-height:1.6;}
-.diff-line b{color:var(--text);}
+.diff-line{text-align:center; font-size:17px; color:var(--dim); margin-bottom:18px; line-height:1.6;}
+.diff-line b{color:var(--text); font-size:19px;}
 .warn-box{
   background:#fff3cd; color:#856404; border:1px solid #ffeeba; border-radius:6px;
-  padding:8px 12px; margin-top:8px; font-size:13.5px; font-weight:600; display:inline-block;
+  padding:8px 12px; margin-top:8px; font-size:14px; font-weight:600; display:inline-block;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .warn-box{
@@ -233,7 +207,7 @@ select.tier{min-width:110px;}
   padding:14px 18px; border-bottom:1px solid var(--border); background:var(--panel2); flex-wrap:wrap; gap:8px;
 }
 .team-head h2{font-size:18px; margin:0;}
-.team-meta-info{display:flex; gap:10px; align-items:center; font-size:12.5px;}
+.team-meta-info{display:flex; gap:10px; align-items:center; font-size:13px;}
 .team-sub-score{color:var(--dim); font-weight:600;}
 .team-rank-range{background:var(--panel); border:1px solid var(--border); padding:3px 8px; border-radius:4px; font-weight:700; color:var(--accent);}
 
@@ -256,7 +230,7 @@ select.tier{min-width:110px;}
 }
 .hero-tag.empty{color:#999; font-style:italic;}
 .p-right{text-align:right;}
-.copy-btn-wrap{text-align:center; margin-top:20px;}
+.result-action-bar{display:flex; justify-content:center; gap:12px; margin-top:20px;}
 
 .tools-grid{
   display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:50px; padding-top:30px; border-top:2px dashed var(--border);
@@ -312,40 +286,31 @@ select.tier{min-width:110px;}
 .ban-items{display:flex; justify-content:center; gap:8px; flex-wrap:wrap;}
 .ban-badge{
   font-size:13px; font-weight:700; padding:5px 10px; border-radius:6px; color:#fff; box-shadow:0 2px 4px rgba(0,0,0,0.1);
+  animation: popInBadge 0.3s ease;
 }
 .ban-badge.tank{background:var(--tank);}
 .ban-badge.damage{background:var(--damage);}
 .ban-badge.support{background:var(--support);}
 
-.member-picker-section{
-  margin-top:40px; padding:28px; background:var(--panel); border:1px solid var(--border); border-radius:12px;
-  box-shadow:0 4px 16px rgba(0,0,0,0.06); text-align:center;
-}
-.member-picker-section h2{margin:0 0 6px; font-size:22px; color:var(--accent);}
-.member-grid{display:grid; grid-template-columns:1fr 2fr; gap:20px; margin-top:20px; text-align:left;}
-@media(max-width:800px){.member-grid{grid-template-columns:1fr;}}
-.member-input-group label{font-size:12.5px; font-weight:600; color:var(--dim); display:block; margin-bottom:6px;}
-.member-input-group textarea{height:120px; resize:vertical; font-family:monospace; font-size:13px;}
-.member-config-row{display:flex; gap:10px; margin-top:12px; align-items:center;}
-.member-config-row input{width:100px; text-align:center; font-weight:700;}
-
-.member-result-box{
-  background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:16px;
-  min-height:190px; display:flex; flex-direction:column; justify-content:center; align-items:center;
-}
-.picked-members-list{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:10px;}
-.picked-badge{
-  background:var(--accent); color:#17120a; font-weight:700; padding:6px 14px; border-radius:6px; font-size:14px;
-  box-shadow:0 2px 4px rgba(0,0,0,0.1); animation: popIn 0.3s ease;
-}
-@keyframes popIn {
-  0% { transform: scale(0.8); opacity: 0; }
+@keyframes popInBadge {
+  0% { transform: scale(0.7); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
-@keyframes pulseAnim {
-  0% { opacity: 0.4; }
-  100% { opacity: 1; }
+
+.loading-overlay{
+  display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;
 }
+.loading-card{
+  background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:30px 40px; text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3); animation: popIn 0.3s ease;
+}
+.spinner {
+  width: 50px; height: 50px; border: 5px solid var(--border); border-top: 5px solid var(--accent);
+  border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
 footer{
   margin-top:60px; text-align:center; color:var(--dim); font-size:13px; border-top:1px solid var(--border); padding-top:20px;
@@ -373,11 +338,11 @@ footer{
 </header>
 
 <div class="guide-box">
-  <h3>📋 데이터 입력 안내사항 (작성자 가이드)</h3>
+  <h3>📋 데이터 입력 및 이용 팁</h3>
   <ul>
-    <li><b>초정밀 맞대결 밸런스:</b> 양 팀의 전체 평점뿐만 아니라, <b>라인별(탱/딜/힐) 1:1 체급 격차</b>를 최우선으로 검사하여 밸런스를 잡습니다.</li>
-    <li><b>자동 조합 시너지 분석:</b> 딜러/힐러의 모스트 영웅 상성(메인힐+서브힐 조합 등)을 자동으로 계산하여 최적의 팀 구성을 도출합니다.</li>
-    <li><b>11명 이상 출전 시:</b> 출전 인원이 10명을 초과하면, 각 포지션별 <b>[고정]</b> 지정자를 우선 포함한 뒤 무작위(랜덤)로 10명을 뽑아 팀을 구성합니다.</li>
+    <li><b>티어 입력:</b> 드롭다운에서 티어를 선택하고 세부 단계 숫자를 직접 입력할 수 있습니다. (언랭인 경우 숫자 칸에 자동으로 0이 입력되며 해당 역할군으로 배치되지 않습니다.)</li>
+    <li><b>마스터 이상 인원 제한:</b> 마스터 이상 유저가 4명 이하이고 전체 인원이 10명을 초과하는 경우, 밸런스 유지를 위해 팀 분배 대상에서 자동으로 제외됩니다.</li>
+    <li><b>모스트 영웅:</b> 주력 영웅이 특별히 없다면 <b>'상관없음'</b>을 입력할 수 있습니다.</li>
   </ul>
 </div>
 
@@ -400,18 +365,18 @@ footer{
 
   <table id="playerTable" style="display:none;">
     <thead><tr>
-    <th class="center-check" style="width:50px;">출전</th>
-    <th style="min-width:110px;">이름</th>
-    <th style="min-width:120px;">주 포지션</th>
-    <th style="min-width:150px;">가능 포지션 (참고용)</th>
-    <th class="center-check" style="min-width:150px;" title="포지션 고정 (라인별 최대 2명)">포지션 고정 (탱/딜/힐)</th>
-    <th style="min-width:120px;">탱커 티어</th>
-    <th style="min-width:120px;">딜러 티어</th>
-    <th style="min-width:120px;">힐러 티어</th>
-    <th style="min-width:140px;">탱커 모스트</th>
-    <th style="min-width:140px;">딜러 모스트</th>
-    <th style="min-width:140px;">힐러 모스트</th>
-    <th style="width:70px; text-align:center;">관리</th>
+    <th class="center-check" style="width:42px;">출전</th>
+    <th style="min-width:105px;">이름</th>
+    <th style="min-width:100px;">주력 포지션</th>
+    <th style="min-width:96px;">가능 포지션</th>
+    <th class="center-check" style="width:84px;">포지션 고정</th>
+    <th style="min-width:175px;">탱커 티어</th>
+    <th style="min-width:175px;">딜러 티어</th>
+    <th style="min-width:175px;">힐러 티어</th>
+    <th style="min-width:145px;">탱커 모스트</th>
+    <th style="min-width:145px;">딜러 모스트</th>
+    <th style="min-width:145px;">힐러 모스트</th>
+    <th style="width:58px; text-align:center;">삭제</th>
     </tr></thead>
     <tbody id="tbody"></tbody>
   </table>
@@ -426,7 +391,8 @@ footer{
 <div class="team" id="teamA"></div>
 <div class="team" id="teamB"></div>
 </div>
-<div class="copy-btn-wrap">
+<div class="result-action-bar">
+  <button class="btn" id="rebalanceBtn" style="background:var(--accent); color:#17120a; font-weight:700; border:none; padding:10px 22px;">🔄 다른 조합으로 다시 팀 구성</button>
   <button class="btn" id="copyBtn">📋 결과 텍스트 복사</button>
 </div>
 </section>
@@ -472,31 +438,15 @@ footer{
   </section>
 </div>
 
-<section class="member-picker-section">
-  <h2>🎯 멤버 뽑기 룰렛</h2>
-  <p style="font-size:13px; color:var(--dim); margin:4px 0 16px;">참가할 인원들을 입력하고 원하는 인원수만큼 무작위로 뽑아보세요!</p>
-  
-  <div class="member-grid">
-    <div class="member-input-group">
-      <label for="memberInputText">참가자 명단 (콤마(,) 또는 줄바꿈으로 구분)</label>
-      <textarea id="memberInputText" placeholder="망고, 페코, 프로피, 플레티, 리푸, 스토커, 바이올, 슈우, 스머프, 트와일"></textarea>
-      <div class="member-config-row">
-        <label for="pickCountInput" style="margin:0; font-size:13px;">뽑을 인원수:</label>
-        <input type="number" id="pickCountInput" value="5" min="1" max="20">
-      </div>
-      <button class="btn-primary" id="pickMemberBtn" style="margin-top:14px; width:100%;">당첨 멤버 추첨하기 🎲</button>
-    </div>
-
-    <div class="member-result-box">
-      <div style="font-size:13px; color:var(--dim); font-weight:600;" id="memberResultTitle">결과가 여기에 표시됩니다</div>
-      <div class="picked-members-list" id="pickedMembersList">
-        <span style="color:var(--dim); font-style:italic; font-size:13px;">버튼을 눌러주세요!</span>
-      </div>
-    </div>
-  </div>
-</section>
-
 </main>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-card">
+    <div class="spinner"></div>
+    <div style="font-family:'Chakra Petch',sans-serif; font-size:17px; font-weight:700; color:var(--text);">최적의 팀 구성을 분석 중입니다...</div>
+    <div style="font-size:13px; color:var(--dim); margin-top:6px;">잠시만 기다려주세요! ⚡</div>
+  </div>
+</div>
 
 <footer>
   만든사람: 망고페코 / 망고코코넛칵테일#3574
@@ -506,14 +456,14 @@ footer{
   <div class="modal-content">
     <h3>메모장 데이터 일괄 붙여넣기</h3>
     <p style="font-size:12.5px; color:var(--dim); margin-bottom:6px;">
-      아래 형식에 맞춰 한 줄에 한 명씩 데이터를 입력해 주세요.
+      아래 형식에 맞춰 한 줄에 한 명씩 데이터를 입력해 주세요. (티어에 <b>'언랭'</b>, 모스트에 <b>'상관없음'</b> 입력 가능)
     </p>
 
     <div class="import-guide-wrap">
       <table class="import-guide-table">
         <tr>
           <th>1. 닉네임</th>
-          <th>2. 주 포지션</th>
+          <th>2. 주력 포지션</th>
           <th>3. 가능 포지션</th>
           <th>4. 탱커 티어</th>
           <th>5. 딜러 티어</th>
@@ -526,10 +476,10 @@ footer{
           <td>망고</td>
           <td>탱</td>
           <td>탱,딜</td>
-          <td>탱:그마2</td>
-          <td>딜:다1</td>
-          <td>힐:에3</td>
-          <td>탱(윈스턴)</td>
+          <td>탱:언랭</td>
+          <td>딜:다이아3</td>
+          <td>힐:에메3</td>
+          <td>탱(상관없음)</td>
           <td>딜(소전)</td>
           <td>힐(아나)</td>
         </tr>
@@ -537,9 +487,9 @@ footer{
     </div>
 
     <p style="font-size:11.5px; color:var(--dim); margin:0 0 4px;">💡 아래 예시 문구를 그대로 복사해서 수정 후 붙여넣으세요:</p>
-    <div class="copy-example-box">망고, 탱, 탱,딜, 탱:에메2, 딜:다이아4, 힐:에메3, 탱(윈스턴), 딜(소전), 힐(아나)</div>
+    <div class="copy-example-box">망고, 탱, 탱,딜, 탱:언랭, 딜:다이아3, 힐:에메3, 탱(상관없음), 딜(소전), 힐(아나)</div>
 
-    <textarea id="importText" placeholder="망고, 탱, 탱,딜, 탱:에메2, 딜:다이아4, 힐:에메3, 탱(윈스턴), 딜(소전), 힐(아나)&#10;페코, 딜, 탱,딜,힐, 탱:다이아2, 딜:에메1, 힐:다이아3, 탱(라인), 딜(겐지,트레이서), 힐(키리코)"></textarea>
+    <textarea id="importText" placeholder="망고, 탱, 탱,딜, 탱:언랭, 딜:다이아3, 힐:에메3, 탱(상관없음), 딜(소전), 힐(아나)&#10;페코, 딜, 탱,딜,힐, 탱:다이아2, 딜:에메1, 힐:언랭, 탱(라인), 딜(상관없음), 힐(키리코)"></textarea>
     <div class="modal-btns">
       <button class="btn" id="closeImportBtn">취소</button>
       <button class="btn" id="applyImportBtn" style="background:var(--accent); color:#17120a; border:none;">추가 및 적용</button>
@@ -549,14 +499,13 @@ footer{
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const TIERS = ['브론즈', '실버', '골드', '플래티넘', '에메랄드', '다이아몬드', '마스터', '그랜드마스터', '챔피언'];
+  const TIERS_DEF = [
+    { name: '브론즈', idx: 0, css: 'bronze' }, { name: '실버', idx: 1, css: 'silver' }, { name: '골드', idx: 2, css: 'gold' },
+    { name: '플래티넘', idx: 3, css: 'plat' }, { name: '에메랄드', idx: 4, css: 'emerald' }, { name: '다이아몬드', idx: 5, css: 'diamond' },
+    { name: '마스터', idx: 6, css: 'master' }, { name: '그랜드마스터', idx: 7, css: 'gm' }, { name: '챔피언', idx: 8, css: 'champ' }
+  ];
   const SHORT_TIER_NAMES = { '브론즈': '브론즈', '실버': '실버', '골드': '골드', '플래티넘': '플래', '에메랄드': '에메', '다이아몬드': '다이아', '마스터': '마스터', '그랜드마스터': '그마', '챔피언': '챔피언' };
   const ROLE_LABEL = { tank: '탱', damage: '딜', support: '힐' };
-
-  const MAIN_DAMAGE = ['솔저', '소전', '바스티온', '시에라', '애쉬', '엠레', '위도우메이커', '캐서디', '토르비욘', '프레야', '한조', '솔저: 76'];
-  const SUB_DAMAGE = ['겐지', '리퍼', '메이', '벤데타', '벤쳐', '시메트라', '시온', '안란', '에코', '정크랫', '트레이서', '파라'];
-  const MAIN_SUPPORT = ['아나', '바티스트', '키리코', '일리아리', '주노'];
-  const SUB_SUPPORT = ['루시우', '메르시', '모이라', '젠야타', '브리기테', '라이프위버'];
 
   const MAP_DATA = {
     payload: ['66번 국도', '감시 기지: 지브롤터', '도라도', '리알토', '샴발리 수도원', '서킷 로얄', '쓰레기촌', '하바나', '그림스뵈튼'],
@@ -574,18 +523,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const MODE_NAMES = { payload: '🚚 화물', hybrid: '🏰 혼합', control: '🚩 쟁탈', flashpoint: '⚡ 플래시포인트', push: '🤖 밀기' };
 
-  const DEMO_DATA = [
-    "망고, 탱, 탱,딜, 탱 : 에메랄드2, 딜 : 다이아3, 힐 : 에메랄드3, 탱(윈스턴, 자리야, 둠피스트), 딜(위도우메이커, 소전, 캐서디), 힐(아나, 메르시, 젠야타)",
-    "프로피, 딜, 딜,힐, 탱 : 골드3, 딜 : 다이아1, 힐 : 실버1, 탱(오리사, 로드호그), 딜(겐지, 트레이서, 에코), 힐(루시우, 모이라)",
-    "플레티, 딜, 딜,탱, 탱 : 실버2, 딜 : 다이아3, 힐 : 골드2, 탱(디바, 정커퀸), 딜(위도우메이커, 한조, 소전), 힐(모이라, 아나)",
-    "리푸, 딜, 딜, 탱 : 플래티넘1, 딜 : 다이아1, 힐 : 에메랄드4, 탱(정커퀸, 디바), 딜(캐서디, 솔저: 76, 트레이서), 힐(키리코, 바티스트)",
-    "스토커, 딜, 딜, 탱 : 골드1, 딜 : 다이아2, 힐 : 골드3, 탱(로드호그, 라인하르트), 딜(리퍼, 메이, 솔저: 76), 힐(메르시, 루시우)",
-    "바이올, 힐, 힐,탱, 탱 : 실버3, 딜 : 플래티넘4, 힐 : 다이아2, 탱(시그마, 오리사), 딜(에코, 소전), 힐(아나, 키리코, 바티스트)",
-    "슈우, 힐, 힐,딜, 탱 : 골드2, 딜 : 플래티넘2, 힐 : 다이아1, 탱(라인하르트, 윈스턴), 딜(파라, 메이), 힐(바티스트, 브리기테, 일리오스)",
-    "스머프, 탱, 탱,힐, 탱 : 다이아3, 딜 : 플래티넘3, 힐 : 실버2, 탱(윈스턴, 오리사, 시그마), 딜(리퍼, 메이), 힐(모이라, 키리코)",
-    "트와일, 힐, 힐, 탱 : 실버1, 딜 : 골드1, 힐 : 다이아2, 탱(자리야, D.Va), 딜(메이, 트레이서), 힐(젠야타, 메르시, 주노)",
-    "페코, 딜, 딜,힐, 탱 : 다이아4, 딜 : 에메랄드2, 힐 : 다이아3, 탱(둠피스트, 윈스턴), 딜(겐지, 둠피스트, 파라), 힐(루시우, 아나)"
+  const DEMO_BASE = [
+    { bt: "망고", main: "tank", multi: ["tank", "damage"], t: "언랭", d: "다이아3", s: "에메랄드3" },
+    { bt: "프로피", main: "damage", multi: ["damage", "support"], t: "골드3", d: "다이아1", s: "실버1" },
+    { bt: "플레티", main: "damage", multi: ["damage", "tank"], t: "실버2", d: "다이아3", s: "언랭" },
+    { bt: "리푸", main: "damage", multi: ["damage"], t: "플래티넘1", d: "다이아1", s: "에메랄드4" },
+    { bt: "스토커", main: "damage", multi: ["damage"], t: "골드1", d: "다이아2", s: "골드3" },
+    { bt: "바이올", main: "support", multi: ["support", "tank"], t: "실버3", d: "플래티넘4", s: "다이아2" },
+    { bt: "슈우", main: "support", multi: ["support", "damage"], t: "골드2", d: "플래티넘2", s: "다이아1" },
+    { bt: "스머프", main: "tank", multi: ["tank", "support"], t: "다이아3", d: "플래티넘3", s: "실버2" },
+    { bt: "트와일", main: "support", multi: ["support"], t: "실버1", d: "골드1", s: "다이아2" },
+    { bt: "페코", main: "damage", multi: ["damage", "support"], t: "다이아4", d: "에메랄드2", s: "다이아3" }
   ];
+
+  function getRandomMosts(role){
+    if(Math.random() < 0.15) return '상관없음';
+    const count = Math.floor(Math.random() * 4) + 1; // 1~4개 랜덤
+    const shuffled = [...HERO_POOL[role]].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count).join(', ');
+  }
 
   document.getElementById('wsCopyBtn').onclick = () => {
     navigator.clipboard.writeText(document.getElementById('wsCodeText').textContent.trim()).then(() => {
@@ -594,6 +550,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function tierToScore(ti, div){
+    if(ti === -1) return 0;
     const step = (ti * 5) + (5 - div);
     if (ti <= 2) return 100 + (step * 15);
     if (ti <= 4) return 250 + (step - 15) * 22;
@@ -602,40 +559,67 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function stepToTierInfo(step){
-    if(step >= 45) return { ti: 8, div: 1, label: '탑 500', shortName: '탑500', score: 1300, step };
+    if(step === -1) return { ti: -1, div: 0, label: '언랭', shortName: '언랭', score: 0, step: -1, css: 'unranked' };
+    if(step >= 45) return { ti: 9, div: 1, label: '탑 500', shortName: '탑500', score: 1300, step, css: 'top500' };
     const ti = Math.floor(step / 5), div = 5 - (step % 5);
-    const tName = TIERS[ti] || '골드';
-    return { ti, div, step, label: `${SHORT_TIER_NAMES[tName] || tName} ${div}`, score: tierToScore(ti, div) };
+    const tDef = TIERS_DEF[ti] || TIERS_DEF[2];
+    return { ti, div, step, label: `${SHORT_TIER_NAMES[tDef.name] || tDef.name} ${div}`, score: tierToScore(ti, div), css: tDef.css };
   }
 
   function renderTierBadgeByStep(step){
     const info = stepToTierInfo(step);
-    if(info.ti === 8) return `<span class="tier-badge top500">탑 500</span>`;
-    const classes = ['bronze', 'silver', 'gold', 'plat', 'emerald', 'diamond', 'master', 'gm', 'champ'];
-    return `<span class="tier-badge ${classes[info.ti] || 'gold'}">${info.label}</span>`;
+    if(info.ti === -1) return `<span class="tier-badge unranked">언랭</span>`;
+    if(info.ti === 9) return `<span class="tier-badge top500">탑 500</span>`;
+    return `<span class="tier-badge ${info.css}">${info.label}</span>`;
   }
 
   function parseTierStringToStep(str){
-    if(!str) return 12;
+    if(!str) return -1;
     const s = str.toString().trim().replace(/\s+/g, '');
+    if(s.includes('언랭') || s.includes('미배치') || s === '-') return -1;
     if(s.includes('500')) return 45;
-    const tierMap = [{k:['브'],i:0},{k:['실'],i:1},{k:['골'],i:2},{k:['플'],i:3},{k:['에'],i:4},{k:['다'],i:5},{k:['마'],i:6},{k:['그'],i:7},{k:['챔'],i:8}];
-    for(const t of tierMap){
-      if(t.k.some(key => s.includes(key))){
+    for(const t of TIERS_DEF){
+      if(s.includes(t.name.substring(0, 1)) || s.includes(t.name)){
         const num = s.match(/[1-5]/);
-        return (t.i * 5) + (5 - (num ? parseInt(num[0]) : 3));
+        const div = num ? parseInt(num[0]) : 3;
+        return (t.idx * 5) + (5 - div);
       }
     }
-    return 12;
+    return -1;
   }
 
-  function tierOptions(selectedStep){
-    let html='';
-    for(let step=0; step<=44; step++){
-      html+=`<option value="${step}" ${step===selectedStep?'selected':''}>${stepToTierInfo(step).label}</option>`;
-    }
-    html+=`<option value="45" ${selectedStep===45?'selected':''}>탑 500</option>`;
-    return html;
+  function createTierSelectHTML(currentStep){
+    const info = stepToTierInfo(currentStep);
+    let selectedTi = info.ti;
+    let selectedDiv = info.div;
+    if(currentStep === -1) { selectedTi = -1; selectedDiv = 0; }
+    if(currentStep === 45) { selectedTi = 9; selectedDiv = 1; }
+
+    let tOpts = `<option value="-1" ${selectedTi===-1?'selected':''}>언랭</option>`;
+    TIERS_DEF.forEach(t => {
+      tOpts += `<option value="${t.idx}" ${selectedTi===t.idx?'selected':''}>${t.name}</option>`;
+    });
+    tOpts += `<option value="9" ${selectedTi===9?'selected':''}>탑 500</option>`;
+
+    const numVal = (selectedTi === -1) ? 0 : selectedDiv;
+    const numDisabled = (selectedTi === -1 || selectedTi === 9) ? 'disabled style="background:var(--border); color:var(--dim);"' : '';
+
+    return `
+      <div class="tier-input-wrap">
+        <select class="tier-select">${tOpts}</select>
+        <input type="number" class="tier-num" min="1" max="5" value="${numVal}" ${numDisabled}>
+      </div>
+    `;
+  }
+
+  function getStepFromRowSelects(row, roleClass){
+    const container = row.querySelector(`.${roleClass}`).closest('td');
+    const tSel = parseInt(container.querySelector('.tier-select').value);
+    const numInput = container.querySelector('.tier-num');
+    if(tSel === -1) return -1;
+    if(tSel === 9) return 45;
+    const div = Math.min(5, Math.max(1, parseInt(numInput.value) || 3));
+    return (tSel * 5) + (5 - div);
   }
 
   let rowIdxCounter = 0;
@@ -653,6 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tr.className = 'pos-tank';
     const mainPos = data.main || 'tank';
     const multi = data.multi || [mainPos, 'damage', 'support'];
+    const lockVal = data.lockTank ? 'tank' : data.lockDamage ? 'damage' : data.lockSupport ? 'support' : 'none';
     
     tr.innerHTML = `
      <td class="center-check"><input type="checkbox" class="player-active" ${data.active !== false ? 'checked' : ''}></td>
@@ -672,18 +657,19 @@ document.addEventListener("DOMContentLoaded", () => {
        </div>
      </td>
      <td class="center-check">
-       <div class="lock-group">
-         <input type="checkbox" class="lock-t" id="l_t_${i}" ${data.lockTank ? 'checked' : ''}><label for="l_t_${i}">탱고정</label>
-         <input type="checkbox" class="lock-d" id="l_d_${i}" ${data.lockDamage ? 'checked' : ''}><label for="l_d_${i}">딜고정</label>
-         <input type="checkbox" class="lock-s" id="l_s_${i}" ${data.lockSupport ? 'checked' : ''}><label for="l_s_${i}">힐고정</label>
-       </div>
+       <select class="lock-select ${lockVal !== 'none' ? 'locked-' + lockVal : ''}">
+         <option value="none" ${lockVal==='none'?'selected':''}>없음</option>
+         <option value="tank" ${lockVal==='tank'?'selected':''}>탱</option>
+         <option value="damage" ${lockVal==='damage'?'selected':''}>딜</option>
+         <option value="support" ${lockVal==='support'?'selected':''}>힐</option>
+       </select>
      </td>
-     <td><select class="tier tier-tank">${tierOptions(parseTierStringToStep(data.tankStr))}</select></td>
-     <td><select class="tier tier-damage">${tierOptions(parseTierStringToStep(data.damageStr))}</select></td>
-     <td><select class="tier tier-support">${tierOptions(parseTierStringToStep(data.supportStr))}</select></td>
-     <td><input class="most most-tank" placeholder="윈스턴, 디바" value="${data.mostT || ''}"></td>
-     <td><input class="most most-damage" placeholder="겐지, 트레이서" value="${data.mostD || ''}"></td>
-     <td><input class="most most-support" placeholder="아나, 키리코" value="${data.mostS || ''}"></td>
+     <td><div class="tier-container tier-tank">${createTierSelectHTML(parseTierStringToStep(data.tankStr))}</div></td>
+     <td><div class="tier-container tier-damage">${createTierSelectHTML(parseTierStringToStep(data.damageStr))}</div></td>
+     <td><div class="tier-container tier-support">${createTierSelectHTML(parseTierStringToStep(data.supportStr))}</div></td>
+     <td><input class="most most-tank" placeholder="윈스턴, 상관없음" value="${data.mostT || ''}"></td>
+     <td><input class="most most-damage" placeholder="겐지, 상관없음" value="${data.mostD || ''}"></td>
+     <td><input class="most most-support" placeholder="아나, 상관없음" value="${data.mostS || ''}"></td>
      <td style="text-align:center;"><button type="button" class="btn-del">삭제</button></td>
     `;
     
@@ -697,26 +683,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateRowStyle(row){
     const main = row.querySelector('input[name^="main_"]:checked');
-    if(main){
-      row.className = `pos-${main.value}`;
-    }
+    if(main){ row.className = `pos-${main.value}`; }
   }
 
   tbody.addEventListener('change', e => {
     const row = e.target.closest('tr');
     if(!row) return;
     if(e.target.name && e.target.name.startsWith('main_')) updateRowStyle(row);
-    if(e.target.classList.contains('lock-t') && e.target.checked){
-      const tBox = row.querySelector('input[name^="multi_"][value="tank"]');
-      if(tBox) tBox.checked = true;
+    if(e.target.classList.contains('tier-select')){
+      const numInput = e.target.closest('.tier-input-wrap').querySelector('.tier-num');
+      const val = parseInt(e.target.value);
+      if(val === -1){
+        numInput.value = 0;
+        numInput.disabled = true;
+        numInput.style.background = 'var(--border)';
+        numInput.style.color = 'var(--dim)';
+      } else if(val === 9){
+        numInput.value = 1;
+        numInput.disabled = true;
+        numInput.style.background = 'var(--border)';
+        numInput.style.color = 'var(--dim)';
+      } else {
+        if(parseInt(numInput.value) === 0 || isNaN(parseInt(numInput.value))) numInput.value = 3;
+        numInput.disabled = false;
+        numInput.style.background = 'var(--panel2)';
+        numInput.style.color = 'var(--text)';
+      }
     }
-    if(e.target.classList.contains('lock-d') && e.target.checked){
-      const dBox = row.querySelector('input[name^="multi_"][value="damage"]');
-      if(dBox) dBox.checked = true;
-    }
-    if(e.target.classList.contains('lock-s') && e.target.checked){
-      const sBox = row.querySelector('input[name^="multi_"][value="support"]');
-      if(sBox) sBox.checked = true;
+    if(e.target.classList.contains('lock-select')){
+      const val = e.target.value;
+      e.target.className = 'lock-select' + (val !== 'none' ? ` locked-${val}` : '');
+      if(val !== 'none'){
+        const mBox = row.querySelector(`input[name^="multi_"][value="${val}"]`);
+        if(mBox) mBox.checked = true;
+      }
     }
   });
 
@@ -737,10 +737,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if(!multi.length) multi = [main, 'damage', 'support'];
 
-    const randomEmeraldToDiamondStep = () => {
-      return Math.floor(Math.random() * 10) + 20;
-    };
-
     let tS = null, dS = null, sS = null;
     parts.forEach(item => {
       if(item.includes('탱') && item.includes(':')) tS = item.split(':')[1].trim();
@@ -755,9 +751,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return { 
       bt, main, multi, 
-      tankStr: tS || stepToTierInfo(randomEmeraldToDiamondStep()).label, 
-      damageStr: dS || stepToTierInfo(randomEmeraldToDiamondStep()).label, 
-      supportStr: sS || stepToTierInfo(randomEmeraldToDiamondStep()).label, 
+      tankStr: tS || '언랭', 
+      damageStr: dS || '언랭', 
+      supportStr: sS || '언랭', 
       mostT: getMost('탱'), mostD: getMost('딜'), mostS: getMost('힐') 
     };
   }
@@ -774,7 +770,17 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.getElementById('resetBtn').onclick = () => { tbody.innerHTML = ''; checkTableVisibility(); document.getElementById('results').style.display = 'none'; document.getElementById('error').style.display = 'none'; };
-  document.getElementById('demoBtn').onclick = () => { tbody.innerHTML = ''; DEMO_DATA.forEach(l => addPlayerRow(parseComplexLine(l))); };
+  
+  document.getElementById('demoBtn').onclick = () => { 
+    tbody.innerHTML = ''; 
+    DEMO_BASE.forEach(u => addPlayerRow({
+      bt: u.bt, main: u.main, multi: u.multi,
+      tankStr: u.t, damageStr: u.d, supportStr: u.s,
+      mostT: getRandomMosts('tank'),
+      mostD: getRandomMosts('damage'),
+      mostS: getRandomMosts('support')
+    })); 
+  };
 
   function combinations(arr, k){
     const res = [];
@@ -785,20 +791,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return res;
   }
 
-  function analyzeSupportType(mostStr){
-    if(!mostStr) return {main:0, sub:0};
-    const hs = mostStr.split(',').map(s=>s.trim()).filter(Boolean);
-    let main = 0, sub = 0;
-    hs.forEach(h => {
-      if(MAIN_SUPPORT.some(ms => h.includes(ms))) main++;
-      if(SUB_SUPPORT.some(ss => h.includes(ss))) sub++;
-    });
-    return {main, sub};
-  }
-
   let currentBestResult = null;
 
-  document.getElementById('balanceBtn').onclick = () => {
+  function executeBalancing(){
     const errEl = document.getElementById('error'), resEl = document.getElementById('results');
     errEl.style.display = 'none'; resEl.style.display = 'none';
 
@@ -809,13 +804,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    let randomMsg = "";
     let players = activeRows.map(r => {
       const bt = r.querySelector('.bt').value.trim() || '플레이어';
       const mainPos = r.querySelector('input[name^="main_"]:checked').value;
-      const lockTank = r.querySelector('.lock-t').checked;
-      const lockDamage = r.querySelector('.lock-d').checked;
-      const lockSupport = r.querySelector('.lock-s').checked;
+      const lockVal = r.querySelector('.lock-select').value;
+      const lockTank = lockVal === 'tank';
+      const lockDamage = lockVal === 'damage';
+      const lockSupport = lockVal === 'support';
 
       const multi = [...r.querySelectorAll('input[name^="multi_"]:checked')].map(c => c.value);
       if(lockTank && !multi.includes('tank')) multi.push('tank');
@@ -823,21 +818,40 @@ document.addEventListener("DOMContentLoaded", () => {
       if(lockSupport && !multi.includes('support')) multi.push('support');
 
       const tier = {
-        tank: Number(r.querySelector('.tier-tank').value),
-        damage: Number(r.querySelector('.tier-damage').value),
-        support: Number(r.querySelector('.tier-support').value)
+        tank: getStepFromRowSelects(r, 'tier-tank'),
+        damage: getStepFromRowSelects(r, 'tier-damage'),
+        support: getStepFromRowSelects(r, 'tier-support')
       };
       const most = {
         tank: r.querySelector('.most-tank').value.trim(),
         damage: r.querySelector('.most-damage').value.trim(),
         support: r.querySelector('.most-support').value.trim()
       };
-      return { bt, mainPos, multi, lockTank, lockDamage, lockSupport, tier, most, scores: { tank: stepToTierInfo(tier.tank).score, damage: stepToTierInfo(tier.damage).score, support: stepToTierInfo(tier.support).score } };
+      
+      const isMasterOrAbove = (step) => step >= 30;
+      const hasHighTier = isMasterOrAbove(tier.tank) || isMasterOrAbove(tier.damage) || isMasterOrAbove(tier.support);
+
+      return { 
+        bt, mainPos, multi, lockTank, lockDamage, lockSupport, tier, most, hasHighTier,
+        scores: { tank: stepToTierInfo(tier.tank).score, damage: stepToTierInfo(tier.damage).score, support: stepToTierInfo(tier.support).score } 
+      };
     });
 
-    const lockedTanks = players.filter(p => p.lockTank);
-    const lockedDamages = players.filter(p => p.lockDamage);
-    const lockedSupports = players.filter(p => p.lockSupport);
+    const masterUsers = players.filter(p => p.hasHighTier);
+    let randomMsg = "";
+    let filteredPlayers = [...players];
+
+    if(players.length > 10 && masterUsers.length <= 4 && masterUsers.length > 0){
+      const nonMasterUsers = players.filter(p => !p.hasHighTier);
+      if(nonMasterUsers.length >= 10){
+        filteredPlayers = nonMasterUsers;
+        randomMsg = `<br>🛡️ <b>마스터 이상 인원 예외 적용:</b> 마스터 이상 유저(${masterUsers.length}명)가 4명 이하이므로 인원수 조정에 따라 밸런스 풀에서 제외되었습니다.`;
+      }
+    }
+
+    const lockedTanks = filteredPlayers.filter(p => p.lockTank);
+    const lockedDamages = filteredPlayers.filter(p => p.lockDamage);
+    const lockedSupports = filteredPlayers.filter(p => p.lockSupport);
 
     if(lockedTanks.length > 2 || lockedDamages.length > 2 || lockedSupports.length > 2){
       errEl.textContent = `각 포지션별 고정은 최대 2명까지만 가능합니다.`;
@@ -845,23 +859,33 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if(players.length > 10){
+    if(filteredPlayers.length > 10){
       const totalLocked = [...lockedTanks, ...lockedDamages, ...lockedSupports];
       const uniqueLocked = [...new Set(totalLocked)];
-      const unlocked = players.filter(p => !uniqueLocked.includes(p)).sort(() => Math.random() - 0.5);
-      players = [...uniqueLocked, ...unlocked.slice(0, 10 - uniqueLocked.length)];
-      randomMsg = `🎲 <b>10명 선발 추첨 완료:</b> [${players.map(p=>p.bt).join(', ')}]`;
+      const unlocked = filteredPlayers.filter(p => !uniqueLocked.includes(p)).sort(() => Math.random() - 0.5);
+      filteredPlayers = [...uniqueLocked, ...unlocked.slice(0, 10 - uniqueLocked.length)];
+      randomMsg += `<br>🎲 <b>10명 선발 추첨 완료:</b> [${filteredPlayers.map(p=>p.bt).join(', ')}]`;
     }
 
     let best = null;
-    for(const teamTanks of combinations(players.filter(p => !p.lockTank), 2 - lockedTanks.length)){
-      const actualTanks = [...lockedTanks, ...teamTanks];
-      const rem1 = players.filter(p => !actualTanks.includes(p));
+    const validTankCandidates = filteredPlayers.filter(p => !p.lockTank && p.tier.tank !== -1);
+    const shuffledTankCombos = combinations(validTankCandidates, 2 - lockedTanks.length).sort(() => Math.random() - 0.5);
 
-      for(const teamDamages of combinations(rem1.filter(p => !p.lockDamage), 4 - lockedDamages.length)){
+    for(const teamTanks of shuffledTankCombos){
+      const actualTanks = [...lockedTanks, ...teamTanks];
+      if(actualTanks.some(p => p.tier.tank === -1)) continue;
+      const rem1 = filteredPlayers.filter(p => !actualTanks.includes(p));
+
+      const validDamageCandidates = rem1.filter(p => !p.lockDamage && p.tier.damage !== -1);
+      const shuffledDmgCombos = combinations(validDamageCandidates, 4 - lockedDamages.length).sort(() => Math.random() - 0.5);
+
+      for(const teamDamages of shuffledDmgCombos){
         const actualDamages = [...lockedDamages, ...teamDamages];
+        if(actualDamages.some(p => p.tier.damage === -1)) continue;
+
         const teamSupports = rem1.filter(p => !actualDamages.includes(p));
         if(teamSupports.length !== 4) continue;
+        if(teamSupports.some(p => p.tier.support === -1)) continue;
 
         for(const tA of combinations(actualTanks, 1)){
           const tB = actualTanks.filter(p => !tA.includes(p));
@@ -887,30 +911,19 @@ document.addEventListener("DOMContentLoaded", () => {
               const scoreDiff = Math.abs(sA_score - sB_score);
 
               let penalty = 0;
-
               const tankA_step = stepToTierInfo(teamA.find(p => p.assignedPos === 'tank').tier.tank).step;
               const tankB_step = stepToTierInfo(teamB.find(p => p.assignedPos === 'tank').tier.tank).step;
               const tankDiff = Math.abs(tankA_step - tankB_step);
               penalty += tankDiff * 350;
-
-              const healsA = sA.map(p => stepToTierInfo(p.tier.support).step);
-              const healsB = sB.map(p => stepToTierInfo(p.tier.support).step);
-              const healDiff = Math.abs((healsA[0]+healsA[1]) - (healsB[0]+healsB[1]));
-              penalty += healDiff * 80;
 
               [...teamA, ...teamB].forEach(p => {
                 if(!p.multi.includes(p.assignedPos)) penalty += 300;
                 else if(p.assignedPos !== p.mainPos) penalty += 60;
               });
 
-              const supA_types = sA.map(p => analyzeSupportType(p.most.support));
-              const supB_types = sB.map(p => analyzeSupportType(p.most.support));
-              const hasMainA = supA_types.some(t => t.main > 0) && supA_types.some(t => t.sub > 0);
-              const hasMainB = supB_types.some(t => t.main > 0) && supB_types.some(t => t.sub > 0);
-              if(!hasMainA) penalty += 150;
-              if(!hasMainB) penalty += 150;
+              const randomJitter = Math.random() * 35;
+              const totalEval = scoreDiff + penalty + randomJitter;
 
-              const totalEval = scoreDiff + penalty;
               if(!best || totalEval < best.totalEval){
                 best = { teamA, teamB, scoreA: sA_score, scoreB: sB_score, scoreDiff, totalEval, tankDiff };
               }
@@ -921,7 +934,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(!best){
-      errEl.textContent = `조건에 맞는 팀 조합을 찾지 못했습니다. (고정 조건 또는 인원 설정을 확인해주세요)`;
+      errEl.textContent = `조건에 맞는 팀 조합을 찾지 못했습니다. (언랭크 유저의 포지션 배치 불가 또는 고정 조건을 확인해주세요)`;
       errEl.style.display = 'block';
       return;
     }
@@ -949,7 +962,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="role-tag ${p.assignedPos}">${ROLE_LABEL[p.assignedPos]}</span>
           <div class="p-info">
             <div class="p-bt">${p.bt}</div>
-            <div class="p-mosts">${p.most[p.assignedPos] ? p.most[p.assignedPos].split(',').slice(0, 5).map(h=>`<span class="hero-tag">${h.trim()}</span>`).join('') : '<span class="hero-tag empty">모스트 없음</span>'}</div>
+            <div class="p-mosts">${p.most[p.assignedPos] ? p.most[p.assignedPos].split(',').slice(0, 5).map(h=>`<span class="hero-tag">${h.trim()}</span>`).join('') : '<span class="hero-tag empty">상관없음</span>'}</div>
           </div>
           <div class="p-right">${renderTierBadgeByStep(p.tier[p.assignedPos])}</div>
         </div>`).join('')}
@@ -968,10 +981,28 @@ document.addEventListener("DOMContentLoaded", () => {
       warnMsg += `<br><div class="warn-box" style="background:#f8d7da; color:#721c24; border-color:#f5c6cb;">🛡️ 양 팀 탱커 간의 티어 차이가 너무 심합니다! (${best.tankDiff}단계 차이 발생)</div>`;
     }
 
-    document.getElementById('diffLine').innerHTML = `<b>🎯 초정밀 자동 밸런스 매칭 결과</b><br>- 양 팀 평점 격차: <b>${roundedDiff}점</b> (A팀: ${Math.round(best.scoreA)}점 vs B팀: ${Math.round(best.scoreB)}점)${warnMsg}<br>${randomMsg}`;
+    document.getElementById('diffLine').innerHTML = `<b>🎯 자동 밸런스 매칭 결과</b><br>양 팀 평점 격차: <b>${roundedDiff}점</b> (A팀: ${Math.round(best.scoreA)}점 vs B팀: ${Math.round(best.scoreB)}점)${warnMsg}${randomMsg}`;
     
     resEl.style.display = 'block';
     resEl.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  document.getElementById('balanceBtn').onclick = () => {
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      executeBalancing();
+      overlay.style.display = 'none';
+    }, 450);
+  };
+
+  document.getElementById('rebalanceBtn').onclick = () => {
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      executeBalancing();
+      overlay.style.display = 'none';
+    }, 450);
   };
 
   document.getElementById('copyBtn').onclick = () => {
@@ -1057,14 +1088,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const allHeroes = [...HERO_POOL.tank, ...HERO_POOL.damage, ...HERO_POOL.support];
     const rollingList = Array.from({length: 40}, () => allHeroes[Math.floor(Math.random() * allHeroes.length)]);
-    rollingList.push(finalBans.map(b => b.name).join(', '));
+    rollingList.push(finalBans[0].name);
 
     strip.style.transition = 'none';
     strip.style.transform = 'translateY(0px)';
     strip.innerHTML = rollingList.map(h => `<div class="slot-item" style="color:var(--accent);">${h}</div>`).join('');
 
     setTimeout(() => {
-      strip.style.transition = 'transform 4s cubic-bezier(0.08, 0.82, 0.18, 1)';
+      strip.style.transition = 'transform 3.5s cubic-bezier(0.08, 0.82, 0.18, 1)';
       strip.style.transform = `translateY(-${(rollingList.length - 1) * 70}px)`;
     }, 50);
 
@@ -1073,42 +1104,19 @@ document.addEventListener("DOMContentLoaded", () => {
       box.style.display = 'flex';
       box.innerHTML = `
         <div style="font-size:12px; color:var(--accent); font-weight:700;">🚫 이번판 밴 영웅 (${finalBans.length}개 조합)</div>
-        <div class="ban-items">
-          ${finalBans.map(b => `<span class="ban-badge ${b.role}">[${ROLE_LABEL[b.role]}] ${b.name}</span>`).join('')}
-        </div>
+        <div class="ban-items" id="banItemsContainer"></div>
       `;
-      isBanSpinning = false;
-    }, 4150);
-  };
-
-  document.getElementById('pickMemberBtn').onclick = () => {
-    const rawText = document.getElementById('memberInputText').value.trim();
-    const pickCount = parseInt(document.getElementById('pickCountInput').value) || 1;
-    const listContainer = document.getElementById('pickedMembersList');
-    const titleEl = document.getElementById('memberResultTitle');
-
-    const members = rawText.split(/[\n,]+/).map(m => m.trim()).filter(Boolean);
-
-    if(members.length === 0){
-      alert('참가자 명단을 한 명 이상 입력해 주세요!');
-      return;
-    }
-
-    if(pickCount > members.length){
-      alert(`입력된 인원(${members.length}명)보다 뽑을 인원수(${pickCount}명)가 많습니다!`);
-      return;
-    }
-
-    titleEl.textContent = "🎲 당첨 멤버를 추첨하고 있습니다...";
-    listContainer.innerHTML = `<span style="color:var(--accent); font-weight:700; font-size:15px; animation: pulseAnim 0.6s infinite alternate;">추첨 중... 🎰</span>`;
-
-    setTimeout(() => {
-      const shuffled = [...members].sort(() => 0.5 - Math.random());
-      const selected = shuffled.slice(0, pickCount);
-
-      titleEl.innerHTML = `🎉 총 <b style="color:var(--accent);">${members.length}명</b> 중 <b>${selected.length}명</b> 당첨!`;
-      listContainer.innerHTML = selected.map(name => `<span class="picked-badge">${name}</span>`).join('');
-    }, 800);
+      const itemsCont = document.getElementById('banItemsContainer');
+      finalBans.forEach((b, idx) => {
+        setTimeout(() => {
+          const span = document.createElement('span');
+          span.className = `ban-badge ${b.role}`;
+          span.textContent = `[${ROLE_LABEL[b.role]}] ${b.name}`;
+          itemsCont.appendChild(span);
+          if(idx === finalBans.length - 1) isBanSpinning = false;
+        }, idx * 250);
+      });
+    }, 3600);
   };
 });
 </script>
