@@ -29,27 +29,14 @@ body{
   padding:20px 14px 60px;
 }
 h1,h2,.num,button{font-family:'Chakra Petch',system-ui,sans-serif;}
-main{max-width:1620px; margin:0 auto;}
+main{max-width:1400px; margin:0 auto;}
 
 header{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:15px; flex-wrap:wrap;}
 .header-titles{flex:1; min-width:280px;}
 h1{font-size:26px; font-weight:700; margin:0 0 6px;}
 .sub{color:var(--dim); font-size:14px; line-height:1.5; margin:0;}
 .sub-highlight{display:block; margin-top:4px; color:var(--accent); font-weight:700; font-size:14.5px;}
-
-.workshop-box{
-  background:var(--panel); border:1px solid var(--border); border-radius:8px;
-  padding:10px 16px; display:flex; align-items:center; gap:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
-}
-.workshop-info .ws-label{font-size:11.5px; color:var(--dim); font-weight:600; margin-bottom:2px;}
-.workshop-info .ws-code{font-family:'Chakra Petch', sans-serif; font-size:18px; font-weight:700; color:var(--accent); letter-spacing:1px;}
-.workshop-info .ws-maker{font-size:11px; color:var(--dim); margin-top:2px;}
-.workshop-box .btn-ws-copy{
-  background:var(--panel2); border:1px solid var(--border); color:var(--text);
-  font-size:12px; font-weight:600; padding:6px 10px; border-radius:4px; cursor:pointer; transition:all 0.2s;
-}
-.workshop-box .btn-ws-copy:hover{background:var(--accent); color:#17120a; border-color:var(--accent);}
+.sub-warning{display:block; margin-top:2px; color:#e8594f; font-weight:700; font-size:14px;}
 
 .guide-box{
   background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent);
@@ -84,9 +71,6 @@ th{
 }
 td{padding:10px 6px; border-bottom:1px solid var(--border); vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
-tr.pos-tank td:nth-child(1){border-left:4px solid var(--tank);}
-tr.pos-damage td:nth-child(1){border-left:4px solid var(--damage);}
-tr.pos-support td:nth-child(1){border-left:4px solid var(--support);}
 
 .empty-placeholder{ padding:60px 20px; text-align:center; color:var(--dim); }
 .empty-placeholder h3{margin:0 0 8px; font-size:18px; color:var(--text);}
@@ -102,7 +86,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--accent);}
 input.bt{min-width:95px; font-weight:600;}
 input.most{min-width:135px;}
 
-/* 티어 드롭다운 색상 스타일링 */
 select.tier-select { font-weight: 600; }
 select.tier-select option { background: var(--panel); color: var(--text); }
 select.tier-select.tier-bronze { color: #cd7f32; }
@@ -112,8 +95,8 @@ select.tier-select.tier-plat { color: #16a085; }
 select.tier-select.tier-emerald { color: #27ae60; }
 select.tier-select.tier-diamond { color: #3498db; }
 select.tier-select.tier-master { color: #f39c12; }
-select.tier-select.tier-gm { color: #c0392b; }
-select.tier-select.tier-champ { color: #8e44ad; }
+select.tier-select.tier-gm { color: #8e44ad; }
+select.tier-select.tier-champ { color: #c0392b; }
 select.tier-select.tier-top500 { color: #d35400; font-weight: 700; }
 select.tier-select.tier-unranked { color: var(--dim); }
 
@@ -121,7 +104,6 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .tier-input-wrap select{flex:2.6; font-weight:600; padding:7px 6px;}
 .tier-input-wrap input.tier-num{flex:1; min-width:44px; text-align:center; font-weight:600; padding:7px 2px;}
 
-/* 포지션 고정 드롭다운 독립 스타일링 */
 .lock-select{
   font-weight:700; text-align:center; padding:6px 4px; cursor:pointer;
 }
@@ -137,16 +119,15 @@ select.tier-select.tier-unranked { color: var(--dim); }
 }
 .btn-del:hover{background:#ffcdd2;}
 
-.role-picker{display:flex; gap:2px; background:var(--panel2); padding:2px; border-radius:4px; border:1px solid var(--border);}
-.role-picker label{
-  flex:1; text-align:center; font-size:11px; font-weight:700; padding:5px 2px; border-radius:3px;
-  cursor:pointer; user-select:none; color:var(--dim); transition:all 0.15s;
+.pref-role-group{display:flex; gap:2px; justify-content:center;}
+.pref-role-group label{
+  font-size:10.5px; font-weight:700; padding:4px 5px; border-radius:3px; border:1px solid var(--border);
+  background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s;
 }
-.role-picker input[type="radio"]{display:none;}
-.role-picker label:hover{background:rgba(255,255,255,0.1);}
-.role-picker input[value="tank"]:checked + label{background:var(--tank); color:#fff;}
-.role-picker input[value="damage"]:checked + label{background:var(--damage); color:#fff;}
-.role-picker input[value="support"]:checked + label{background:var(--support); color:#fff;}
+.pref-role-group input[type="checkbox"]{display:none;}
+.pref-role-group input[value="tank"]:checked + label{background:var(--tank); color:#fff; border-color:var(--tank);}
+.pref-role-group input[value="damage"]:checked + label{background:var(--damage); color:#fff; border-color:var(--damage);}
+.pref-role-group input[value="support"]:checked + label{background:var(--support); color:#fff; border-color:var(--support);}
 
 .multi-role-group{display:flex; gap:2px; justify-content:center;}
 .multi-role-group label{
@@ -168,7 +149,7 @@ select.tier-select.tier-unranked { color: var(--dim); }
 }
 .modal-content h3{margin:0 0 10px; font-size:17px; color:var(--accent);}
 .modal-content textarea{
-  width:100%; height:130px; background:var(--panel2); color:var(--text);
+  width:100%; height:120px; background:var(--panel2); color:var(--text);
   border:1px solid var(--border); border-radius:4px; padding:10px; font-family:monospace; font-size:12px;
   resize:vertical; outline:none; margin-bottom:12px;
 }
@@ -182,10 +163,15 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .copy-example-box {
   background: var(--panel2); border: 1px dashed var(--accent); border-radius: 4px;
   padding: 6px 10px; font-family: monospace; font-size: 11.5px; color: var(--text);
-  margin-bottom: 10px; user-select: all; word-break: break-all;
+  margin-bottom: 8px; user-select: all; word-break: break-all;
 }
 
-#error{color:#e8594f; font-size:14px; text-align:center; margin:14px 0; display:none; font-weight:600;}
+.modal-desc-list {
+  font-size: 12px; color: var(--dim); margin: 6px 0 10px; padding-left: 16px; line-height: 1.5;
+}
+.modal-desc-list li { margin-bottom: 3px; }
+
+#error{color:#e8594f; font-size:16px; text-align:center; margin:14px 0; display:none; font-weight:700;}
 
 .tier-badge{
   display:inline-block; padding:3px 8px; border-radius:4px; font-size:11.5px; font-weight:700; text-align:center;
@@ -197,12 +183,11 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .tier-badge.emerald{background:#27ae60; color:#fff;}
 .tier-badge.diamond{background:#3498db; color:#fff;}
 .tier-badge.master{background:#f39c12; color:#fff;}
-.tier-badge.gm{background:#c0392b; color:#fff;}
-.tier-badge.champ{background:#8e44ad; color:#fff;}
+.tier-badge.gm{background:#8e44ad; color:#fff;}
+.tier-badge.champ{background:#c0392b; color:#fff;}
 .tier-badge.top500{background:#d35400; color:#fff; border:1px solid #f1c40f;}
 .tier-badge.unranked{background:#6c757d; color:#fff;}
 
-/* 결과 영역 상단 여백 및 배치 수정 */
 #results{
   margin-top: 50px; 
   padding-top: 20px; 
@@ -212,9 +197,9 @@ select.tier-select.tier-unranked { color: var(--dim); }
 }
 
 .result-top-bar{
-  display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; flex-wrap:wrap; gap:15px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; margin-bottom:24px; gap:15px; text-align:center;
 }
-.diff-line{font-size:17px; color:var(--dim); line-height:1.6; flex:1; min-width:280px;}
+.diff-line{font-size:17px; color:var(--dim); line-height:1.6; text-align:center; width:100%;}
 .diff-line b{color:var(--text); font-size:19px;}
 
 .history-container{
@@ -226,7 +211,7 @@ select.tier-select.tier-unranked { color: var(--dim); }
 
 .warn-box{
   background:#fff3cd; color:#856404; border:1px solid #ffeeba; border-radius:6px;
-  padding:8px 12px; margin-top:8px; font-size:14px; font-weight:600; display:inline-block;
+  padding:12px 16px; margin-top:10px; font-size:16px; font-weight:700; display:block; line-height:1.5; text-align:center;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .warn-box{
@@ -244,7 +229,21 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .team-head h2{font-size:18px; margin:0;}
 .team-meta-info{display:flex; gap:10px; align-items:center; font-size:13px;}
 .team-sub-score{color:var(--dim); font-weight:600;}
-.team-rank-range{background:var(--panel); border:1px solid var(--border); padding:3px 8px; border-radius:4px; font-weight:700; color:var(--accent);}
+
+.team-rank-range{
+  display:inline-block; padding:3px 8px; border-radius:4px; font-size:11.5px; font-weight:700; text-align:center; color:#fff;
+}
+.team-rank-range.tier-bronze { background: #cd7f32; }
+.team-rank-range.tier-silver { background: #95a5a6; }
+.team-rank-range.tier-gold { background: #d4ac0d; }
+.team-rank-range.tier-plat { background: #16a085; }
+.team-rank-range.tier-emerald { background: #27ae60; }
+.team-rank-range.tier-diamond { background: #3498db; }
+.team-rank-range.tier-master { background: #f39c12; }
+.team-rank-range.tier-gm { background: #8e44ad; }
+.team-rank-range.tier-champ { background: #c0392b; }
+.team-rank-range.tier-top500 { background: #d35400; border:1px solid #f1c40f; }
+.team-rank-range.tier-unranked { background: #6c757d; }
 
 .player-row{display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--border);}
 .player-row:last-child{border-bottom:none;}
@@ -295,24 +294,23 @@ select.tier-select.tier-unranked { color: var(--dim); }
 }
 
 .slot-container{
-  width:100%; max-width:380px; height:70px; margin:10px auto 20px; overflow:hidden;
+  width:100%; max-width:380px; height:60px; margin:10px auto 20px; overflow:hidden;
   border:3px solid var(--accent); border-radius:8px; background:var(--panel2);
-  position:relative; box-shadow:inset 0 0 10px rgba(0,0,0,0.15);
+  position:relative; box-shadow:inset 0 0 10px rgba(0,0,0,0.15); display:flex; align-items:center; justify-content:center;
 }
 .slot-container::before, .slot-container::after{
-  content:''; position:absolute; left:0; right:0; height:18px; z-index:2; pointer-events:none;
+  content:''; position:absolute; left:0; right:0; height:15px; z-index:2; pointer-events:none;
 }
 .slot-container::before{top:0; background:linear-gradient(to bottom, rgba(0,0,0,0.25), transparent);}
 .slot-container::after{bottom:0; background:linear-gradient(to top, rgba(0,0,0,0.25), transparent);}
 
 .slot-strip{
   display:flex; flex-direction:column; position:absolute; width:100%; top:0; left:0;
-  transition:transform 0.1s linear;
 }
 .slot-item{
-  height:70px; display:flex; align-items:center; justify-content:center;
-  font-size:20px; font-weight:700; color:var(--text); font-family:'Chakra Petch', sans-serif;
-  text-shadow:0 1px 2px rgba(0,0,0,0.1);
+  height:60px; display:flex; align-items:center; justify-content:center;
+  font-size:18px; font-weight:700; color:var(--text); font-family:'Chakra Petch', sans-serif;
+  text-shadow:0 1px 2px rgba(0,0,0,0.1); flex-shrink:0;
 }
 
 .ban-result-box{
@@ -356,30 +354,22 @@ footer{
 <main>
 <header>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.5.11</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.5.20</h1>
     <p class="sub">
       탱커 2명, 딜러 4명, 힐러 4명(1/2/2 조합)을 기준으로 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
+      <span class="sub-warning">⚠️ 6:6 모드는 지원하지 않습니다.</span>
       <span class="sub-highlight">⚠️ 아래 팀 구성은 참고용으로 사용해주십시오.</span>
     </p>
-  </div>
-  <div class="workshop-box">
-    <div class="workshop-info">
-      <div class="ws-label">경쟁전 워크샵 코드</div>
-      <div class="ws-code" id="wsCodeText">GGTG0</div>
-      <div class="ws-maker">제작자: 망고페코 / 망고코코넛칵테일#3574 (v1.5.11)</div>
-    </div>
-    <button class="btn-ws-copy" id="wsCopyBtn">코드 복사</button>
   </div>
 </header>
 
 <div class="guide-box">
   <h3>📋 데이터 입력 및 이용 팁</h3>
   <ul>
+    <li><b>선호 포지션 및 가능 포지션:</b> 선호 포지션과 가능 포지션은 체크박스를 통해 여러 개 복수 선택할 수 있습니다.</li>
     <li><b>포지션 고정 (최우선 순위):</b> 포지션 고정이 선택된 유저는 해당 포지션으로 최우선 배정되며, 전체 팀 조합의 핵심 제어 기준이 됩니다.</li>
-    <li><b>가능 포지션 참고:</b> 팀 분배 알고리즘은 유저의 '가능 포지션' 목록을 최대한 존중하여 배정합니다.</li>
-    <li><b>티어 입력:</b> 드롭다운에서 티어를 선택하고 세부 단계 숫자를 직접 입력할 수 있습니다. (언랭인 경우 숫자 칸에 자동으로 0이 입력되며 해당 역할군으로 배치되지 않습니다.)</li>
-    <li><b>마스터 이상 인원 제한:</b> 마스터 이상 티어 유저는 양 팀에 공정하게 분배되어야 하므로 홀수 명(1명 등)일 경우 팀을 구성할 수 없습니다.</li>
-    <li><b>모스트 영웅:</b> 주력 영웅이 특별히 없다면 <b>'상관없음'</b>을 입력할 수 있습니다.</li>
+    <li><b>딜러 성향 반영:</b> 딜러는 메인과 서브 특성 및 '상관없음' 성향을 반영하여 조화롭게 배치됩니다.</li>
+    <li><b>마스터 이상 인원 제한:</b> 마스터 이상 티어 유저는 <b>6명 이상</b>이어야 게임 붕괴를 방지하고 정상적인 팀 구성이 가능합니다. (5명 이하일 경우 차단)</li>
   </ul>
 </div>
 
@@ -403,7 +393,7 @@ footer{
   <table id="playerTable" style="display:none;">
     <thead><tr>
     <th style="min-width:105px;">이름</th>
-    <th style="min-width:100px;">주력 포지션</th>
+    <th style="min-width:100px;">선호 포지션</th>
     <th style="min-width:96px;">가능 포지션</th>
     <th style="width:84px;">포지션 고정</th>
     <th style="min-width:175px;">탱커 티어</th>
@@ -422,6 +412,8 @@ footer{
 <p id="error"></p>
 
 <section id="results">
+<div id="resultAlertBanner"></div>
+
 <div class="result-top-bar">
   <div class="diff-line" id="diffLine"></div>
   <div class="history-container">
@@ -456,9 +448,9 @@ footer{
       <div class="map-tags" id="mapTags"></div>
     </div>
 
-    <div class="slot-container">
+    <div class="slot-container" style="height:70px;">
       <div class="slot-strip" id="slotStrip">
-        <div class="slot-item">모드를 선택하고 돌려주세요</div>
+        <div class="slot-item" style="height:70px;">모드를 선택하고 돌려주세요</div>
       </div>
     </div>
 
@@ -473,8 +465,11 @@ footer{
       <div style="color:var(--dim); font-size:13.5px; font-weight:600;">버튼을 눌러 밴 영웅을 추첨하세요!</div>
     </div>
 
-    <div class="slot-container" style="display:none;" id="banSlotContainer">
-      <div class="slot-strip" id="banSlotStrip"></div>
+    <div id="banSlotsGrid" style="display:none; grid-template-columns: repeat(4, 1fr); gap:6px; margin-bottom:20px;">
+      <div class="slot-container"><div class="slot-strip" id="banStrip0"></div></div>
+      <div class="slot-container"><div class="slot-strip" id="banStrip1"></div></div>
+      <div class="slot-container"><div class="slot-strip" id="banStrip2"></div></div>
+      <div class="slot-container"><div class="slot-strip" id="banStrip3"></div></div>
     </div>
 
     <button class="btn-primary" id="banBtn" style="margin-top:10px; width:220px; padding:11px 0; background:#c7402f; color:#fff;">밴 영웅 추첨하기 🚫</button>
@@ -492,21 +487,26 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.5.11)
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.5.20)
 </footer>
 
 <div class="modal" id="importModal">
   <div class="modal-content">
     <h3>메모장 데이터 일괄 붙여넣기</h3>
     <p style="font-size:12.5px; color:var(--dim); margin-bottom:6px;">
-      아래 형식에 맞춰 한 줄에 한 명씩 데이터를 입력해 주세요. (형식: <b>[이름, 주력포지션, 가능포지션, 탱커티어(모스트), 딜러티어(모스트), 힐러티어(모스트)]</b>)
+      아래 형식에 맞춰 한 줄에 한 명씩 데이터를 입력해 주세요. (형식: <b>[이름, 선호포지션, 가능포지션, 탱커티어(모스트), 딜러티어(모스트), 힐러티어(모스트)]</b>)
     </p>
+
+    <ul class="modal-desc-list">
+      <li>💡 <b>모스트 영웅 팁:</b> 모스트 캐릭터가 너무 많거나 한두 개 빼고 다 다를 경우, 모스트 부분에 <b>'상관없음'</b>으로 작성해 주시면 편합니다.</li>
+      <li>💡 <b>딜러 성향 팁:</b> 메인딜러나 서브딜러 한쪽 분야가 대부분 가능하다면 모스트 부분에 <b>'메인딜러'</b> 또는 <b>'서브딜러'</b>로 작성하여 성향을 유도할 수 있습니다.</li>
+    </ul>
 
     <div class="import-guide-wrap">
       <table class="import-guide-table">
         <tr>
           <th>1. 이름</th>
-          <th>2. 주력포지션</th>
+          <th>2. 선호포지션</th>
           <th>3. 가능포지션</th>
           <th>4. 탱커티어(모스트)</th>
           <th>5. 딜러티어(모스트)</th>
@@ -514,19 +514,19 @@ footer{
         </tr>
         <tr>
           <td>망고</td>
-          <td>탱</td>
+          <td>탱,딜</td>
           <td>탱,딜</td>
           <td>언랭(상관없음)</td>
-          <td>다이아3(소전)</td>
+          <td>다이아3(메인딜러)</td>
           <td>에메3(아나)</td>
         </tr>
       </table>
     </div>
 
     <p style="font-size:11.5px; color:var(--dim); margin:0 0 4px;">💡 아래 예시 문구를 그대로 복사해서 수정 후 붙여넣으세요:</p>
-    <div class="copy-example-box">망고, 탱, 탱,딜, 언랭(상관없음), 다이아3(소전), 에메3(아나)</div>
+    <div class="copy-example-box">망고, 탱,딜, 탱,딜, 언랭(상관없음), 다이아3(메인딜러), 에메3(아나)</div>
 
-    <textarea id="importText" placeholder="망고, 탱, 탱,딜, 언랭(상관없음), 다이아3(소전), 에메3(아나)&#10;페코, 딜, 탱,딜,힐, 다이아2(라인), 에메1(상관없음), 언랭(키리코)"></textarea>
+    <textarea id="importText" placeholder="망고, 탱,딜, 탱,딜, 언랭(상관없음), 다이아3(메인딜러), 에메3(아나)&#10;페코, 딜, 탱,딜,힐, 다이아2(라인), 에메1(서브딜러), 언랭(키리코)"></textarea>
     <div class="modal-btns">
       <button class="btn" id="closeImportBtn">취소</button>
       <button class="btn" id="applyImportBtn" style="background:var(--accent); color:#17120a; border:none;">추가 및 적용</button>
@@ -554,37 +554,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const HERO_POOL = {
     tank: ['디바', '둠피스트', '마우가', '오리사', '라인하르트', '로드호그', '시그마', '윈스턴', '레킹볼', '자리야', '정커퀸', '라마트라', '도미나', '디몬', '헤저드'],
-    damage: ['애쉬', '바스티온', '캐서디', '에코', '겐지', '한조', '정크랫', '메이', '파라', '리퍼', '솔저: 76', '솜브라', '시메트라', '토르비욘', '트레이서', '위도우메이커', '소전', '벤처', '시에라', '엠레', '프레야', '벤데타', '시온', '안란'],
+    damageMain: ['소전', '위도우메이커', '애쉬', '캐서디', '솔저: 76', '한조', '바스티온', '토르비욘', '시메트라'],
+    damageSub: ['겐지', '트레이서', '솜브라', '에코', '파라', '메이', '정크랫', '리퍼', '벤처', '시에라', '엠레', '프레야', '벤데타', '시온', '안란'],
     support: ['아나', '바티스트', '브리기테', '일리아리', '주노', '키리코', '라이프위버', '루시우', '메르시', '모이라', '젠야타', '우양', '미즈키', '캣', '냥이']
   };
 
   const MODE_NAMES = { payload: '🚚 화물', hybrid: '🏰 혼합', control: '🚩 쟁탈', flashpoint: '⚡ 플래시포인트', push: '🤖 밀기' };
 
   const DEMO_BASE = [
-    { bt: "망고", main: "tank", multi: ["tank", "damage"], t: "언랭", d: "다이아3", s: "에메랄드3" },
-    { bt: "프로피", main: "damage", multi: ["damage", "support"], t: "골드3", d: "다이아1", s: "실버1" },
-    { bt: "플레티", main: "damage", multi: ["damage", "tank"], t: "실버2", d: "다이아3", s: "언랭" },
-    { bt: "리푸", main: "damage", multi: ["damage"], t: "플래티넘1", d: "다이아1", s: "에메랄드4" },
-    { bt: "스토커", main: "damage", multi: ["damage"], t: "골드1", d: "다이아2", s: "골드3" },
-    { bt: "바이올", main: "support", multi: ["support", "tank"], t: "실버3", d: "플래티넘4", s: "다이아2" },
-    { bt: "슈우", main: "support", multi: ["support", "damage"], t: "골드2", d: "플래티넘2", s: "다이아1" },
-    { bt: "스머프", main: "tank", multi: ["tank", "support"], t: "다이아3", d: "플래티넘3", s: "실버2" },
-    { bt: "트와일", main: "support", multi: ["support"], t: "실버1", d: "골드1", s: "다이아2" },
-    { bt: "페코", main: "damage", multi: ["damage", "support"], t: "다이아4", d: "에메랄드2", s: "다이아3" }
+    { bt: "망고", pref: ["tank", "damage"], multi: ["tank", "damage"], t: "언랭", d: "다이아3", s: "에메랄드3" },
+    { bt: "프로피", pref: ["damage"], multi: ["damage", "support"], t: "골드3", d: "다이아1", s: "실버1" },
+    { bt: "플레티", pref: ["damage", "tank"], multi: ["damage", "tank"], t: "실버2", d: "다이아3", s: "언랭" },
+    { bt: "리푸", pref: ["damage"], multi: ["damage"], t: "플래티넘1", d: "다이아1", s: "에메랄드4" },
+    { bt: "스토커", pref: ["damage"], multi: ["damage"], t: "골드1", d: "다이아2", s: "골드3" },
+    { bt: "바이올", pref: ["support"], multi: ["support", "tank"], t: "실버3", d: "플래티넘4", s: "다이아2" },
+    { bt: "슈우", pref: ["support"], multi: ["support", "damage"], t: "골드2", d: "플래티넘2", s: "다이아1" },
+    { bt: "스머프", pref: ["tank"], multi: ["tank", "support"], t: "다이아3", d: "플래티넘3", s: "실버2" },
+    { bt: "트와일", pref: ["support"], multi: ["support"], t: "실버1", d: "골드1", s: "다이아2" },
+    { bt: "페코", pref: ["damage"], multi: ["damage", "support"], t: "다이아4", d: "에메랄드2", s: "다이아3" }
   ];
 
   function getRandomMosts(role){
     if(Math.random() < 0.15) return '상관없음';
+    const pool = role === 'damage' ? [...HERO_POOL.damageMain, ...HERO_POOL.damageSub] : HERO_POOL[role];
     const count = Math.floor(Math.random() * 4) + 1;
-    const shuffled = [...HERO_POOL[role]].sort(() => 0.5 - Math.random());
+    const shuffled = [...pool].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count).join(', ');
   }
-
-  document.getElementById('wsCopyBtn').onclick = () => {
-    navigator.clipboard.writeText(document.getElementById('wsCodeText').textContent.trim()).then(() => {
-      alert('경쟁전 워크샵 코드(GGTG0)가 클립보드에 복사되었습니다!');
-    });
-  };
 
   function tierToScore(ti, div){
     if(ti === -1) return 0;
@@ -667,7 +663,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let rowIdxCounter = 0;
-  let historyTeams = []; // 구성 이력 배열 저장
+  let historyTeams = [];
+  let cachedSortedCandidates = [];
 
   const tbody = document.getElementById('tbody'), playerTable = document.getElementById('playerTable'), emptyPlaceholder = document.getElementById('emptyPlaceholder');
   const historySelect = document.getElementById('historySelect');
@@ -681,18 +678,17 @@ document.addEventListener("DOMContentLoaded", () => {
   function addPlayerRow(data = {}){
     const i = rowIdxCounter++;
     const tr = document.createElement('tr');
-    tr.className = 'pos-tank';
-    const mainPos = data.main || 'tank';
-    const multi = data.multi || [mainPos, 'damage', 'support'];
+    const pref = data.pref || ['tank'];
+    const multi = data.multi || ['tank', 'damage', 'support'];
     const lockVal = data.lockTank ? 'tank' : data.lockDamage ? 'damage' : data.lockSupport ? 'support' : 'none';
     
     tr.innerHTML = `
      <td><input class="bt" placeholder="이름" value="${data.bt || ''}"></td>
      <td>
-       <div class="role-picker">
-         <input type="radio" id="m_${i}_t" name="main_${i}" value="tank" ${mainPos==='tank'?'checked':''}><label for="m_${i}_t">탱</label>
-         <input type="radio" id="m_${i}_d" name="main_${i}" value="damage" ${mainPos==='damage'?'checked':''}><label for="m_${i}_d">딜</label>
-         <input type="radio" id="m_${i}_s" name="main_${i}" value="support" ${mainPos==='support'?'checked':''}><label for="m_${i}_s">힐</label>
+       <div class="pref-role-group">
+         <input type="checkbox" id="pref_${i}_t" name="pref_${i}" value="tank" ${pref.includes('tank')?'checked':''}><label for="pref_${i}_t">탱</label>
+         <input type="checkbox" id="pref_${i}_d" name="pref_${i}" value="damage" ${pref.includes('damage')?'checked':''}><label for="pref_${i}_d">딜</label>
+         <input type="checkbox" id="pref_${i}_s" name="pref_${i}" value="support" ${pref.includes('support')?'checked':''}><label for="pref_${i}_s">힐</label>
        </div>
      </td>
      <td>
@@ -714,28 +710,21 @@ document.addEventListener("DOMContentLoaded", () => {
      <td><div class="tier-container tier-damage">${createTierSelectHTML(parseTierStringToStep(data.damageStr))}</div></td>
      <td><div class="tier-container tier-support">${createTierSelectHTML(parseTierStringToStep(data.supportStr))}</div></td>
      <td><input class="most most-tank" placeholder="윈스턴, 상관없음" value="${data.mostT || ''}"></td>
-     <td><input class="most most-damage" placeholder="겐지, 상관없음" value="${data.mostD || ''}"></td>
+     <td><input class="most most-damage" placeholder="소전, 메인딜러" value="${data.mostD || ''}"></td>
      <td><input class="most most-support" placeholder="아나, 상관없음" value="${data.mostS || ''}"></td>
      <td style="text-align:center;"><button type="button" class="btn-del">삭제</button></td>
     `;
     
     tr.querySelector('.btn-del').onclick = () => { tr.remove(); checkTableVisibility(); };
     tbody.appendChild(tr);
-    updateRowStyle(tr);
     checkTableVisibility();
   }
 
   document.getElementById('addRowBtn').onclick = () => addPlayerRow();
 
-  function updateRowStyle(row){
-    const main = row.querySelector('input[name^="main_"]:checked');
-    if(main){ row.className = `pos-${main.value}`; }
-  }
-
   tbody.addEventListener('change', e => {
     const row = e.target.closest('tr');
     if(!row) return;
-    if(e.target.name && e.target.name.startsWith('main_')) updateRowStyle(row);
     if(e.target.classList.contains('tier-select')){
       const numInput = e.target.closest('.tier-input-wrap').querySelector('.tier-num');
       const val = parseInt(e.target.value);
@@ -772,19 +761,30 @@ document.addEventListener("DOMContentLoaded", () => {
   function parseComplexLine(line){
     const parts = line.split(',').map(s => s.trim());
     const bt = parts[0] || '플레이어';
-    let main = 'tank';
-    if(parts[1] && (parts[1].includes('딜') || parts[1].includes('damage'))) main = 'damage';
-    if(parts[1] && (parts[1].includes('힐') || parts[1].includes('support'))) main = 'support';
 
+    let pref = [];
     let multi = [];
-    for(let idx = 2; idx < parts.length; idx++){
-      const item = parts[idx];
+    let parsingIdx = 1;
+
+    while(parts[parsingIdx] && (parts[parsingIdx].includes('탱') || parts[parsingIdx].includes('딜') || parts[parsingIdx].includes('힐') || parts[parsingIdx].includes('tank') || parts[parsingIdx].includes('damage') || parts[parsingIdx].includes('support'))){
+      const item = parts[parsingIdx];
+      if(item.includes(':') || item.includes('(')) break;
+      if(item.includes('탱')) pref.push('tank');
+      if(item.includes('딜')) pref.push('damage');
+      if(item.includes('힐')) pref.push('support');
+      parsingIdx++;
+    }
+    if(!pref.length) pref = ['tank'];
+
+    while(parts[parsingIdx] && (parts[parsingIdx].includes('탱') || parts[parsingIdx].includes('딜') || parts[parsingIdx].includes('힐') || parts[parsingIdx].includes('tank') || parts[parsingIdx].includes('damage') || parts[parsingIdx].includes('support'))){
+      const item = parts[parsingIdx];
       if(item.includes(':') || item.includes('(')) break;
       if(item.includes('탱')) multi.push('tank');
       if(item.includes('딜')) multi.push('damage');
       if(item.includes('힐')) multi.push('support');
+      parsingIdx++;
     }
-    if(!multi.length) multi = [main, 'damage', 'support'];
+    if(!multi.length) multi = [...pref, 'damage', 'support'];
 
     let tS = null, dS = null, sS = null;
     let tM = '', dM = '', sM = '';
@@ -814,7 +814,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     return { 
-      bt, main, multi, 
+      bt, pref, multi, 
       tankStr: tS || '언랭', 
       damageStr: dS || '언랭', 
       supportStr: sS || '언랭', 
@@ -841,13 +841,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('results').style.display = 'none'; 
     document.getElementById('error').style.display = 'none'; 
     historyTeams = [];
+    cachedSortedCandidates = [];
     historySelect.innerHTML = '';
   };
   
   document.getElementById('demoBtn').onclick = () => { 
     tbody.innerHTML = ''; 
     DEMO_BASE.forEach(u => addPlayerRow({
-      bt: u.bt, main: u.main, multi: u.multi,
+      bt: u.bt, pref: u.pref, multi: u.multi,
       tankStr: u.t, damageStr: u.d, supportStr: u.s,
       mostT: getRandomMosts('tank'),
       mostD: getRandomMosts('damage'),
@@ -864,24 +865,51 @@ document.addEventListener("DOMContentLoaded", () => {
     return res;
   }
 
-  function getTeamSignature(teamA, teamB){
-    const aNames = teamA.map(p => p.bt).sort().join(',');
-    const bNames = teamB.map(p => p.bt).sort().join(',');
-    return `A[${aNames}]|B[${bNames}]`;
+  function getNormalizedTeamSignature(teamA, teamB){
+    const aNames = teamA.map(p => `${p.bt}:${p.assignedPos}`).sort().join(',');
+    const bNames = teamB.map(p => `${p.bt}:${p.assignedPos}`).sort().join(',');
+    const combined = [aNames, bNames].sort();
+    return `A[${combined[0]}]|B[${combined[1]}]`;
   }
 
-  function renderResult(best){
+  function getDamageStyle(mostStr){
+    if(!mostStr) return 'any';
+    const s = mostStr.trim();
+    if(s.includes('메인딜러') || s.includes('메인')) return 'main';
+    if(s.includes('서브딜러') || s.includes('서브')) return 'sub';
+    if(s.includes('상관없음')) return 'any';
+    const heroes = s.split(',').map(h => h.trim());
+    let mainCount = 0, subCount = 0;
+    heroes.forEach(h => {
+      if(HERO_POOL.damageMain.includes(h)) mainCount++;
+      if(HERO_POOL.damageSub.includes(h)) subCount++;
+    });
+    if(mainCount > subCount) return 'main';
+    if(subCount > mainCount) return 'sub';
+    return 'any';
+  }
+
+  function getRangeTierClass(team) {
+    const steps = team.map(p => p.tier[p.assignedPos]);
+    const minStep = Math.min(...steps);
+    const info = stepToTierInfo(minStep);
+    return info.css;
+  }
+
+  function renderResult(best, terminationMsg = ""){
     const getRange = (team) => {
       const steps = team.map(p => p.tier[p.assignedPos]);
       return `${stepToTierInfo(Math.min(...steps)).label} ~ ${stepToTierInfo(Math.max(...steps)).label}`;
     };
 
-    const renderTeamHTML = (team, name) => `
+    const renderTeamHTML = (team, name) => {
+      const rangeClass = getRangeTierClass(team);
+      return `
       <div class="team-head">
         <h2>${name}</h2>
         <div class="team-meta-info">
           <span class="team-sub-score">평점: ${Math.round(team.reduce((s,p)=>s+p.scores[p.assignedPos],0))}점</span>
-          <span class="team-rank-range">매칭 구간: ${getRange(team)}</span>
+          <span class="team-rank-range ${rangeClass}">매칭 구간: ${getRange(team)}</span>
         </div>
       </div>
       ${team.map(p => `
@@ -894,17 +922,25 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="p-right">${renderTierBadgeByStep(p.tier[p.assignedPos])}</div>
         </div>`).join('')}
     `;
+    };
 
     document.getElementById('teamA').innerHTML = renderTeamHTML(best.teamA, 'A팀');
     document.getElementById('teamB').innerHTML = renderTeamHTML(best.teamB, 'B팀');
 
+    const alertBanner = document.getElementById('resultAlertBanner');
+    if(terminationMsg){
+      alertBanner.innerHTML = `<div class="warn-box" style="background:#f8d7da; color:#721c24; border-color:#f5c6cb; margin-bottom:16px; font-size:17px;">🚨 ${terminationMsg}</div>`;
+    } else {
+      alertBanner.innerHTML = "";
+    }
+
     const roundedDiff = Math.round(best.scoreDiff);
     let warnMsg = "";
-    if(roundedDiff > 100){
-      warnMsg += `<br><div class="warn-box">⚠️ 양 팀 간의 평점 격차가 커서(${roundedDiff}점) 밸런스에 차이가 발생할 수 있으니 참고해 주세요!</div>`;
+    if(roundedDiff >= 100 && !terminationMsg){
+      warnMsg += `<br><div class="warn-box" style="background:#f8d7da; color:#721c24; border-color:#f5c6cb;">⚠️ 양 팀 간의 평점 격차가 100점 이상(${roundedDiff}점) 발생하여 최적 팀 구성 탐색이 종결되었습니다.</div>`;
     }
     if(best.tankDiff >= 3){
-      warnMsg += `<br><div class="warn-box" style="background:#f8d7da; color:#721c24; border-color:#f5c6cb;">🛡️ 양 팀 탱커 간의 티어 차이가 너무 심합니다! (${best.tankDiff}단계 차이 발생)</div>`;
+      warnMsg += `<br><div class="warn-box" style="background:#fff3cd; color:#856404; border-color:#ffeeba;">🛡️ 탱커 간 티어 차이가 존재하나, 타 라인(딜러/힐러) 격차 보완을 통해 밸런스가 조율된 구성입니다. (${best.tankDiff}단계 차이)</div>`;
     }
 
     document.getElementById('diffLine').innerHTML = `<b>🎯 자동 밸런스 매칭 결과</b><br>양 팀 평점 격차: <b>${roundedDiff}점</b> (A팀: ${Math.round(best.scoreA)}점 vs B팀: ${Math.round(best.scoreB)}점)${warnMsg}`;
@@ -913,19 +949,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function executeBalancing(isNewFresh = true){
-    const errEl = document.getElementById('error'), resEl = document.getElementById('results');
+    const errEl = document.getElementById('error');
     errEl.style.display = 'none'; 
 
     const rows = [...tbody.querySelectorAll('tr')];
     if(rows.length < 10){
-      errEl.textContent = `등록된 유저가 총 ${rows.length}명입니다. 최소 10명이 필요합니다.`;
+      const msg = `등록된 유저가 총 ${rows.length}명입니다. 최소 10명이 필요합니다.`;
+      errEl.textContent = msg;
       errEl.style.display = 'block';
+      alert(msg);
       return;
     }
 
     let players = rows.map(r => {
       const bt = r.querySelector('.bt').value.trim() || '플레이어';
-      const mainPos = r.querySelector('input[name^="main_"]:checked').value;
       const lockVal = r.querySelector('.lock-select').value;
       const lockTank = lockVal === 'tank';
       const lockDamage = lockVal === 'damage';
@@ -951,27 +988,27 @@ document.addEventListener("DOMContentLoaded", () => {
       const hasHighTier = isMasterOrAbove(tier.tank) || isMasterOrAbove(tier.damage) || isMasterOrAbove(tier.support);
 
       return { 
-        bt, mainPos, multi, lockTank, lockDamage, lockSupport, tier, most, hasHighTier,
-        scores: { tank: stepToTierInfo(tier.tier?.tank || tier.tank).score, damage: stepToTierInfo(tier.damage).score, support: stepToTierInfo(tier.support).score } 
+        bt, multi, lockTank, lockDamage, lockSupport, tier, most, hasHighTier,
+        damageStyle: getDamageStyle(most.damage),
+        scores: { tank: stepToTierInfo(tier.tank).score, damage: stepToTierInfo(tier.damage).score, support: stepToTierInfo(tier.support).score } 
       };
     });
 
-    // 마스터 이상 인원 홀수(혼자 등) 체크 검증
     const masterUsers = players.filter(p => p.hasHighTier);
-    if(masterUsers.length > 0 && masterUsers.length % 2 !== 0){
-      errEl.textContent = `마스터 이상 티어 유저는 양 팀에 공정하게 분배되어야 하므로 홀수 명(${masterUsers.length}명)일 경우 팀을 구성할 수 없습니다. (짝수 명이어야 합니다)`;
+    if(masterUsers.length < 6 && masterUsers.length > 0){
+      const msg = `🛡️ 마스터 이상 티어 유저가 ${masterUsers.length}명이므로 밸런스 붕괴 방지를 위해 팀 구성을 진행할 수 없습니다. (6명 이상 필요)`;
+      errEl.textContent = msg;
       errEl.style.display = 'block';
+      alert(msg);
       return;
     }
 
-    let randomMsg = "";
     let filteredPlayers = [...players];
 
     if(players.length > 10 && masterUsers.length <= 4 && masterUsers.length > 0){
       const nonMasterUsers = players.filter(p => !p.hasHighTier);
       if(nonMasterUsers.length >= 10){
         filteredPlayers = nonMasterUsers;
-        randomMsg = `<br>🛡️ <b>마스터 이상 인원 예외 적용:</b> 마스터 이상 유저(${masterUsers.length}명)가 4명 이하이므로 인원수 조정에 따라 밸런스 풀에서 제외되었습니다.`;
       }
     }
 
@@ -980,8 +1017,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const lockedSupports = filteredPlayers.filter(p => p.lockSupport);
 
     if(lockedTanks.length > 2 || lockedDamages.length > 2 || lockedSupports.length > 2){
-      errEl.textContent = `각 포지션별 고정은 최대 2명까지만 가능합니다.`;
+      const msg = `각 포지션별 고정은 최대 2명까지만 가능합니다.`;
+      errEl.textContent = msg;
       errEl.style.display = 'block';
+      alert(msg);
       return;
     }
 
@@ -995,100 +1034,153 @@ document.addEventListener("DOMContentLoaded", () => {
     if(isNewFresh){
       historyTeams = [];
       historySelect.innerHTML = '';
-    }
+      cachedSortedCandidates = [];
 
-    const existingSignatures = new Set(historyTeams.map(h => h.signature));
+      const existingSignatures = new Set();
+      const candidates = [];
 
-    let best = null;
-    const validTankCandidates = filteredPlayers.filter(p => !p.lockTank && p.tier.tank !== -1);
-    const shuffledTankCombos = combinations(validTankCandidates, 2 - lockedTanks.length).sort(() => Math.random() - 0.5);
+      const validTankCandidates = filteredPlayers.filter(p => !p.lockTank && p.tier.tank !== -1);
+      const shuffledTankCombos = combinations(validTankCandidates, 2 - lockedTanks.length);
 
-    for(const teamTanks of shuffledTankCombos){
-      const actualTanks = [...lockedTanks, ...teamTanks];
-      if(actualTanks.some(p => p.tier.tank === -1)) continue;
-      const rem1 = filteredPlayers.filter(p => !actualTanks.includes(p));
+      for(const teamTanks of shuffledTankCombos){
+        const actualTanks = [...lockedTanks, ...teamTanks];
+        if(actualTanks.some(p => p.tier.tank === -1)) continue;
+        const rem1 = filteredPlayers.filter(p => !actualTanks.includes(p));
 
-      const validDamageCandidates = rem1.filter(p => !p.lockDamage && p.tier.damage !== -1);
-      const shuffledDmgCombos = combinations(validDamageCandidates, 4 - lockedDamages.length).sort(() => Math.random() - 0.5);
+        const validDamageCandidates = rem1.filter(p => !p.lockDamage && p.tier.damage !== -1);
+        const shuffledDmgCombos = combinations(validDamageCandidates, 4 - lockedDamages.length);
 
-      for(const teamDamages of shuffledDmgCombos){
-        const actualDamages = [...lockedDamages, ...teamDamages];
-        if(actualDamages.some(p => p.tier.damage === -1)) continue;
+        for(const teamDamages of shuffledDmgCombos){
+          const actualDamages = [...lockedDamages, ...teamDamages];
+          if(actualDamages.some(p => p.tier.damage === -1)) continue;
 
-        const teamSupports = rem1.filter(p => !actualDamages.includes(p));
-        if(teamSupports.length !== 4) continue;
-        if(teamSupports.some(p => p.tier.support === -1)) continue;
+          const teamSupports = rem1.filter(p => !actualDamages.includes(p));
+          if(teamSupports.length !== 4) continue;
+          if(teamSupports.some(p => p.tier.support === -1)) continue;
 
-        for(const tA of combinations(actualTanks, 1)){
-          const tB = actualTanks.filter(p => !tA.includes(p));
-          for(const dA of combinations(actualDamages, 2)){
-            const dB = actualDamages.filter(p => !dA.includes(p));
-            for(const sA of combinations(teamSupports, 2)){
-              const sB = teamSupports.filter(p => !sA.includes(p));
+          for(const tA of combinations(actualTanks, 1)){
+            const tB = actualTanks.filter(p => !tA.includes(p));
+            for(const dA of combinations(actualDamages, 2)){
+              const dB = actualDamages.filter(p => !dA.includes(p));
+              for(const sA of combinations(teamSupports, 2)){
+                const sB = teamSupports.filter(p => !sA.includes(p));
 
-              const getPos = (p, t, d, s) => {
-                if(p.lockTank) return 'tank';
-                if(p.lockDamage) return 'damage';
-                if(p.lockSupport) return 'support';
-                if(t.includes(p)) return 'tank';
-                if(d.includes(p)) return 'damage';
-                if(s.includes(p)) return 'support';
-                return p.multi[0] || 'damage';
-              };
+                const getPos = (p, t, d, s) => {
+                  if(p.lockTank) return 'tank';
+                  if(p.lockDamage) return 'damage';
+                  if(p.lockSupport) return 'support';
+                  if(t.includes(p)) return 'tank';
+                  if(d.includes(p)) return 'damage';
+                  if(s.includes(p)) return 'support';
+                  return p.multi[0] || 'damage';
+                };
 
-              const teamA = [tA[0], dA[0], dA[1], sA[0], sA[1]].map(p => ({...p, assignedPos: getPos(p, tA, dA, sA)}));
-              const teamB = [tB[0], dB[0], dB[1], sB[0], sB[1]].map(p => ({...p, assignedPos: getPos(p, tB, dB, sB)}));
+                const teamA = [tA[0], dA[0], dA[1], sA[0], sA[1]].map(p => ({...p, assignedPos: getPos(p, tA, dA, sA)}));
+                const teamB = [tB[0], dB[0], dB[1], sB[0], sB[1]].map(p => ({...p, assignedPos: getPos(p, tB, dB, sB)}));
 
-              let invalidLock = false;
-              [...teamA, ...teamB].forEach(p => {
-                if(p.lockTank && p.assignedPos !== 'tank') invalidLock = true;
-                if(p.lockDamage && p.assignedPos !== 'damage') invalidLock = true;
-                if(p.lockSupport && p.assignedPos !== 'support') invalidLock = true;
-              });
-              if(invalidLock) continue;
+                let invalidLock = false;
+                [...teamA, ...teamB].forEach(p => {
+                  if(p.lockTank && p.assignedPos !== 'tank') invalidLock = true;
+                  if(p.lockDamage && p.assignedPos !== 'damage') invalidLock = true;
+                  if(p.lockSupport && p.assignedPos !== 'support') invalidLock = true;
+                });
+                if(invalidLock) continue;
 
-              const sig = getTeamSignature(teamA, teamB);
-              if(existingSignatures.has(sig)) continue; // 이미 생성된 이력이 있는 조합은 제외
+                const sig = getNormalizedTeamSignature(teamA, teamB);
+                if(existingSignatures.has(sig)) continue;
+                existingSignatures.add(sig);
 
-              const sA_score = teamA.reduce((sum, p) => sum + p.scores[p.assignedPos], 0);
-              const sB_score = teamB.reduce((sum, p) => sum + p.scores[p.assignedPos], 0);
-              const scoreDiff = Math.abs(sA_score - sB_score);
+                const sA_score = teamA.reduce((sum, p) => sum + p.scores[p.assignedPos], 0);
+                const sB_score = teamB.reduce((sum, p) => sum + p.scores[p.assignedPos], 0);
+                const scoreDiff = Math.abs(sA_score - sB_score);
 
-              let penalty = 0;
-              const tankA_step = stepToTierInfo(teamA.find(p => p.assignedPos === 'tank').tier.tank).step;
-              const tankB_step = stepToTierInfo(teamB.find(p => p.assignedPos === 'tank').tier.tank).step;
-              const tankDiff = Math.abs(tankA_step - tankB_step);
-              penalty += tankDiff * 350;
+                let penalty = 0;
+                const tankA_step = stepToTierInfo(teamA.find(p => p.assignedPos === 'tank').tier.tank).step;
+                const tankB_step = stepToTierInfo(teamB.find(p => p.assignedPos === 'tank').tier.tank).step;
+                const tankDiff = Math.abs(tankA_step - tankB_step);
+                penalty += tankDiff * 350; // 탱커 간 티어 격차가 날 경우 페널티를 강력하게 부여하여 우선순위에서 밀려나도록 함
 
-              [...teamA, ...teamB].forEach(p => {
-                if(!p.multi.includes(p.assignedPos)) penalty += 500;
-              });
+                const dListA = teamA.filter(p => p.assignedPos === 'damage');
+                const dListB = teamB.filter(p => p.assignedPos === 'damage');
+                if(dListA.length === 2 && dListA[0].damageStyle === dListA[1].damageStyle && dListA[0].damageStyle !== 'any') penalty += 150;
+                if(dListB.length === 2 && dListB[0].damageStyle === dListB[1].damageStyle && dListB[0].damageStyle !== 'any') penalty += 150;
 
-              const randomJitter = Math.random() * 50;
-              const totalEval = scoreDiff + penalty + randomJitter;
+                [...teamA, ...teamB].forEach(p => {
+                  if(!p.multi.includes(p.assignedPos)) penalty += 500;
+                });
 
-              if(!best || totalEval < best.totalEval){
-                best = { teamA, teamB, scoreA: sA_score, scoreB: sB_score, scoreDiff, totalEval, tankDiff, signature: sig };
+                const totalEval = scoreDiff + penalty;
+
+                candidates.push({ teamA, teamB, scoreA: sA_score, scoreB: sB_score, scoreDiff, totalEval, tankDiff, signature: sig });
               }
             }
           }
         }
       }
+
+      // 정렬 기준: 1순위 탱커 티어 격차(tankDiff)가 적은 순, 2순위 평점 격차(scoreDiff)가 적은 순
+      candidates.sort((a, b) => {
+        if (Math.abs(a.tankDiff - b.tankDiff) > 0) {
+          return a.tankDiff - b.tankDiff;
+        }
+        if (Math.abs(a.scoreDiff - b.scoreDiff) > 0.01) {
+          return a.scoreDiff - b.scoreDiff;
+        }
+        return a.totalEval - b.totalEval;
+      });
+
+      cachedSortedCandidates = candidates;
     }
 
-    if(!best){
-      if(historyTeams.length > 0){
-        errEl.innerHTML = `⚠️ 더 이상 새로운 팀 조합이 없습니다. (밸런스된 모든 팀 조합이 출력되었습니다.)`;
-      } else {
-        errEl.textContent = `조건에 맞는 팀 조합을 찾지 못했습니다. (가능 포지션 설정 및 포지션 고정 조건을 확인해주세요)`;
-      }
+    if(cachedSortedCandidates.length === 0){
+      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (가능 포지션 설정 및 포지션 고정 조건을 확인해주세요)`;
+      errEl.innerHTML = msg;
       errEl.style.display = 'block';
+      alert(msg);
+      return;
+    }
+
+    const nextIndex = historyTeams.length;
+    if(nextIndex >= cachedSortedCandidates.length){
+      let msg = `⚠️ 더 이상 새로운 팀 조합이 없습니다. (포지션 고정 및 가능한 모든 밸런스 구성이 탐색되었습니다.)`;
+      errEl.innerHTML = msg;
+      errEl.style.display = 'block';
+      alert(msg);
+      return;
+    }
+
+    const best = cachedSortedCandidates[nextIndex];
+
+    if(!isNewFresh && historyTeams.length > 0){
+      const lastBest = historyTeams[historyTeams.length - 1];
+      if(lastBest.scoreDiff >= 100){
+        const termMsg = `양 팀 평점 격차가 100점 이상(${Math.round(lastBest.scoreDiff)}점) 벌어져 최적의 밸런스 구성을 종결합니다.`;
+        alert(termMsg);
+        renderResult(lastBest, termMsg);
+        return;
+      }
+    }
+
+    if(best.scoreDiff >= 100){
+      const termMsg = `양 팀 평점 격차가 100점 이상(${Math.round(best.scoreDiff)}점) 벌어져 최적의 밸런스 구성을 종결합니다.`;
+      if(!isNewFresh || historyTeams.length > 0) alert(termMsg);
+      const order = {tank:0, damage:1, support:2};
+      best.teamA.sort((a,b) => order[a.assignedPos] - order[b.assignedPos]);
+      best.teamB.sort((a,b) => order[b.assignedPos] - order[b.assignedPos]);
+      historyTeams.push(best);
+      const historyIndex = historyTeams.length - 1;
+      const opt = document.createElement('option');
+      opt.value = historyIndex;
+      opt.textContent = `구성 #${historyTeams.length} (격차: ${Math.round(best.scoreDiff)}점)`;
+      historySelect.appendChild(opt);
+      historySelect.value = historyIndex;
+      renderResult(best, termMsg);
       return;
     }
 
     const order = {tank:0, damage:1, support:2};
     best.teamA.sort((a,b) => order[a.assignedPos] - order[b.assignedPos]);
-    best.teamB.sort((a,b) => order[a.assignedPos] - order[b.assignedPos]);
+    best.teamB.sort((a,b) => order[b.assignedPos] - order[b.assignedPos]);
 
     historyTeams.push(best);
     const historyIndex = historyTeams.length - 1;
@@ -1154,7 +1246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentMode = e.target.dataset.mode;
       updateMapList(currentMode);
       document.getElementById('slotStrip').style.transform = 'translateY(0px)';
-      document.getElementById('slotStrip').innerHTML = `<div class="slot-item">모드를 선택하고 돌려주세요</div>`;
+      document.getElementById('slotStrip').innerHTML = `<div class="slot-item" style="height:70px;">모드를 선택하고 돌려주세요</div>`;
     }
   };
 
@@ -1168,7 +1260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     strip.style.transition = 'none';
     strip.style.transform = 'translateY(0px)';
-    strip.innerHTML = reel.map(m => `<div class="slot-item">${m}</div>`).join('');
+    strip.innerHTML = reel.map(m => `<div class="slot-item" style="height:70px;">${m}</div>`).join('');
 
     setTimeout(() => {
       strip.style.transition = 'transform 2.5s cubic-bezier(0.15, 0.85, 0.35, 1)';
@@ -1199,36 +1291,40 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const tankBans = pickRandom(HERO_POOL.tank, chosenPattern.tank).map(h => ({name: h, role: 'tank'}));
-    const damageBans = pickRandom(HERO_POOL.damage, chosenPattern.damage).map(h => ({name: h, role: 'damage'}));
+    const damageBans = pickRandom([...HERO_POOL.damageMain, ...HERO_POOL.damageSub], chosenPattern.damage).map(h => ({name: h, role: 'damage'}));
     const supportBans = pickRandom(HERO_POOL.support, chosenPattern.support).map(h => ({name: h, role: 'support'}));
 
     const finalBans = [...tankBans, ...damageBans, ...supportBans].sort(() => 0.5 - Math.random());
 
     const box = document.getElementById('banResultBox');
-    const container = document.getElementById('banSlotContainer');
-    const strip = document.getElementById('banSlotStrip');
+    const slotsGrid = document.getElementById('banSlotsGrid');
 
     box.style.display = 'none';
-    container.style.display = 'block';
+    slotsGrid.style.display = 'grid';
 
-    const allHeroes = [...HERO_POOL.tank, ...HERO_POOL.damage, ...HERO_POOL.support];
-    const rollingList = Array.from({length: 40}, () => allHeroes[Math.floor(Math.random() * allHeroes.length)]);
-    rollingList.push(finalBans[0].name);
+    const allHeroes = [...HERO_POOL.tank, ...HERO_POOL.damageMain, ...HERO_POOL.damageSub, ...HERO_POOL.support];
 
-    strip.style.transition = 'none';
-    strip.style.transform = 'translateY(0px)';
-    strip.innerHTML = rollingList.map(h => `<div class="slot-item" style="color:var(--accent);">${h}</div>`).join('');
+    for(let i = 0; i < 4; i++){
+      const targetHero = finalBans[i].name;
+      const strip = document.getElementById(`banStrip${i}`);
+      const reel = Array.from({length: 25 + (i * 6)}, () => allHeroes[Math.floor(Math.random() * allHeroes.length)]).concat(targetHero);
+
+      strip.style.transition = 'none';
+      strip.style.transform = 'translateY(0px)';
+      strip.innerHTML = reel.map(h => `<div class="slot-item">${h}</div>`).join('');
+
+      setTimeout(() => {
+        const duration = 2.0 + (i * 0.4);
+        strip.style.transition = `transform ${duration}s cubic-bezier(0.1, 0.8, 0.2, 1)`;
+        strip.style.transform = `translateY(-${(reel.length - 1) * 60}px)`;
+      }, 50);
+    }
 
     setTimeout(() => {
-      strip.style.transition = 'transform 3.5s cubic-bezier(0.08, 0.82, 0.18, 1)';
-      strip.style.transform = `translateY(-${(rollingList.length - 1) * 70}px)`;
-    }, 50);
-
-    setTimeout(() => {
-      container.style.display = 'none';
+      slotsGrid.style.display = 'none';
       box.style.display = 'flex';
       box.innerHTML = `
-        <div style="font-size:12px; color:var(--accent); font-weight:700;">🚫 이번판 밴 영웅 (${finalBans.length}개 조합)</div>
+        <div style="font-size:12px; color:var(--accent); font-weight:700;">🚫 이번판 밴 영웅 (4개 조합 완료)</div>
         <div class="ban-items" id="banItemsContainer"></div>
       `;
       const itemsCont = document.getElementById('banItemsContainer');
@@ -1239,7 +1335,7 @@ document.addEventListener("DOMContentLoaded", () => {
           span.textContent = `[${ROLE_LABEL[b.role]}] ${b.name}`;
           itemsCont.appendChild(span);
           if(idx === finalBans.length - 1) isBanSpinning = false;
-        }, idx * 250);
+        }, idx * 200);
       });
     }, 3600);
   };
