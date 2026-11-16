@@ -29,7 +29,7 @@ body{
   padding:20px 14px 60px;
 }
 h1,h2,.num,button{font-family:'Chakra Petch',system-ui,sans-serif;}
-main{max-width:1400px; margin:0 auto;}
+main{max-width:1200px; margin:0 auto;}
 
 header{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:15px; flex-wrap:wrap;}
 .header-titles{flex:1; min-width:280px;}
@@ -45,7 +45,8 @@ h1{font-size:26px; font-weight:700; margin:0 0 6px;}
 .guide-box h3{margin:0 0 6px; font-size:15px; color:var(--accent);}
 .guide-box ul{margin:0; padding-left:20px; color:var(--dim);}
 
-.toolbar{display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;}
+.toolbar{display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;}
+.toolbar-left{display:flex; gap:10px; flex-wrap:wrap;}
 .btn{
   font-weight:600; font-size:13.5px; padding:8px 14px; border-radius:4px;
   border:1px solid var(--border); background:var(--panel2); color:var(--text);
@@ -59,17 +60,17 @@ h1{font-size:26px; font-weight:700; margin:0 0 6px;}
 }
 .btn-primary:hover{filter:brightness(1.1); transform:translateY(-1px);}
 
-.table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:6px; background:var(--panel); min-height:220px; display:flex; flex-direction:column; justify-content:center;}
-table{border-collapse:collapse; width:100%; min-width:1450px;}
+.table-wrap{overflow-x:hidden; border:1px solid var(--border); border-radius:6px; background:var(--panel); min-height:220px; display:flex; flex-direction:column; justify-content:center; padding:10px;}
+table{border-collapse:collapse; width:100%; table-layout:fixed;}
 
-th, td { border-right: 1px solid var(--col-border); }
+th, td { border-right: 1px solid var(--col-border); overflow: hidden; text-overflow: ellipsis; }
 th:last-child, td:last-child { border-right: none; }
 
 th{
-  text-align:center; font-size:12.5px; font-weight:600; color:var(--dim);
-  padding:14px 6px; border-bottom:1px solid var(--border); background:var(--panel2); white-space:nowrap;
+  text-align:center; font-size:12px; font-weight:600; color:var(--dim);
+  padding:10px 2px; border-bottom:1px solid var(--border); background:var(--panel2); white-space:nowrap;
 }
-td{padding:10px 6px; border-bottom:1px solid var(--border); vertical-align:middle;}
+td{padding:6px 2px; border-bottom:1px solid var(--border); vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 
 .empty-placeholder{ padding:60px 20px; text-align:center; color:var(--dim); }
@@ -79,14 +80,13 @@ tr:last-child td{border-bottom:none;}
 
 input,select,textarea{
   width:100%; background:var(--panel2); color:var(--text);
-  border:1px solid var(--border); border-radius:4px; padding:7px 8px; font-size:13px;
+  border:1px solid var(--border); border-radius:4px; padding:5px 4px; font-size:12px;
   font-family:inherit; outline:none; transition:border-color 0.2s;
 }
 input:focus,select:focus,textarea:focus{border-color:var(--accent);}
-input.bt{min-width:95px; font-weight:600;}
-input.most{min-width:135px;}
+input.bt{font-weight:600;}
 
-select.tier-select { font-weight: 600; }
+select.tier-select { font-weight: 600; font-size: 11.5px; }
 select.tier-select option { background: var(--panel); color: var(--text); }
 select.tier-select.tier-bronze { color: #cd7f32; }
 select.tier-select.tier-silver { color: #8fa4b2; }
@@ -97,42 +97,40 @@ select.tier-select.tier-diamond { color: #3498db; }
 select.tier-select.tier-master { color: #f39c12; }
 select.tier-select.tier-gm { color: #8e44ad; }
 select.tier-select.tier-champ { color: #c0392b; }
-select.tier-select.tier-top500 { color: #d35400; font-weight: 700; }
 select.tier-select.tier-unranked { color: var(--dim); }
 
-.tier-input-wrap{display:flex; gap:4px; align-items:center;}
-.tier-input-wrap select{flex:2.6; font-weight:600; padding:7px 6px;}
-.tier-input-wrap input.tier-num{flex:1; min-width:44px; text-align:center; font-weight:600; padding:7px 2px;}
+.tier-input-wrap{display:flex; gap:2px; align-items:center;}
+.tier-input-wrap select{flex:2.2; font-weight:600; padding:5px 2px;}
+.tier-input-wrap input.tier-num{flex:1; min-width:28px; text-align:center; font-weight:600; padding:5px 1px;}
 
-.lock-select{
-  font-weight:700; text-align:center; padding:6px 4px; cursor:pointer;
+.tier-locked-highlight{
+  background: rgba(201, 122, 31, 0.12);
+  border-radius: 4px;
+  padding: 2px;
 }
-.lock-select option { background: var(--panel); color: var(--text); }
-.lock-select.locked-tank{background:rgba(47, 111, 209, 0.12); color:var(--tank); border-color:var(--tank);}
-.lock-select.locked-damage{background:rgba(199, 64, 47, 0.12); color:var(--damage); border-color:var(--damage);}
-.lock-select.locked-support{background:rgba(31, 138, 92, 0.12); color:var(--support); border-color:var(--support);}
 
 .center-check{text-align:center;}
 
-.btn-del{
-  background:#ffebee; color:#c62828; border:1px solid #ef9a9a; padding:5px 8px; font-size:11.5px; border-radius:3px; cursor:pointer;
+.btn-detail{
+  background:var(--panel2); color:var(--accent); border:1px solid var(--border); padding:5px 0; font-size:13px; font-weight:700; border-radius:4px; cursor:pointer; transition:all 0.2s; width:100%; display:block; text-align:center;
 }
-.btn-del:hover{background:#ffcdd2;}
+.btn-detail:hover{background:var(--accent); color:#17120a; border-color:var(--accent);}
+.btn-detail.has-setting{background:rgba(201, 122, 31, 0.15); border-color:var(--accent);}
 
-.pref-role-group{display:flex; gap:2px; justify-content:center;}
+.pref-role-group{display:flex; gap:1px; justify-content:center;}
 .pref-role-group label{
-  font-size:10.5px; font-weight:700; padding:4px 5px; border-radius:3px; border:1px solid var(--border);
-  background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s;
+  font-size:10px; font-weight:700; padding:3px 2px; border-radius:3px; border:1px solid var(--border);
+  background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s; width:22px; text-align:center;
 }
 .pref-role-group input[type="checkbox"]{display:none;}
 .pref-role-group input[value="tank"]:checked + label{background:var(--tank); color:#fff; border-color:var(--tank);}
 .pref-role-group input[value="damage"]:checked + label{background:var(--damage); color:#fff; border-color:var(--damage);}
 .pref-role-group input[value="support"]:checked + label{background:var(--support); color:#fff; border-color:var(--support);}
 
-.multi-role-group{display:flex; gap:2px; justify-content:center;}
+.multi-role-group{display:flex; gap:1px; justify-content:center;}
 .multi-role-group label{
-  font-size:10.5px; font-weight:700; padding:4px 5px; border-radius:3px; border:1px solid var(--border);
-  background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s;
+  font-size:10px; font-weight:700; padding:3px 2px; border-radius:3px; border:1px solid var(--border);
+  background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s; width:22px; text-align:center;
 }
 .multi-role-group input[type="checkbox"]{display:none;}
 .multi-role-group input[value="tank"]:checked + label{background:var(--tank); color:#fff; border-color:var(--tank);}
@@ -145,15 +143,25 @@ select.tier-select.tier-unranked { color: var(--dim); }
 }
 .modal-content{
   background:var(--panel); border:1px solid var(--border); border-radius:8px;
-  width:92%; max-width:760px; padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  width:92%; max-width:480px; padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
-.modal-content h3{margin:0 0 10px; font-size:17px; color:var(--accent);}
+.modal-content h3{margin:0 0 12px; font-size:17px; color:var(--accent);}
 .modal-content textarea{
   width:100%; height:120px; background:var(--panel2); color:var(--text);
   border:1px solid var(--border); border-radius:4px; padding:10px; font-family:monospace; font-size:12px;
   resize:vertical; outline:none; margin-bottom:12px;
 }
-.modal-btns{display:flex; justify-content:flex-end; gap:8px;}
+.modal-btns{display:flex; justify-content:flex-end; gap:8px; margin-top:16px;}
+
+.detail-form-group{margin-bottom:14px;}
+.detail-form-group label{display:block; font-size:12.5px; font-weight:600; color:var(--dim); margin-bottom:6px;}
+.checkbox-label{display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; cursor:pointer;}
+.checkbox-label input{width:18px; height:18px; cursor:pointer;}
+
+.delete-list-container{max-height:260px; overflow-y:auto; border:1px solid var(--border); border-radius:4px; padding:8px; background:var(--panel2); margin-bottom:12px;}
+.delete-item-row{display:flex; align-items:center; gap:10px; padding:6px 8px; border-bottom:1px solid var(--border); font-size:13.5px; font-weight:600;}
+.delete-item-row:last-child{border-bottom:none;}
+.delete-item-row input{width:16px; height:16px; cursor:pointer;}
 
 .import-guide-wrap { width: 100%; overflow-x: auto; margin-bottom: 8px; border: 1px solid var(--border); border-radius: 4px; }
 .import-guide-table{ width: 100%; min-width: 650px; border-collapse: collapse; font-size: 11.5px; text-align: center; }
@@ -174,7 +182,7 @@ select.tier-select.tier-unranked { color: var(--dim); }
 #error{color:#e8594f; font-size:16px; text-align:center; margin:14px 0; display:none; font-weight:700;}
 
 .tier-badge{
-  display:inline-block; padding:3px 8px; border-radius:4px; font-size:11.5px; font-weight:700; text-align:center;
+  display:inline-block; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:700; text-align:center;
 }
 .tier-badge.bronze{background:#cd7f32; color:#fff;}
 .tier-badge.silver{background:#95a5a6; color:#fff;}
@@ -185,8 +193,16 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .tier-badge.master{background:#f39c12; color:#fff;}
 .tier-badge.gm{background:#8e44ad; color:#fff;}
 .tier-badge.champ{background:#c0392b; color:#fff;}
-.tier-badge.top500{background:#d35400; color:#fff; border:1px solid #f1c40f;}
 .tier-badge.unranked{background:#6c757d; color:#fff;}
+
+.badge-smb{
+  display:inline-block; background:#e65100; color:#fff; font-size:10px; font-weight:700; padding:2px 5px; border-radius:3px; margin-left:4px; vertical-align:middle;
+}
+.badge-var{
+  display:inline-block; background:#37474f; color:#cfd8dc; font-size:10px; font-weight:700; padding:2px 5px; border-radius:3px; margin-left:4px; vertical-align:middle;
+}
+.badge-var.up{background:#c62828; color:#fff;}
+.badge-var.down{background:#1565c0; color:#fff;}
 
 #results{
   margin-top: 50px; 
@@ -211,7 +227,7 @@ select.tier-select.tier-unranked { color: var(--dim); }
 
 .warn-box{
   background:#fff3cd; color:#856404; border:1px solid #ffeeba; border-radius:6px;
-  padding:12px 16px; margin-top:10px; font-size:16px; font-weight:700; display:block; line-height:1.5; text-align:center;
+  padding:12px 16px; margin-top:10px; font-size:15px; font-weight:700; display:block; line-height:1.5; text-align:center;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]) .warn-box{
@@ -242,7 +258,6 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .team-rank-range.tier-master { background: #f39c12; }
 .team-rank-range.tier-gm { background: #8e44ad; }
 .team-rank-range.tier-champ { background: #c0392b; }
-.team-rank-range.tier-top500 { background: #d35400; border:1px solid #f1c40f; }
 .team-rank-range.tier-unranked { background: #6c757d; }
 
 .player-row{display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--border);}
@@ -354,7 +369,7 @@ footer{
 <main>
 <header>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.5.20</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.6.4</h1>
     <p class="sub">
       탱커 2명, 딜러 4명, 힐러 4명(1/2/2 조합)을 기준으로 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-warning">⚠️ 6:6 모드는 지원하지 않습니다.</span>
@@ -364,20 +379,21 @@ footer{
 </header>
 
 <div class="guide-box">
-  <h3>📋 데이터 입력 및 이용 팁</h3>
+  <h3>📋 데이터 입력 및 이용 팁 (v1.6.4 업데이트)</h3>
   <ul>
-    <li><b>선호 포지션 및 가능 포지션:</b> 선호 포지션과 가능 포지션은 체크박스를 통해 여러 개 복수 선택할 수 있습니다.</li>
-    <li><b>포지션 고정 (최우선 순위):</b> 포지션 고정이 선택된 유저는 해당 포지션으로 최우선 배정되며, 전체 팀 조합의 핵심 제어 기준이 됩니다.</li>
-    <li><b>딜러 성향 반영:</b> 딜러는 메인과 서브 특성 및 '상관없음' 성향을 반영하여 조화롭게 배치됩니다.</li>
-    <li><b>마스터 이상 인원 제한:</b> 마스터 이상 티어 유저는 <b>6명 이상</b>이어야 게임 붕괴를 방지하고 정상적인 팀 구성이 가능합니다. (5명 이하일 경우 차단)</li>
+    <li><b>[⚙️ 상세 설정]:</b> 각 유저 행의 톱니바퀴 아이콘을 눌러 포지션 고정, 역대 티어 변동(급상승/휴면하락), '생배' 여부를 설정할 수 있습니다. (고정된 포지션은 티어 칸 배경색이 은은하게 하이라이트됩니다.)</li>
+    <li><b>데이터 입력 방법:</b> 아래 표에서 배틀태그(이름)를 입력하고, 선호 및 가능 포지션(탱/딜/힐)을 체크한 뒤, 각 포지션별 티어(브론즈~챔피언 및 세부 단계 1~5)와 주요 모스트 영웅을 자유롭게 선택·입력하세요.</li>
   </ul>
 </div>
 
 <div class="toolbar">
-<button class="btn" id="addRowBtn">➕ 유저 직접 추가</button>
-<button class="btn" id="openImportBtn">📋 메모장 데이터 일괄 입력</button>
-<button class="btn" id="demoBtn">예시 데이터 채우기</button>
-<button class="btn" id="resetBtn">전체 초기화</button>
+  <div class="toolbar-left">
+    <button class="btn" id="addRowBtn">➕ 유저 직접 추가</button>
+    <button class="btn" id="openImportBtn">📋 메모장 데이터 일괄 입력</button>
+    <button class="btn" id="demoBtn">예시 데이터 채우기</button>
+    <button class="btn" id="resetBtn">전체 초기화</button>
+  </div>
+  <button class="btn" id="openDeleteModal" style="background:#ffebee; color:#c62828; border:1px solid #ef9a9a; padding:6px 12px; font-size:12.5px;">🗑️ 유저 삭제</button>
 </div>
 
 <div class="table-wrap" id="tableWrap">
@@ -392,17 +408,16 @@ footer{
 
   <table id="playerTable" style="display:none;">
     <thead><tr>
-    <th style="min-width:105px;">이름</th>
-    <th style="min-width:100px;">선호 포지션</th>
-    <th style="min-width:96px;">가능 포지션</th>
-    <th style="width:84px;">포지션 고정</th>
-    <th style="min-width:175px;">탱커 티어</th>
-    <th style="min-width:175px;">딜러 티어</th>
-    <th style="min-width:175px;">힐러 티어</th>
-    <th style="min-width:145px;">탱커 모스트</th>
-    <th style="min-width:145px;">딜러 모스트</th>
-    <th style="min-width:145px;">힐러 모스트</th>
-    <th style="width:58px; text-align:center;">삭제</th>
+    <th style="width:110px;">이름</th>
+    <th style="width:95px;">선호 포지션</th>
+    <th style="width:95px;">가능 포지션</th>
+    <th style="width:160px;">탱커 티어</th>
+    <th style="width:160px;">딜러 티어</th>
+    <th style="width:160px;">힐러 티어</th>
+    <th style="width:110px;">탱커 모스트</th>
+    <th style="width:110px;">딜러 모스트</th>
+    <th style="width:110px;">힐러 모스트</th>
+    <th style="width:55px; text-align:center;">상세</th>
     </tr></thead>
     <tbody id="tbody"></tbody>
   </table>
@@ -487,11 +502,58 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.5.20)
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.6.4)
 </footer>
 
-<div class="modal" id="importModal">
+<!-- 상세 설정 모달 -->
+<div class="modal" id="detailModal">
   <div class="modal-content">
+    <h3 id="detailModalTitle">⚙️ 유저 상세 설정</h3>
+    <div class="detail-form-group">
+      <label>포지션 고정 (최우선 순위)</label>
+      <select id="modalLockSelect">
+        <option value="none">고정 없음</option>
+        <option value="tank">탱커 고정</option>
+        <option value="damage">딜러 고정</option>
+        <option value="support">힐러 고정</option>
+      </select>
+    </div>
+    <div class="detail-form-group">
+      <label>역대 최고/최저 티어 변동 보정</label>
+      <select id="modalTierVariant">
+        <option value="normal">일반 (현재 티어 기준)</option>
+        <option value="up">최근 급상승 (전시즌 대비 상승)</option>
+        <option value="down">최근 휴면/강등 (전시즌 대비 하락)</option>
+      </select>
+    </div>
+    <div class="detail-form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" id="modalSmurfCheck"> 
+        <span>생배 계정 (배치만 본 불확실한 계정)</span>
+      </label>
+    </div>
+    <div class="modal-btns">
+      <button class="btn" id="closeDetailModal">취소</button>
+      <button class="btn" id="saveDetailModal" style="background:var(--accent); color:#17120a; border:none;">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 유저 삭제 모달 -->
+<div class="modal" id="deleteModal">
+  <div class="modal-content">
+    <h3>🗑️ 유저 선택 삭제</h3>
+    <p style="font-size:12.5px; color:var(--dim); margin-bottom:10px;">삭제할 플레이어를 체크한 후 확인 버튼을 눌러주세요.</p>
+    <div class="delete-list-container" id="deleteListContainer"></div>
+    <div class="modal-btns">
+      <button class="btn" id="closeDeleteModal">취소</button>
+      <button class="btn" id="confirmDeleteModal" style="background:#c62828; color:#fff; border:none;">선택 삭제 확인</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="importModal">
+  <div class="modal-content" style="max-width:760px;">
     <h3>메모장 데이터 일괄 붙여넣기</h3>
     <p style="font-size:12.5px; color:var(--dim); margin-bottom:6px;">
       아래 형식에 맞춰 한 줄에 한 명씩 데이터를 입력해 주세요. (형식: <b>[이름, 선호포지션, 가능포지션, 탱커티어(모스트), 딜러티어(모스트), 힐러티어(모스트)]</b>)
@@ -562,47 +624,62 @@ document.addEventListener("DOMContentLoaded", () => {
   const MODE_NAMES = { payload: '🚚 화물', hybrid: '🏰 혼합', control: '🚩 쟁탈', flashpoint: '⚡ 플래시포인트', push: '🤖 밀기' };
 
   const DEMO_BASE = [
-    { bt: "망고", pref: ["tank", "damage"], multi: ["tank", "damage"], t: "언랭", d: "다이아3", s: "에메랄드3" },
-    { bt: "프로피", pref: ["damage"], multi: ["damage", "support"], t: "골드3", d: "다이아1", s: "실버1" },
-    { bt: "플레티", pref: ["damage", "tank"], multi: ["damage", "tank"], t: "실버2", d: "다이아3", s: "언랭" },
-    { bt: "리푸", pref: ["damage"], multi: ["damage"], t: "플래티넘1", d: "다이아1", s: "에메랄드4" },
-    { bt: "스토커", pref: ["damage"], multi: ["damage"], t: "골드1", d: "다이아2", s: "골드3" },
-    { bt: "바이올", pref: ["support"], multi: ["support", "tank"], t: "실버3", d: "플래티넘4", s: "다이아2" },
-    { bt: "슈우", pref: ["support"], multi: ["support", "damage"], t: "골드2", d: "플래티넘2", s: "다이아1" },
-    { bt: "스머프", pref: ["tank"], multi: ["tank", "support"], t: "다이아3", d: "플래티넘3", s: "실버2" },
-    { bt: "트와일", pref: ["support"], multi: ["support"], t: "실버1", d: "골드1", s: "다이아2" },
-    { bt: "페코", pref: ["damage"], multi: ["damage", "support"], t: "다이아4", d: "에메랄드2", s: "다이아3" }
+    { bt: "망고", pref: ["tank", "damage"], multi: ["tank", "damage"], t: "언랭", d: "다이아3", s: "에메랄드3", variant: "normal", smurf: false, lock: "none" },
+    { bt: "프로피", pref: ["damage"], multi: ["damage", "support"], t: "골드3", d: "다이아1", s: "실버1", variant: "normal", smurf: true, lock: "none" },
+    { bt: "플레티", pref: ["damage", "tank"], multi: ["damage", "tank"], t: "실버2", d: "다이아3", s: "언랭", variant: "down", smurf: false, lock: "none" },
+    { bt: "리푸", pref: ["damage"], multi: ["damage"], t: "플래티넘1", d: "다이아1", s: "에메랄드4", variant: "normal", smurf: false, lock: "none" },
+    { bt: "스토커", pref: ["damage"], multi: ["damage"], t: "골드1", d: "다이아2", s: "골드3", variant: "normal", smurf: false, lock: "none" },
+    { bt: "바이올", pref: ["support"], multi: ["support", "tank"], t: "실버3", d: "플래티넘4", s: "다이아2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "슈우", pref: ["support"], multi: ["support", "damage"], t: "골드2", d: "플래티넘2", s: "다이아1", variant: "up", smurf: false, lock: "none" },
+    { bt: "스머프", pref: ["tank"], multi: ["tank", "support"], t: "다이아3", d: "플래티넘3", s: "실버2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "트와일", pref: ["support"], multi: ["support"], t: "실버1", d: "골드1", s: "다이아2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "페코", pref: ["damage"], multi: ["damage", "support"], t: "다이아4", d: "에메랄드2", s: "다이아3", variant: "normal", smurf: false, lock: "none" }
   ];
 
   function getRandomMosts(role){
     if(Math.random() < 0.15) return '상관없음';
     const pool = role === 'damage' ? [...HERO_POOL.damageMain, ...HERO_POOL.damageSub] : HERO_POOL[role];
-    const count = Math.floor(Math.random() * 4) + 1;
+    const count = Math.floor(Math.random() * 3) + 1;
     const shuffled = [...pool].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count).join(', ');
   }
 
-  function tierToScore(ti, div){
+  function tierToScore(ti, div, role = '', variant = 'normal', isSmurf = false){
     if(ti === -1) return 0;
     const step = (ti * 5) + (5 - div);
-    if (ti <= 2) return 100 + (step * 15);
-    if (ti <= 4) return 250 + (step - 15) * 22;
-    if (ti <= 6) return 500 + (step - 25) * 35;
-    return 850 + (step - 35) * 50;
+    let baseScore = 0;
+    if (ti <= 2) baseScore = 100 + (step * 15);
+    else if (ti <= 4) baseScore = 250 + (step - 15) * 22;
+    else if (ti <= 6) baseScore = 500 + (step - 25) * 35;
+    else baseScore = 850 + (step - 35) * 50;
+
+    if(variant === 'up') baseScore *= 0.92;
+    else if(variant === 'down') baseScore *= 1.08;
+
+    if(isSmurf){
+      const dia5Step = (5 * 5) + (5 - 5);
+      if(step > dia5Step) baseScore *= 0.88;
+      else if(step < dia5Step) baseScore *= 1.12;
+    }
+
+    if(role === 'support' && ti >= 6){
+      const discountRatio = 1.0 - ((ti - 5) * 0.05);
+      baseScore *= Math.max(0.85, discountRatio);
+    }
+
+    return baseScore;
   }
 
   function stepToTierInfo(step){
     if(step === -1) return { ti: -1, div: 0, label: '언랭', shortName: '언랭', score: 0, step: -1, css: 'tier-unranked' };
-    if(step >= 45) return { ti: 9, div: 1, label: '탑 500', shortName: '탑500', score: 1300, step, css: 'tier-top500' };
     const ti = Math.floor(step / 5), div = 5 - (step % 5);
     const tDef = TIERS_DEF[ti] || TIERS_DEF[2];
-    return { ti, div, step, label: `${SHORT_TIER_NAMES[tDef.name] || tDef.name} ${div}`, score: tierToScore(ti, div), css: tDef.css };
+    return { ti, div, step, label: `${SHORT_TIER_NAMES[tDef.name] || tDef.name} ${div}`, css: tDef.css };
   }
 
   function renderTierBadgeByStep(step){
     const info = stepToTierInfo(step);
     if(info.ti === -1) return `<span class="tier-badge unranked">언랭</span>`;
-    if(info.ti === 9) return `<span class="tier-badge top500">탑 500</span>`;
     return `<span class="tier-badge ${info.css.replace('tier-', '')}">${info.label}</span>`;
   }
 
@@ -610,7 +687,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if(!str) return -1;
     const s = str.toString().trim().replace(/\s+/g, '');
     if(s.includes('언랭') || s.includes('미배치') || s === '-') return -1;
-    if(s.includes('500')) return 45;
     for(const t of TIERS_DEF){
       if(s.includes(t.name.substring(0, 1)) || s.includes(t.name)){
         const num = s.match(/[1-5]/);
@@ -631,17 +707,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedTi = info.ti;
     let selectedDiv = info.div;
     if(currentStep === -1) { selectedTi = -1; selectedDiv = 0; }
-    if(currentStep === 45) { selectedTi = 9; selectedDiv = 1; }
 
     let tOpts = `<option value="-1" ${selectedTi===-1?'selected':''}>언랭</option>`;
     TIERS_DEF.forEach(t => {
       tOpts += `<option value="${t.idx}" ${selectedTi===t.idx?'selected':''}>${t.name}</option>`;
     });
-    tOpts += `<option value="9" ${selectedTi===9?'selected':''}>탑 500</option>`;
 
     const numVal = (selectedTi === -1) ? 0 : selectedDiv;
-    const numDisabled = (selectedTi === -1 || selectedTi === 9) ? 'disabled style="background:var(--border); color:var(--dim);"' : '';
-
+    const numDisabled = (selectedTi === -1) ? 'disabled style="background:var(--border); color:var(--dim);"' : '';
     const tempInfo = stepToTierInfo(currentStep);
 
     return `
@@ -657,7 +730,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const tSel = parseInt(container.querySelector('.tier-select').value);
     const numInput = container.querySelector('.tier-num');
     if(tSel === -1) return -1;
-    if(tSel === 9) return 45;
     const div = Math.min(5, Math.max(1, parseInt(numInput.value) || 3));
     return (tSel * 5) + (5 - div);
   }
@@ -665,9 +737,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let rowIdxCounter = 0;
   let historyTeams = [];
   let cachedSortedCandidates = [];
+  let activeDetailRow = null;
 
   const tbody = document.getElementById('tbody'), playerTable = document.getElementById('playerTable'), emptyPlaceholder = document.getElementById('emptyPlaceholder');
   const historySelect = document.getElementById('historySelect');
+  const detailModal = document.getElementById('detailModal');
+  const deleteModal = document.getElementById('deleteModal');
 
   function checkTableVisibility(){
     const hasRows = tbody.children.length > 0;
@@ -675,12 +750,33 @@ document.addEventListener("DOMContentLoaded", () => {
     emptyPlaceholder.style.display = hasRows ? 'none' : 'block';
   }
 
+  function updateRowLockHighlight(row){
+    const lock = row.dataset.lock || 'none';
+    const tankTd = row.querySelector('.tier-tank').closest('td');
+    const dmgTd = row.querySelector('.tier-damage').closest('td');
+    const supTd = row.querySelector('.tier-support').closest('td');
+
+    tankTd.classList.remove('tier-locked-highlight');
+    dmgTd.classList.remove('tier-locked-highlight');
+    supTd.classList.remove('tier-locked-highlight');
+
+    if(lock === 'tank') tankTd.classList.add('tier-locked-highlight');
+    if(lock === 'damage') dmgTd.classList.add('tier-locked-highlight');
+    if(lock === 'support') supTd.classList.add('tier-locked-highlight');
+  }
+
   function addPlayerRow(data = {}){
     const i = rowIdxCounter++;
     const tr = document.createElement('tr');
     const pref = data.pref || ['tank'];
     const multi = data.multi || ['tank', 'damage', 'support'];
-    const lockVal = data.lockTank ? 'tank' : data.lockDamage ? 'damage' : data.lockSupport ? 'support' : 'none';
+    const lock = data.lock || 'none';
+    const variant = data.variant || 'normal';
+    const smurf = data.smurf ? 'true' : 'false';
+
+    tr.dataset.variant = variant;
+    tr.dataset.smurf = smurf;
+    tr.dataset.lock = lock;
     
     tr.innerHTML = `
      <td><input class="bt" placeholder="이름" value="${data.bt || ''}"></td>
@@ -698,29 +794,87 @@ document.addEventListener("DOMContentLoaded", () => {
          <input type="checkbox" id="mu_${i}_s" name="multi_${i}" value="support" ${multi.includes('support')?'checked':''}><label for="mu_${i}_s">힐</label>
        </div>
      </td>
-     <td class="center-check">
-       <select class="lock-select ${lockVal !== 'none' ? 'locked-' + lockVal : ''}">
-         <option value="none" ${lockVal==='none'?'selected':''}>없음</option>
-         <option value="tank" ${lockVal==='tank'?'selected':''}>탱</option>
-         <option value="damage" ${lockVal==='damage'?'selected':''}>딜</option>
-         <option value="support" ${lockVal==='support'?'selected':''}>힐</option>
-       </select>
-     </td>
      <td><div class="tier-container tier-tank">${createTierSelectHTML(parseTierStringToStep(data.tankStr))}</div></td>
      <td><div class="tier-container tier-damage">${createTierSelectHTML(parseTierStringToStep(data.damageStr))}</div></td>
      <td><div class="tier-container tier-support">${createTierSelectHTML(parseTierStringToStep(data.supportStr))}</div></td>
-     <td><input class="most most-tank" placeholder="윈스턴, 상관없음" value="${data.mostT || ''}"></td>
-     <td><input class="most most-damage" placeholder="소전, 메인딜러" value="${data.mostD || ''}"></td>
-     <td><input class="most most-support" placeholder="아나, 상관없음" value="${data.mostS || ''}"></td>
-     <td style="text-align:center;"><button type="button" class="btn-del">삭제</button></td>
+     <td><input class="most most-tank" placeholder="윈스턴" value="${data.mostT || ''}"></td>
+     <td><input class="most most-damage" placeholder="소전" value="${data.mostD || ''}"></td>
+     <td><input class="most most-support" placeholder="아나" value="${data.mostS || ''}"></td>
+     <td style="text-align:center;"><button type="button" class="btn-detail ${variant !== 'normal' || smurf === 'true' || lock !== 'none' ? 'has-setting' : ''}" title="상세 설정">⚙️</button></td>
     `;
     
-    tr.querySelector('.btn-del').onclick = () => { tr.remove(); checkTableVisibility(); };
+    updateRowLockHighlight(tr);
+
+    tr.querySelector('.btn-detail').onclick = () => {
+      activeDetailRow = tr;
+      document.getElementById('modalLockSelect').value = tr.dataset.lock;
+      document.getElementById('modalTierVariant').value = tr.dataset.variant;
+      document.getElementById('modalSmurfCheck').checked = tr.dataset.smurf === 'true';
+      document.getElementById('detailModalTitle').textContent = `⚙️ ${(tr.querySelector('.bt').value.trim() || '유저')} 상세 설정`;
+      detailModal.style.display = 'flex';
+    };
+
     tbody.appendChild(tr);
     checkTableVisibility();
   }
 
   document.getElementById('addRowBtn').onclick = () => addPlayerRow();
+
+  document.getElementById('openDeleteModal').onclick = () => {
+    const rows = [...tbody.querySelectorAll('tr')];
+    if(rows.length === 0){
+      alert('삭제할 플레이어가 없습니다.');
+      return;
+    }
+    const container = document.getElementById('deleteListContainer');
+    container.innerHTML = rows.map((r, idx) => {
+      const name = r.querySelector('.bt').value.trim() || `플레이어 ${idx+1}`;
+      return `
+        <label class="delete-item-row">
+          <input type="checkbox" class="del-checkbox" value="${idx}">
+          <span>${name}</span>
+        </label>
+      `;
+    }).join('');
+    deleteModal.style.display = 'flex';
+  };
+  document.getElementById('closeDeleteModal').onclick = () => { deleteModal.style.display = 'none'; };
+  document.getElementById('confirmDeleteModal').onclick = () => {
+    const checkboxes = [...document.querySelectorAll('.del-checkbox:checked')];
+    const indicesToDelete = checkboxes.map(cb => parseInt(cb.value)).reverse();
+    const rows = [...tbody.querySelectorAll('tr')];
+    indicesToDelete.forEach(idx => {
+      if(rows[idx]) rows[idx].remove();
+    });
+    deleteModal.style.display = 'none';
+    checkTableVisibility();
+  };
+
+  document.getElementById('closeDetailModal').onclick = () => { detailModal.style.display = 'none'; };
+  document.getElementById('saveDetailModal').onclick = () => {
+    if(activeDetailRow){
+      const lock = document.getElementById('modalLockSelect').value;
+      const variant = document.getElementById('modalTierVariant').value;
+      const isSmurf = document.getElementById('modalSmurfCheck').checked;
+      
+      activeDetailRow.dataset.lock = lock;
+      activeDetailRow.dataset.variant = variant;
+      activeDetailRow.dataset.smurf = isSmurf ? 'true' : 'false';
+
+      if(lock !== 'none'){
+        const roleVal = lock;
+        const mBox = activeDetailRow.querySelector(`input[name^="multi_"][value="${roleVal}"]`);
+        if(mBox) mBox.checked = true;
+      }
+
+      updateRowLockHighlight(activeDetailRow);
+
+      const btnDetail = activeDetailRow.querySelector('.btn-detail');
+      if(variant !== 'normal' || isSmurf || lock !== 'none') btnDetail.classList.add('has-setting');
+      else btnDetail.classList.remove('has-setting');
+    }
+    detailModal.style.display = 'none';
+  };
 
   tbody.addEventListener('change', e => {
     const row = e.target.closest('tr');
@@ -733,11 +887,6 @@ document.addEventListener("DOMContentLoaded", () => {
         numInput.disabled = true;
         numInput.style.background = 'var(--border)';
         numInput.style.color = 'var(--dim)';
-      } else if(val === 9){
-        numInput.value = 1;
-        numInput.disabled = true;
-        numInput.style.background = 'var(--border)';
-        numInput.style.color = 'var(--dim)';
       } else {
         if(parseInt(numInput.value) === 0 || isNaN(parseInt(numInput.value))) numInput.value = 3;
         numInput.disabled = false;
@@ -747,14 +896,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const roleClass = e.target.closest('.tier-container').classList.contains('tier-tank') ? 'tier-tank' : e.target.closest('.tier-container').classList.contains('tier-damage') ? 'tier-damage' : 'tier-support';
       const currentStep = getStepFromRowSelects(row, roleClass);
       updateSelectTierColor(e.target, currentStep);
-    }
-    if(e.target.classList.contains('lock-select')){
-      const val = e.target.value;
-      e.target.className = 'lock-select' + (val !== 'none' ? ` locked-${val}` : '');
-      if(val !== 'none'){
-        const mBox = row.querySelector(`input[name^="multi_"][value="${val}"]`);
-        if(mBox) mBox.checked = true;
-      }
     }
   });
 
@@ -790,7 +931,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let tM = '', dM = '', sM = '';
 
     parts.forEach(item => {
-      const matchTierMost = item.match(/^(.*?[급즈브실골플에다마그챔탑500랜급]+[1-5]?-?[0-5]?)\s*\(([^)]+)\)$/);
+      const matchTierMost = item.match(/^(.*?[급즈브실골플에다마그챔랜급]+[1-5]?-?[0-5]?)\s*\(([^)]+)\)$/);
       const matchColon = item.match(/(탱|딜|힐)\s*:\s*(.+)/);
 
       if(matchTierMost){
@@ -852,7 +993,8 @@ document.addEventListener("DOMContentLoaded", () => {
       tankStr: u.t, damageStr: u.d, supportStr: u.s,
       mostT: getRandomMosts('tank'),
       mostD: getRandomMosts('damage'),
-      mostS: getRandomMosts('support')
+      mostS: getRandomMosts('support'),
+      variant: u.variant, smurf: u.smurf, lock: u.lock
     })); 
   };
 
@@ -912,15 +1054,21 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="team-rank-range ${rangeClass}">매칭 구간: ${getRange(team)}</span>
         </div>
       </div>
-      ${team.map(p => `
+      ${team.map(p => {
+        let badges = '';
+        if(p.isSmurf) badges += `<span class="badge-smb">생배</span>`;
+        if(p.variant === 'up') badges += `<span class="badge-var up">급상승</span>`;
+        if(p.variant === 'down') badges += `<span class="badge-var down">휴면하락</span>`;
+        return `
         <div class="player-row">
           <span class="role-tag ${p.assignedPos}">${ROLE_LABEL[p.assignedPos]}</span>
           <div class="p-info">
-            <div class="p-bt">${p.bt}</div>
+            <div class="p-bt">${p.bt} ${badges}</div>
             <div class="p-mosts">${p.most[p.assignedPos] ? p.most[p.assignedPos].split(',').slice(0, 5).map(h=>`<span class="hero-tag">${h.trim()}</span>`).join('') : '<span class="hero-tag empty">상관없음</span>'}</div>
           </div>
           <div class="p-right">${renderTierBadgeByStep(p.tier[p.assignedPos])}</div>
-        </div>`).join('')}
+        </div>`;
+      }).join('')}
     `;
     };
 
@@ -939,8 +1087,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if(roundedDiff >= 100 && !terminationMsg){
       warnMsg += `<br><div class="warn-box" style="background:#f8d7da; color:#721c24; border-color:#f5c6cb;">⚠️ 양 팀 간의 평점 격차가 100점 이상(${roundedDiff}점) 발생하여 최적 팀 구성 탐색이 종결되었습니다.</div>`;
     }
-    if(best.tankDiff >= 3){
-      warnMsg += `<br><div class="warn-box" style="background:#fff3cd; color:#856404; border-color:#ffeeba;">🛡️ 탱커 간 티어 차이가 존재하나, 타 라인(딜러/힐러) 격차 보완을 통해 밸런스가 조율된 구성입니다. (${best.tankDiff}단계 차이)</div>`;
+    if(best.tankDiff >= 4){
+      warnMsg += `<br><div class="warn-box" style="background:#fff3cd; color:#856404; border-color:#ffeeba;">⚠️ 탱커 간 티어 격차가 심합니다! (${best.tankDiff}단계 차이)</div>`;
+    }
+    const hasSmurfInTeams = [...best.teamA, ...best.teamB].some(p => p.isSmurf);
+    if(hasSmurfInTeams){
+      warnMsg += `<br><div class="warn-box" style="background:#e8f4fd; color:#0d47a1; border-color:#bbdefb;">ℹ️ 생배 계정이 포함되어 있어 완벽한 밸런스가 맞춰지지 않았습니다.</div>`;
     }
 
     document.getElementById('diffLine').innerHTML = `<b>🎯 자동 밸런스 매칭 결과</b><br>양 팀 평점 격차: <b>${roundedDiff}점</b> (A팀: ${Math.round(best.scoreA)}점 vs B팀: ${Math.round(best.scoreB)}점)${warnMsg}`;
@@ -963,10 +1115,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let players = rows.map(r => {
       const bt = r.querySelector('.bt').value.trim() || '플레이어';
-      const lockVal = r.querySelector('.lock-select').value;
-      const lockTank = lockVal === 'tank';
-      const lockDamage = lockVal === 'damage';
-      const lockSupport = lockVal === 'support';
+      const lock = r.dataset.lock || 'none';
+      const lockTank = lock === 'tank';
+      const lockDamage = lock === 'damage';
+      const lockSupport = lock === 'support';
+      const variant = r.dataset.variant || 'normal';
+      const isSmurf = r.dataset.smurf === 'true';
 
       const multi = [...r.querySelectorAll('input[name^="multi_"]:checked')].map(c => c.value);
       if(lockTank && !multi.includes('tank')) multi.push('tank');
@@ -987,10 +1141,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const isMasterOrAbove = (step) => step >= 30;
       const hasHighTier = isMasterOrAbove(tier.tank) || isMasterOrAbove(tier.damage) || isMasterOrAbove(tier.support);
 
+      const tInfo = stepToTierInfo(tier.tank);
+      const dInfo = stepToTierInfo(tier.damage);
+      const sInfo = stepToTierInfo(tier.support);
+
+      const scores = {
+        tank: tierToScore(tInfo.ti, tInfo.div, 'tank', variant, isSmurf),
+        damage: tierToScore(dInfo.ti, dInfo.div, 'damage', variant, isSmurf),
+        support: tierToScore(sInfo.ti, sInfo.div, 'support', variant, isSmurf)
+      };
+
       return { 
-        bt, multi, lockTank, lockDamage, lockSupport, tier, most, hasHighTier,
+        bt, multi, lockTank, lockDamage, lockSupport, tier, most, hasHighTier, variant, isSmurf,
         damageStyle: getDamageStyle(most.damage),
-        scores: { tank: stepToTierInfo(tier.tank).score, damage: stepToTierInfo(tier.damage).score, support: stepToTierInfo(tier.support).score } 
+        scores
       };
     });
 
@@ -1016,8 +1180,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const lockedDamages = filteredPlayers.filter(p => p.lockDamage);
     const lockedSupports = filteredPlayers.filter(p => p.lockSupport);
 
-    if(lockedTanks.length > 2 || lockedDamages.length > 2 || lockedSupports.length > 2){
-      const msg = `각 포지션별 고정은 최대 2명까지만 가능합니다.`;
+    if(lockedTanks.length > 2 || lockedDamages.length > 4 || lockedSupports.length > 4){
+      const msg = `포지션 고정 인원이 정원(탱2, 딜4, 힐4)을 초과했습니다.`;
       errEl.textContent = msg;
       errEl.style.display = 'block';
       alert(msg);
@@ -1039,31 +1203,38 @@ document.addEventListener("DOMContentLoaded", () => {
       const existingSignatures = new Set();
       const candidates = [];
 
-      const validTankCandidates = filteredPlayers.filter(p => !p.lockTank && p.tier.tank !== -1);
-      const shuffledTankCombos = combinations(validTankCandidates, 2 - lockedTanks.length);
+      const unselectedPlayers = filteredPlayers.filter(p => !lockedTanks.includes(p) && !lockedDamages.includes(p) && !lockedSupports.includes(p));
 
-      for(const teamTanks of shuffledTankCombos){
-        const actualTanks = [...lockedTanks, ...teamTanks];
-        if(actualTanks.some(p => p.tier.tank === -1)) continue;
-        const rem1 = filteredPlayers.filter(p => !actualTanks.includes(p));
+      const needTanksCount = 2 - lockedTanks.length;
+      const needDmgCount = 4 - lockedDamages.length;
+      const needSupCount = 4 - lockedSupports.length;
 
-        const validDamageCandidates = rem1.filter(p => !p.lockDamage && p.tier.damage !== -1);
-        const shuffledDmgCombos = combinations(validDamageCandidates, 4 - lockedDamages.length);
+      const validTankPool = unselectedPlayers.filter(p => p.tier.tank !== -1);
+      const tankCombos = needTanksCount > 0 ? combinations(validTankPool, needTanksCount) : [[]];
 
-        for(const teamDamages of shuffledDmgCombos){
-          const actualDamages = [...lockedDamages, ...teamDamages];
-          if(actualDamages.some(p => p.tier.damage === -1)) continue;
+      for(const chosenTanks of tankCombos){
+        const actualTanks = [...lockedTanks, ...chosenTanks];
+        if(actualTanks.length !== 2) continue;
+        const rem1 = unselectedPlayers.filter(p => !chosenTanks.includes(p));
 
-          const teamSupports = rem1.filter(p => !actualDamages.includes(p));
-          if(teamSupports.length !== 4) continue;
-          if(teamSupports.some(p => p.tier.support === -1)) continue;
+        const validDmgPool = rem1.filter(p => p.tier.damage !== -1);
+        const dmgCombos = needDmgCount > 0 ? combinations(validDmgPool, needDmgCount) : [[]];
+
+        for(const chosenDmg of dmgCombos){
+          const actualDamages = [...lockedDamages, ...chosenDmg];
+          if(actualDamages.length !== 4) continue;
+          const rem2 = rem1.filter(p => !chosenDmg.includes(p));
+
+          const actualSupports = [...lockedSupports, ...rem2];
+          if(actualSupports.length !== 4) continue;
+          if(actualSupports.some(p => p.tier.support === -1)) continue;
 
           for(const tA of combinations(actualTanks, 1)){
             const tB = actualTanks.filter(p => !tA.includes(p));
             for(const dA of combinations(actualDamages, 2)){
               const dB = actualDamages.filter(p => !dA.includes(p));
-              for(const sA of combinations(teamSupports, 2)){
-                const sB = teamSupports.filter(p => !sA.includes(p));
+              for(const sA of combinations(actualSupports, 2)){
+                const sB = actualSupports.filter(p => !sA.includes(p));
 
                 const getPos = (p, t, d, s) => {
                   if(p.lockTank) return 'tank';
@@ -1098,7 +1269,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const tankA_step = stepToTierInfo(teamA.find(p => p.assignedPos === 'tank').tier.tank).step;
                 const tankB_step = stepToTierInfo(teamB.find(p => p.assignedPos === 'tank').tier.tank).step;
                 const tankDiff = Math.abs(tankA_step - tankB_step);
-                penalty += tankDiff * 350; // 탱커 간 티어 격차가 날 경우 페널티를 강력하게 부여하여 우선순위에서 밀려나도록 함
 
                 const dListA = teamA.filter(p => p.assignedPos === 'damage');
                 const dListB = teamB.filter(p => p.assignedPos === 'damage');
@@ -1118,7 +1288,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // 정렬 기준: 1순위 탱커 티어 격차(tankDiff)가 적은 순, 2순위 평점 격차(scoreDiff)가 적은 순
       candidates.sort((a, b) => {
         if (Math.abs(a.tankDiff - b.tankDiff) > 0) {
           return a.tankDiff - b.tankDiff;
@@ -1129,11 +1298,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return a.totalEval - b.totalEval;
       });
 
-      cachedSortedCandidates = candidates;
+      const zeroGapCandidates = candidates.filter(c => c.tankDiff === 0);
+      cachedSortedCandidates = zeroGapCandidates.length > 0 ? zeroGapCandidates : candidates;
     }
 
     if(cachedSortedCandidates.length === 0){
-      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (가능 포지션 설정 및 포지션 고정 조건을 확인해주세요)`;
+      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (포지션 고정 조건이나 가능 포지션 설정을 확인해 주세요)`;
       errEl.innerHTML = msg;
       errEl.style.display = 'block';
       alert(msg);
@@ -1227,7 +1397,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formatTeam = (team, name, score) => {
       const steps = team.map(p => p.tier[p.assignedPos]);
       const range = `${stepToTierInfo(Math.min(...steps)).label} ~ ${stepToTierInfo(Math.max(...steps)).label}`;
-      return `[${name} 팀] (평점: ${Math.round(score)}점 | 구간: ${range})\n` + team.map(p => `- [${ROLE_LABEL[p.assignedPos]}] ${p.bt} (${stepToTierInfo(p.tier[p.assignedPos]).label})`).join('\n');
+      return `[${name} 팀] (평점: ${Math.round(score)}점 | 구간: ${range})\n` + team.map(p => `- [${ROLE_LABEL[p.assignedPos]}] ${p.bt}${p.isSmurf ? ' (생배)' : ''} (${stepToTierInfo(p.tier[p.assignedPos]).label})`).join('\n');
     };
     navigator.clipboard.writeText(`[오버워치 내전 팀 구성 결과]\n\n${formatTeam(targetResult.teamA, 'A', targetResult.scoreA)}\n\n${formatTeam(targetResult.teamB, 'B', targetResult.scoreB)}`).then(() => alert('선택한 팀 구성 결과가 복사되었습니다!'));
   };
