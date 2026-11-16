@@ -38,6 +38,17 @@ h1{font-size:26px; font-weight:700; margin:0 0 6px;}
 .sub-highlight{display:block; margin-top:4px; color:var(--accent); font-weight:700; font-size:14.5px;}
 .sub-warning{display:block; margin-top:2px; color:#e8594f; font-weight:700; font-size:14px;}
 
+.advanced-options-section{
+  background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent);
+  padding:14px 18px; border-radius:6px; margin-bottom:18px; font-size:13.5px;
+}
+.advanced-options-section h3{margin:0 0 10px; font-size:15px; color:var(--accent);}
+.advanced-options-grid{display:flex; gap:20px; flex-wrap:wrap;}
+.advanced-options-grid label{
+  display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; cursor:pointer; user-select:none;
+}
+.advanced-options-grid input[type="checkbox"]{width:16px; height:16px; cursor:pointer; accent-color:var(--accent);}
+
 .guide-box{
   background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent);
   padding:14px 18px; border-radius:6px; margin-bottom:18px; font-size:13.5px; line-height:1.6;
@@ -218,6 +229,13 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .diff-line{font-size:17px; color:var(--dim); line-height:1.6; text-align:center; width:100%;}
 .diff-line b{color:var(--text); font-size:19px;}
 
+.advanced-badge-container {
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px;
+}
+.advanced-badge {
+  background: var(--accent); color: #17120a; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 .history-container{
   background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:8px 14px;
   display:flex; align-items:center; gap:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04);
@@ -369,7 +387,7 @@ footer{
 <main>
 <header>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.6.4</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.6.6</h1>
     <p class="sub">
       탱커 2명, 딜러 4명, 힐러 4명(1/2/2 조합)을 기준으로 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-warning">⚠️ 6:6 모드는 지원하지 않습니다.</span>
@@ -378,8 +396,17 @@ footer{
   </div>
 </header>
 
+<div class="advanced-options-section">
+  <h3>⚙️ 고급 제어 설정</h3>
+  <div class="advanced-options-grid">
+    <label><input type="checkbox" id="forceMasterCheck"> 👑 마스터 이상 유저 강제 포함 모드</label>
+    <label><input type="checkbox" id="tankGapAllowedCheck"> 🛡️ 탱커 간 티어 격차 허용 모드</label>
+    <label><input type="checkbox" id="disableAccountVariantCheck"> 🔓 생배·휴면·급상승 계정 보정 제한 해제</label>
+  </div>
+</div>
+
 <div class="guide-box">
-  <h3>📋 데이터 입력 및 이용 팁 (v1.6.4 업데이트)</h3>
+  <h3>📋 데이터 입력 및 이용 팁 (v1.6.6 업데이트)</h3>
   <ul>
     <li><b>[⚙️ 상세 설정]:</b> 각 유저 행의 톱니바퀴 아이콘을 눌러 포지션 고정, 역대 티어 변동(급상승/휴면하락), '생배' 여부를 설정할 수 있습니다. (고정된 포지션은 티어 칸 배경색이 은은하게 하이라이트됩니다.)</li>
     <li><b>데이터 입력 방법:</b> 아래 표에서 배틀태그(이름)를 입력하고, 선호 및 가능 포지션(탱/딜/힐)을 체크한 뒤, 각 포지션별 티어(브론즈~챔피언 및 세부 단계 1~5)와 주요 모스트 영웅을 자유롭게 선택·입력하세요.</li>
@@ -430,6 +457,7 @@ footer{
 <div id="resultAlertBanner"></div>
 
 <div class="result-top-bar">
+  <div id="advancedModeBadgeContainer" class="advanced-badge-container"></div>
   <div class="diff-line" id="diffLine"></div>
   <div class="history-container">
     <label for="historySelect">📁 구성 이력:</label>
@@ -502,7 +530,7 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.6.4)
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.6.6)
 </footer>
 
 <!-- 상세 설정 모달 -->
@@ -644,7 +672,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return shuffled.slice(0, count).join(', ');
   }
 
-  function tierToScore(ti, div, role = '', variant = 'normal', isSmurf = false){
+  function tierToScore(ti, div, role = '', variant = 'normal', isSmurf = false, disableVariant = false){
     if(ti === -1) return 0;
     const step = (ti * 5) + (5 - div);
     let baseScore = 0;
@@ -653,13 +681,15 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (ti <= 6) baseScore = 500 + (step - 25) * 35;
     else baseScore = 850 + (step - 35) * 50;
 
-    if(variant === 'up') baseScore *= 0.92;
-    else if(variant === 'down') baseScore *= 1.08;
+    if(!disableVariant){
+      if(variant === 'up') baseScore *= 0.92;
+      else if(variant === 'down') baseScore *= 1.08;
 
-    if(isSmurf){
-      const dia5Step = (5 * 5) + (5 - 5);
-      if(step > dia5Step) baseScore *= 0.88;
-      else if(step < dia5Step) baseScore *= 1.12;
+      if(isSmurf){
+        const dia5Step = (5 * 5) + (5 - 5);
+        if(step > dia5Step) baseScore *= 0.88;
+        else if(step < dia5Step) baseScore *= 1.12;
+      }
     }
 
     if(role === 'support' && ti >= 6){
@@ -1044,6 +1074,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return `${stepToTierInfo(Math.min(...steps)).label} ~ ${stepToTierInfo(Math.max(...steps)).label}`;
     };
 
+    const isForceMasterOn = document.getElementById('forceMasterCheck').checked;
+    const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked;
+    const isDisableVariantOn = document.getElementById('disableAccountVariantCheck').checked;
+
+    let badgeHtml = '';
+    if(isForceMasterOn) badgeHtml += `<span class="advanced-badge">👑 마스터 강제 포함 모드 활성화</span>`;
+    if(isTankGapAllowedOn) badgeHtml += `<span class="advanced-badge">🛡️ 탱커 격차 허용 모드 활성화</span>`;
+    if(isDisableVariantOn) badgeHtml += `<span class="advanced-badge">🔓 계정 보정 제한 해제 활성화</span>`;
+    document.getElementById('advancedModeBadgeContainer').innerHTML = badgeHtml;
+
     const renderTeamHTML = (team, name) => {
       const rangeClass = getRangeTierClass(team);
       return `
@@ -1091,7 +1131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       warnMsg += `<br><div class="warn-box" style="background:#fff3cd; color:#856404; border-color:#ffeeba;">⚠️ 탱커 간 티어 격차가 심합니다! (${best.tankDiff}단계 차이)</div>`;
     }
     const hasSmurfInTeams = [...best.teamA, ...best.teamB].some(p => p.isSmurf);
-    if(hasSmurfInTeams){
+    if(hasSmurfInTeams && !isDisableVariantOn){
       warnMsg += `<br><div class="warn-box" style="background:#e8f4fd; color:#0d47a1; border-color:#bbdefb;">ℹ️ 생배 계정이 포함되어 있어 완벽한 밸런스가 맞춰지지 않았습니다.</div>`;
     }
 
@@ -1112,6 +1152,10 @@ document.addEventListener("DOMContentLoaded", () => {
       alert(msg);
       return;
     }
+
+    const isForceMasterOn = document.getElementById('forceMasterCheck').checked;
+    const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked;
+    const isDisableVariantOn = document.getElementById('disableAccountVariantCheck').checked;
 
     let players = rows.map(r => {
       const bt = r.querySelector('.bt').value.trim() || '플레이어';
@@ -1146,9 +1190,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const sInfo = stepToTierInfo(tier.support);
 
       const scores = {
-        tank: tierToScore(tInfo.ti, tInfo.div, 'tank', variant, isSmurf),
-        damage: tierToScore(dInfo.ti, dInfo.div, 'damage', variant, isSmurf),
-        support: tierToScore(sInfo.ti, sInfo.div, 'support', variant, isSmurf)
+        tank: tierToScore(tInfo.ti, tInfo.div, 'tank', variant, isSmurf, isDisableVariantOn),
+        damage: tierToScore(dInfo.ti, dInfo.div, 'damage', variant, isSmurf, isDisableVariantOn),
+        support: tierToScore(sInfo.ti, sInfo.div, 'support', variant, isSmurf, isDisableVariantOn)
       };
 
       return { 
@@ -1159,8 +1203,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const masterUsers = players.filter(p => p.hasHighTier);
-    if(masterUsers.length < 6 && masterUsers.length > 0){
-      const msg = `🛡️ 마스터 이상 티어 유저가 ${masterUsers.length}명이므로 밸런스 붕괴 방지를 위해 팀 구성을 진행할 수 없습니다. (6명 이상 필요)`;
+    if(masterUsers.length < 6 && masterUsers.length > 0 && !isForceMasterOn){
+      const msg = `🛡️ 마스터 이상 티어 유저가 ${masterUsers.length}명이므로 밸런스 붕괴 방지를 위해 팀 구성을 진행할 수 없습니다. (강제 포함 모드를 켜면 진행 가능합니다)`;
       errEl.textContent = msg;
       errEl.style.display = 'block';
       alert(msg);
@@ -1169,7 +1213,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let filteredPlayers = [...players];
 
-    if(players.length > 10 && masterUsers.length <= 4 && masterUsers.length > 0){
+    if(players.length > 10 && masterUsers.length <= 4 && masterUsers.length > 0 && !isForceMasterOn){
       const nonMasterUsers = players.filter(p => !p.hasHighTier);
       if(nonMasterUsers.length >= 10){
         filteredPlayers = nonMasterUsers;
@@ -1207,7 +1251,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const needTanksCount = 2 - lockedTanks.length;
       const needDmgCount = 4 - lockedDamages.length;
-      const needSupCount = 4 - lockedSupports.length;
 
       const validTankPool = unselectedPlayers.filter(p => p.tier.tank !== -1);
       const tankCombos = needTanksCount > 0 ? combinations(validTankPool, needTanksCount) : [[]];
@@ -1270,6 +1313,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const tankB_step = stepToTierInfo(teamB.find(p => p.assignedPos === 'tank').tier.tank).step;
                 const tankDiff = Math.abs(tankA_step - tankB_step);
 
+                if(!isTankGapAllowedOn){
+                  penalty += tankDiff * 25;
+                }
+
                 const dListA = teamA.filter(p => p.assignedPos === 'damage');
                 const dListB = teamB.filter(p => p.assignedPos === 'damage');
                 if(dListA.length === 2 && dListA[0].damageStyle === dListA[1].damageStyle && dListA[0].damageStyle !== 'any') penalty += 150;
@@ -1289,7 +1336,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       candidates.sort((a, b) => {
-        if (Math.abs(a.tankDiff - b.tankDiff) > 0) {
+        if (!isTankGapAllowedOn && Math.abs(a.tankDiff - b.tankDiff) > 0) {
           return a.tankDiff - b.tankDiff;
         }
         if (Math.abs(a.scoreDiff - b.scoreDiff) > 0.01) {
@@ -1298,8 +1345,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return a.totalEval - b.totalEval;
       });
 
-      const zeroGapCandidates = candidates.filter(c => c.tankDiff === 0);
-      cachedSortedCandidates = zeroGapCandidates.length > 0 ? zeroGapCandidates : candidates;
+      cachedSortedCandidates = candidates;
     }
 
     if(cachedSortedCandidates.length === 0){
