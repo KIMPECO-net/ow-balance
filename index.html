@@ -387,7 +387,7 @@ footer{
 <main>
 <header>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.7.3</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.7.4</h1>
     <p class="sub">
       탱커 2명, 딜러 4명, 힐러 4명(1/2/2 조합)을 기준으로 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-warning">⚠️ 6:6 모드는 지원하지 않습니다.</span>
@@ -402,7 +402,7 @@ footer{
     <label><input type="checkbox" id="forceMasterCheck"> 👑 마스터 이상 유저 강제 포함 모드</label>
     <label><input type="checkbox" id="tankGapAllowedCheck"> 🛡️ 탱커 간 티어 격차 허용 모드</label>
     <label><input type="checkbox" id="disableAccountVariantCheck"> 🔓 생배·휴면·급상승 계정 보정 제한 해제</label>
-    <label><input type="checkbox" id="roleGapControlCheck"> ⚖️ 딜러·힐러 라인별 맞밸 모드 (대조 유저간 티어 차이 최대 3단계)</label>
+    <label><input type="checkbox" id="roleGapControlCheck"> ⚖️ 딜러·힐러 라인별 맞밸 모드</label>
   </div>
 </div>
 
@@ -410,7 +410,7 @@ footer{
   <h3>📋 데이터 입력 및 이용 팁</h3>
   <ul>
     <li><b>[⚙️ 상세 설정]:</b> 각 유저 행의 톱니바퀴 아이콘을 눌러 포지션 고정, 역대 티어 변동(급상승/휴면하락), '생배' 여부를 설정할 수 있습니다. (고정된 포지션은 티어 칸 배경색이 은은하게 하이라이트됩니다.)</li>
-    <li><b>데이터 입력 방법:</b> 아래 표에서 배틀태그(이름)를 입력하고, 선호 및 가능 포지션(탱/딜/힐)을 체크한 뒤, 각 포지션별 티어(브론즈~챔피언 및 세부 단계 1~5)와 주요 모스트 영웅을 자유롭게 선택·입력하세요.</li>
+    <li><b>데이터 입력 방법:</b> 아래 표에서 배틀태그(이름)를 입력하고, 선호 및 가능 포지션(탱/딜/힐)을 체크한 뒤, 각 포지션별 티어(브론즈~챔피언 및 세부 단계 1~5)와 주요 모스트 영웅을 자유롭게 선택·입력하세요. (모스트에 쓸 만한 영웅이 없거나 모르겠다면 빈칸으로 비워두셔도 됩니다.)</li>
   </ul>
 </div>
 
@@ -534,7 +534,7 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.7.3)
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.7.4)
 </footer>
 
 <!-- 상세 설정 모달 -->
@@ -633,7 +633,7 @@ footer{
 
     <ul class="modal-desc-list">
       <li>📌 <b>작성 형식:</b> <code>이름 / 선호포지션 / 가능포지션 / 탱커티어(모스트) / 딜러티어(모스트) / 힐러티어(모스트)</code></li>
-      <li>💡 <b>빈칸 처리법:</b> 입력하지 않거나 모르는 항목은 <b><code>(-)</code></b> 또는 <b><code>언랭(-)</code></b>으로 작성해 주세요.</li>
+      <li>💡 <b>빈칸 처리법:</b> 입력하지 않거나 모르는 항목은 <b><code>(-)</code></b> 또는 <b><code>언랭(-)</code></b>으로 작성해 주세요. (모스트가 없으면 빈칸 가능)</li>
     </ul>
 
     <div class="import-guide-wrap">
@@ -718,9 +718,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   function getRandomMosts(role){
-    if(Math.random() < 0.15) return '상관없음';
+    if(Math.random() < 0.15) return '';
     const pool = role === 'damage' ? [...HERO_POOL.damageMain, ...HERO_POOL.damageSub] : HERO_POOL[role];
-    const count = Math.floor(Math.random() * 3) + 1;
+    const count = Math.floor(Math.random() * 2) + 1;
     const shuffled = [...pool].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count).join(', ');
   }
@@ -954,8 +954,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.getElementById('closeDetailModal').onclick = () => { detailModal.style.display = 'none'; };
-  
-  // 확인 버튼 클릭 시 모달이 닫히도록 수정
   document.getElementById('saveDetailModal').onclick = () => {
     if(activeDetailRow){
       const lock = document.getElementById('modalLockSelect').value;
@@ -1133,7 +1131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if(isForceMasterOn) badgeHtml += `<span class="advanced-badge">👑 마스터 강제 포함 모드 활성화</span>`;
     if(isTankGapAllowedOn) badgeHtml += `<span class="advanced-badge">🛡️ 탱커 격차 허용 모드 활성화</span>`;
     if(isDisableVariantOn) badgeHtml += `<span class="advanced-badge">🔓 계정 보정 제한 해제 활성화</span>`;
-    if(isRoleGapControlOn) badgeHtml += `<span class="advanced-badge">⚖️ 딜러·힐러 라인별 맞밸 모드 활성화 (대조유저 티어차 ≤3)</span>`;
+    if(isRoleGapControlOn) badgeHtml += `<span class="advanced-badge">⚖️ 딜러·힐러 라인별 맞밸 모드 활성화</span>`;
     document.getElementById('advancedModeBadgeContainer').innerHTML = badgeHtml;
 
     const renderTeamHTML = (team, name) => {
@@ -1425,7 +1423,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(cachedSortedCandidates.length === 0){
-      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (딜러/힐러 맞밸 모드(티어차 ≤3) 조건이 너무 엄격하거나 고정/가능 포지션 설정을 확인해 주세요)`;
+      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (맞밸 모드 조건이 너무 엄격하거나 고정/가능 포지션 설정을 확인해 주세요)`;
       errEl.innerHTML = msg;
       errEl.style.display = 'block';
       alert(msg);
