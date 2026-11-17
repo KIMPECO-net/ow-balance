@@ -156,10 +156,10 @@ select.tier-select.tier-unranked { color: var(--dim); }
   background:var(--panel); border:1px solid var(--border); border-radius:8px;
   width:92%; max-width:480px; padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
-.modal-content.large-modal{ max-width:640px; }
+.modal-content.large-modal{ max-width:760px; }
 .modal-content h3{margin:0 0 12px; font-size:17px; color:var(--accent);}
 .modal-content textarea{
-  width:100%; height:120px; background:var(--panel2); color:var(--text);
+  width:100%; height:140px; background:var(--panel2); color:var(--text);
   border:1px solid var(--border); border-radius:4px; padding:10px; font-family:monospace; font-size:12px;
   resize:vertical; outline:none; margin-bottom:12px;
 }
@@ -183,13 +183,13 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .copy-example-box {
   background: var(--panel2); border: 1px dashed var(--accent); border-radius: 4px;
   padding: 6px 10px; font-family: monospace; font-size: 11.5px; color: var(--text);
-  margin-bottom: 8px; user-select: all; word-break: break-all;
+  margin-bottom: 8px; user-select: all; word-break: break-all; line-height: 1.5;
 }
 
 .modal-desc-list {
   font-size: 12px; color: var(--dim); margin: 6px 0 10px; padding-left: 16px; line-height: 1.5;
 }
-.modal-desc-list li { margin-bottom: 3px; }
+.modal-desc-list li { margin-bottom: 4px; }
 
 .desc-modal-body{ max-height: 400px; overflow-y: auto; font-size: 13px; line-height: 1.6; color: var(--text); text-align: left; }
 .desc-modal-body h4 { color: var(--accent); margin: 12px 0 4px; font-size: 14px; }
@@ -387,7 +387,7 @@ footer{
 <main>
 <header>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.6.8</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.7.3</h1>
     <p class="sub">
       탱커 2명, 딜러 4명, 힐러 4명(1/2/2 조합)을 기준으로 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-warning">⚠️ 6:6 모드는 지원하지 않습니다.</span>
@@ -402,11 +402,12 @@ footer{
     <label><input type="checkbox" id="forceMasterCheck"> 👑 마스터 이상 유저 강제 포함 모드</label>
     <label><input type="checkbox" id="tankGapAllowedCheck"> 🛡️ 탱커 간 티어 격차 허용 모드</label>
     <label><input type="checkbox" id="disableAccountVariantCheck"> 🔓 생배·휴면·급상승 계정 보정 제한 해제</label>
+    <label><input type="checkbox" id="roleGapControlCheck"> ⚖️ 딜러·힐러 라인별 맞밸 모드 (대조 유저간 티어 차이 최대 3단계)</label>
   </div>
 </div>
 
 <div class="guide-box">
-  <h3>📋 데이터 입력 및 이용 팁 (v1.6.8 업데이트)</h3>
+  <h3>📋 데이터 입력 및 이용 팁</h3>
   <ul>
     <li><b>[⚙️ 상세 설정]:</b> 각 유저 행의 톱니바퀴 아이콘을 눌러 포지션 고정, 역대 티어 변동(급상승/휴면하락), '생배' 여부를 설정할 수 있습니다. (고정된 포지션은 티어 칸 배경색이 은은하게 하이라이트됩니다.)</li>
     <li><b>데이터 입력 방법:</b> 아래 표에서 배틀태그(이름)를 입력하고, 선호 및 가능 포지션(탱/딜/힐)을 체크한 뒤, 각 포지션별 티어(브론즈~챔피언 및 세부 단계 1~5)와 주요 모스트 영웅을 자유롭게 선택·입력하세요.</li>
@@ -533,7 +534,7 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.6.8)
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.7.3)
 </footer>
 
 <!-- 상세 설정 모달 -->
@@ -622,16 +623,17 @@ footer{
   </div>
 </div>
 
+<!-- 슬래시 기반 메모장 일괄 입력 모달 -->
 <div class="modal" id="importModal">
-  <div class="modal-content" style="max-width:760px;">
-    <h3>메모장 데이터 일괄 붙여넣기</h3>
+  <div class="modal-content large-modal">
+    <h3>📋 메모장 데이터 일괄 붙여넣기 (슬래시 / 구분 방식)</h3>
     <p style="font-size:12.5px; color:var(--dim); margin-bottom:6px;">
-      아래 형식에 맞춰 한 줄에 한 명씩 데이터를 입력해 주세요. (형식: <b>[이름, 선호포지션, 가능포지션, 탱커티어(모스트), 딜러티어(모스트), 힐러티어(모스트)]</b>)
+      각 항목을 슬래시(<code>/</code>)로 구분하여 한 줄에 한 명씩 입력해 주세요.
     </p>
 
     <ul class="modal-desc-list">
-      <li>💡 <b>모스트 영웅 팁:</b> 모스트 캐릭터가 너무 많거나 한두 개 빼고 다 다를 경우, 모스트 부분에 <b>'상관없음'</b>으로 작성해 주시면 편합니다.</li>
-      <li>💡 <b>딜러 성향 팁:</b> 메인딜러나 서브딜러 한쪽 분야가 대부분 가능하다면 모스트 부분에 <b>'메인딜러'</b> 또는 <b>'서브딜러'</b>로 작성하여 성향을 유도할 수 있습니다.</li>
+      <li>📌 <b>작성 형식:</b> <code>이름 / 선호포지션 / 가능포지션 / 탱커티어(모스트) / 딜러티어(모스트) / 힐러티어(모스트)</code></li>
+      <li>💡 <b>빈칸 처리법:</b> 입력하지 않거나 모르는 항목은 <b><code>(-)</code></b> 또는 <b><code>언랭(-)</code></b>으로 작성해 주세요.</li>
     </ul>
 
     <div class="import-guide-wrap">
@@ -648,17 +650,20 @@ footer{
           <td>망고</td>
           <td>탱,딜</td>
           <td>탱,딜</td>
-          <td>언랭(상관없음)</td>
+          <td>언랭(-)</td>
           <td>다이아3(메인딜러)</td>
           <td>에메3(아나)</td>
         </tr>
       </table>
     </div>
 
-    <p style="font-size:11.5px; color:var(--dim); margin:0 0 4px;">💡 아래 예시 문구를 그대로 복사해서 수정 후 붙여넣으세요:</p>
-    <div class="copy-example-box">망고, 탱,딜, 탱,딜, 언랭(상관없음), 다이아3(메인딜러), 에메3(아나)</div>
+    <p style="font-size:11.5px; color:var(--dim); margin:0 0 4px;">💡 아래 예시를 복사해서 수정 후 붙여넣으세요:</p>
+    <div class="copy-example-box">
+      망고 / 탱,딜 / 탱,딜 / 언랭(-) / 다이아3(메인딜러) / 에메3(아나)<br>
+      페코 / 딜 / 탱,딜,힐 / 플래2(라인) / 에메1(서브딜러) / (-)
+    </div>
 
-    <textarea id="importText" placeholder="망고, 탱,딜, 탱,딜, 언랭(상관없음), 다이아3(메인딜러), 에메3(아나)&#10;페코, 딜, 탱,딜,힐, 다이아2(라인), 에메1(서브딜러), 언랭(키리코)"></textarea>
+    <textarea id="importText" placeholder="망고 / 탱,딜 / 탱,딜 / 언랭(-) / 다이아3(메인딜러) / 에메3(아나)&#10;페코 / 딜 / 탱,딜,힐 / 플래2(라인) / 에메1(서브딜러) / (-)"></textarea>
     <div class="modal-btns">
       <button class="btn" id="closeImportBtn">취소</button>
       <button class="btn" id="applyImportBtn" style="background:var(--accent); color:#17120a; border:none;">추가 및 적용</button>
@@ -733,8 +738,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(!disableVariant){
-      if(variant === 'up') baseScore *= 0.90; // 10% decrease
-      else if(variant === 'down') baseScore *= 1.10; // 10% increase
+      if(variant === 'up') baseScore *= 0.90;
+      else if(variant === 'down') baseScore *= 1.10;
 
       if(isSmurf){
         const dia5Score = 3000;
@@ -744,7 +749,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(role === 'support' && ti >= 3){
-      const discountRatio = 1.0 - ((7 - ti) * 0.03); // Master(6)->3%, Diamond(5)->6%, Emerald(4)->9%, Plat(3)->12%
+      const discountRatio = 1.0 - ((7 - ti) * 0.03);
       baseScore *= Math.max(0.70, discountRatio);
     }
 
@@ -767,9 +772,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function parseTierStringToStep(str){
     if(!str) return -1;
     const s = str.toString().trim().replace(/\s+/g, '');
-    if(s.includes('언랭') || s.includes('미배치') || s === '-') return -1;
-    for(const t of TIERS_DEF){
-      if(s.includes(t.name) || s.includes(t.fullName)){
+    if(s.includes('언랭') || s.includes('미배치') || s === '-' || s === '(-)') return -1;
+    
+    const tierMap = [
+      { keys: ['브론즈', '브론'], idx: 0 },
+      { keys: ['실버', '실'], idx: 1 },
+      { keys: ['골드', '골'], idx: 2 },
+      { keys: ['플래티넘', '플래', '플'], idx: 3 },
+      { keys: ['에메랄드', '에메'], idx: 4 },
+      { keys: ['다이아몬드', '다이아', '다'], idx: 5 },
+      { keys: ['마스터', '마스', '마'], idx: 6 },
+      { keys: ['그랜드마스터', '그마', '그'], idx: 7 },
+      { keys: ['챔피언', '챔'], idx: 8 }
+    ];
+
+    for(const t of tierMap){
+      if(t.keys.some(k => s.includes(k))){
         const num = s.match(/[1-5]/);
         const div = num ? parseInt(num[0]) : 3;
         return (t.idx * 5) + (5 - div);
@@ -882,9 +900,9 @@ document.addEventListener("DOMContentLoaded", () => {
      <td><div class="tier-container tier-tank">${createTierSelectHTML(parseTierStringToStep(data.tankStr))}</div></td>
      <td><div class="tier-container tier-damage">${createTierSelectHTML(parseTierStringToStep(data.damageStr))}</div></td>
      <td><div class="tier-container tier-support">${createTierSelectHTML(parseTierStringToStep(data.supportStr))}</div></td>
-     <td><input class="most most-tank" placeholder="윈스턴" value="${data.mostT || ''}"></td>
-     <td><input class="most most-damage" placeholder="소전" value="${data.mostD || ''}"></td>
-     <td><input class="most most-support" placeholder="아나" value="${data.mostS || ''}"></td>
+     <td><input class="most most-tank" placeholder="" value="${data.mostT || ''}"></td>
+     <td><input class="most most-damage" placeholder="" value="${data.mostD || ''}"></td>
+     <td><input class="most most-support" placeholder="" value="${data.mostS || ''}"></td>
      <td style="text-align:center;"><button type="button" class="btn-detail ${variant !== 'normal' || smurf === 'true' || lock !== 'none' ? 'has-setting' : ''}" title="상세 설정">⚙️</button></td>
     `;
     
@@ -936,6 +954,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.getElementById('closeDetailModal').onclick = () => { detailModal.style.display = 'none'; };
+  
+  // 확인 버튼 클릭 시 모달이 닫히도록 수정
   document.getElementById('saveDetailModal').onclick = () => {
     if(activeDetailRow){
       const lock = document.getElementById('modalLockSelect').value;
@@ -984,69 +1004,47 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  function parseComplexLine(line){
-    const parts = line.split(',').map(s => s.trim());
+  function parseSlashLine(line){
+    const parts = line.split('/').map(s => s.trim());
     const bt = parts[0] || '플레이어';
 
     let pref = [];
-    let multi = [];
-    let parsingIdx = 1;
-
-    while(parts[parsingIdx] && (parts[parsingIdx].includes('탱') || parts[parsingIdx].includes('딜') || parts[parsingIdx].includes('힐') || parts[parsingIdx].includes('tank') || parts[parsingIdx].includes('damage') || parts[parsingIdx].includes('support'))){
-      const item = parts[parsingIdx];
-      if(item.includes(':') || item.includes('(')) break;
-      if(item.includes('탱')) pref.push('tank');
-      if(item.includes('딜')) pref.push('damage');
-      if(item.includes('힐')) pref.push('support');
-      parsingIdx++;
-    }
+    const prefRaw = parts[1] || '탱';
+    if(prefRaw.includes('탱')) pref.push('tank');
+    if(prefRaw.includes('딜')) pref.push('damage');
+    if(prefRaw.includes('힐')) pref.push('support');
     if(!pref.length) pref = ['tank'];
 
-    while(parts[parsingIdx] && (parts[parsingIdx].includes('탱') || parts[parsingIdx].includes('딜') || parts[parsingIdx].includes('힐') || parts[parsingIdx].includes('tank') || parts[parsingIdx].includes('damage') || parts[parsingIdx].includes('support'))){
-      const item = parts[parsingIdx];
-      if(item.includes(':') || item.includes('(')) break;
-      if(item.includes('탱')) multi.push('tank');
-      if(item.includes('딜')) multi.push('damage');
-      if(item.includes('힐')) multi.push('support');
-      parsingIdx++;
-    }
+    let multi = [];
+    const multiRaw = parts[2] || '탱,딜,힐';
+    if(multiRaw.includes('탱')) multi.push('tank');
+    if(multiRaw.includes('딜')) multi.push('damage');
+    if(multiRaw.includes('힐')) multi.push('support');
     if(!multi.length) multi = [...pref, 'damage', 'support'];
 
-    let tS = null, dS = null, sS = null;
-    let tM = '', dM = '', sM = '';
-
-    parts.forEach(item => {
-      const matchTierMost = item.match(/^(.*?[급즈브실골플에다마그챔랜급]+[1-5]?-?[0-5]?)\s*\(([^)]+)\)$/);
-      const matchColon = item.match(/(탱|딜|힐)\s*:\s*(.+)/);
-
-      if(matchTierMost){
-        const fullTierStr = matchTierMost[1].trim();
-        const mostVal = matchTierMost[2].trim();
-        if(!tS && (fullTierStr.includes('탱') || !sS && !dS)) { tS = fullTierStr; tM = mostVal; }
-        else if(!dS && (fullTierStr.includes('딜') || sS)) { dS = fullTierStr; dM = mostVal; }
-        else if(!sS) { sS = fullTierStr; sM = mostVal; }
-      } else if(matchColon){
-        const rName = matchColon[1];
-        const val = matchColon[2].trim();
-        if(rName === '탱') tS = val;
-        if(rName === '딜') dS = val;
-        if(rName === '힐') sS = val;
+    const parseRoleBlock = (blockStr) => {
+      if(!blockStr || blockStr === '-' || blockStr === '(-)') {
+        return { tierStr: '언랭', most: '' };
       }
-    });
-
-    const getMostFallback = (roleKey) => {
-      const match = line.match(new RegExp(`${roleKey}\\s*\\(([^)]+)\\)`));
-      return match ? match[1].trim() : '';
+      const match = blockStr.match(/^(.*?)\(([^)]*)\)$/);
+      if(match){
+        return { tierStr: match[1].trim(), most: match[2].trim() === '-' ? '' : match[2].trim() };
+      }
+      return { tierStr: blockStr, most: '' };
     };
 
-    return { 
-      bt, pref, multi, 
-      tankStr: tS || '언랭', 
-      damageStr: dS || '언랭', 
-      supportStr: sS || '언랭', 
-      mostT: tM || getMostFallback('탱'), 
-      mostD: dM || getMostFallback('딜'), 
-      mostS: sM || getMostFallback('힐') 
+    const tankData = parseRoleBlock(parts[3]);
+    const damageData = parseRoleBlock(parts[4]);
+    const supportData = parseRoleBlock(parts[5]);
+
+    return {
+      bt, pref, multi,
+      tankStr: tankData.tierStr,
+      damageStr: damageData.tierStr,
+      supportStr: supportData.tierStr,
+      mostT: tankData.most,
+      mostD: damageData.most,
+      mostS: supportData.most
     };
   }
 
@@ -1056,7 +1054,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('applyImportBtn').onclick = () => {
     const text = document.getElementById('importText').value.trim();
-    if(text) text.split('\n').forEach(l => { if(l.trim()) addPlayerRow(parseComplexLine(l.trim())); });
+    if(text){
+      text.split('\n').forEach(l => {
+        if(l.trim()) addPlayerRow(parseSlashLine(l.trim()));
+      });
+    }
     importModal.style.display = 'none';
     document.getElementById('importText').value = '';
   };
@@ -1116,13 +1118,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return 'any';
   }
 
-  function getRangeTierClass(team) {
-    const steps = team.map(p => p.tier[p.assignedPos]);
-    const minStep = Math.min(...steps);
-    const info = stepToTierInfo(minStep);
-    return info.css;
-  }
-
   function renderResult(best, terminationMsg = ""){
     const getRange = (team) => {
       const steps = team.map(p => p.tier[p.assignedPos]);
@@ -1132,11 +1127,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const isForceMasterOn = document.getElementById('forceMasterCheck').checked;
     const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked;
     const isDisableVariantOn = document.getElementById('disableAccountVariantCheck').checked;
+    const isRoleGapControlOn = document.getElementById('roleGapControlCheck').checked;
 
     let badgeHtml = '';
     if(isForceMasterOn) badgeHtml += `<span class="advanced-badge">👑 마스터 강제 포함 모드 활성화</span>`;
     if(isTankGapAllowedOn) badgeHtml += `<span class="advanced-badge">🛡️ 탱커 격차 허용 모드 활성화</span>`;
     if(isDisableVariantOn) badgeHtml += `<span class="advanced-badge">🔓 계정 보정 제한 해제 활성화</span>`;
+    if(isRoleGapControlOn) badgeHtml += `<span class="advanced-badge">⚖️ 딜러·힐러 라인별 맞밸 모드 활성화 (대조유저 티어차 ≤3)</span>`;
     document.getElementById('advancedModeBadgeContainer').innerHTML = badgeHtml;
 
     const renderTeamHTML = (team, name) => {
@@ -1214,6 +1211,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const isForceMasterOn = document.getElementById('forceMasterCheck').checked;
     const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked;
     const isDisableVariantOn = document.getElementById('disableAccountVariantCheck').checked;
+    const isRoleGapControlOn = document.getElementById('roleGapControlCheck').checked;
 
     let players = rows.map(r => {
       const bt = r.querySelector('.bt').value.trim() || '플레이어';
@@ -1240,7 +1238,7 @@ document.addEventListener("DOMContentLoaded", () => {
         support: r.querySelector('.most-support').value.trim()
       };
       
-      const isMasterOrAbove = (step) => step >= 30; // Master starts at step 30 (ti=6)
+      const isMasterOrAbove = (step) => step >= 30;
       const hasHighTier = isMasterOrAbove(tier.tank) || isMasterOrAbove(tier.damage) || isMasterOrAbove(tier.support);
 
       const tInfo = stepToTierInfo(tier.tank);
@@ -1358,6 +1356,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 if(invalidLock) continue;
 
+                // 맞밸 모드: 딜러 2명, 힐러 2명 각각 1:1 대조했을 때 티어 차이가 최대 3단계 이하가 되도록 매칭
+                const dListA = teamA.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
+                const dListB = teamB.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
+                const maxDamagePairDiff = Math.max(
+                  Math.abs(stepToTierInfo(dListA[0].tier.damage).step - stepToTierInfo(dListB[0].tier.damage).step),
+                  Math.abs(stepToTierInfo(dListA[1].tier.damage).step - stepToTierInfo(dListB[1].tier.damage).step)
+                );
+
+                const sListA = teamA.filter(p => p.assignedPos === 'support').sort((p1, p2) => p2.tier.support - p1.tier.support);
+                const sListB = teamB.filter(p => p.assignedPos === 'support').sort((p1, p2) => p2.tier.support - p1.tier.support);
+                const maxSupportPairDiff = Math.max(
+                  Math.abs(stepToTierInfo(sListA[0].tier.support).step - stepToTierInfo(sListB[0].tier.support).step),
+                  Math.abs(stepToTierInfo(sListA[1].tier.support).step - stepToTierInfo(sListB[1].tier.support).step)
+                );
+
+                if(isRoleGapControlOn){
+                  if(maxDamagePairDiff > 3) continue;
+                  if(maxSupportPairDiff > 3) continue;
+                }
+
                 const sig = getNormalizedTeamSignature(teamA, teamB);
                 if(existingSignatures.has(sig)) continue;
                 existingSignatures.add(sig);
@@ -1377,8 +1395,6 @@ document.addEventListener("DOMContentLoaded", () => {
                   penalty += tankDiff * 25;
                 }
 
-                const dListA = teamA.filter(p => p.assignedPos === 'damage');
-                const dListB = teamB.filter(p => p.assignedPos === 'damage');
                 if(dListA.length === 2 && dListA[0].damageStyle === dListA[1].damageStyle && dListA[0].damageStyle !== 'any') penalty += 150;
                 if(dListB.length === 2 && dListB[0].damageStyle === dListB[1].damageStyle && dListB[0].damageStyle !== 'any') penalty += 150;
 
@@ -1409,7 +1425,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(cachedSortedCandidates.length === 0){
-      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (포지션 고정 조건이나 가능 포지션 설정을 확인해 주세요)`;
+      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (딜러/힐러 맞밸 모드(티어차 ≤3) 조건이 너무 엄격하거나 고정/가능 포지션 설정을 확인해 주세요)`;
       errEl.innerHTML = msg;
       errEl.style.display = 'block';
       alert(msg);
