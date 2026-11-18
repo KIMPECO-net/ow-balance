@@ -215,9 +215,11 @@ select.tier-select.tier-unranked { color: var(--dim); }
   display:inline-block; background:#2e7d32; color:#fff; font-size:10px; font-weight:700; padding:2px 5px; border-radius:3px; margin-left:4px; vertical-align:middle;
 }
 .badge-var{
-  display:inline-block; background:#37474f; color:#cfd8dc; font-size:10px; font-weight:700; padding:2px 5px; border-radius:3px; margin-left:4px; vertical-align:middle;
+  display:inline-block; font-size:10px; font-weight:700; padding:2px 5px; border-radius:3px; margin-left:4px; vertical-align:middle;
 }
+/* 급상승: 실제 티어보다 낮게 추정됨 (붉은색 포인트) */
 .badge-var.up{background:#c62828; color:#fff;}
+/* 휴면 계정: 실제 티어보다 높게 추정됨 (푸른색 포인트) */
 .badge-var.down{background:#1565c0; color:#fff;}
 
 #results{
@@ -393,7 +395,7 @@ footer{
 <header>
   <button class="header-demo-btn" id="demoBtn" title="예시 데이터 채우기">?</button>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.8.1</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.8.2</h1>
     <p class="sub">
       내전 인원에 맞춰 5:5 및 6:6 모드를 선택하여 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-highlight">⚠️ 아래 팀 구성은 참고용으로 사용해주십시오.</span>
@@ -539,7 +541,7 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.8.1)<br>
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.8.2)<br>
   <button class="footer-feedback-btn" id="feedbackBtn">💬 피드백 하기</button>
 </footer>
 
@@ -560,8 +562,8 @@ footer{
       <label>역대 최고/최저 티어 변동 보정</label>
       <select id="modalTierVariant">
         <option value="normal">일반 (현재 티어 기준)</option>
-        <option value="up">최근 급상승 (저번 시즌 대비 상승)</option>
-        <option value="down">최근 휴면/강등 (저번 시즌 대비 하락)</option>
+        <option value="up">최근 급상승 (실제보다 낮게 추정됨)</option>
+        <option value="down">최근 휴면/강등 (실제보다 높게 추정됨)</option>
       </select>
     </div>
     <div class="detail-form-group">
@@ -595,7 +597,8 @@ footer{
 
       <h4>3. ⚖️ 계정 및 포지션별 보정 규칙</h4>
       <ul>
-        <li><b>급상승 / 휴면 계정 보정:</b> 최근 급상승(-10%), 휴면/강등(+10%) 보정 적용.</li>
+        <li><b>최근 급상승 (실제보다 낮게 추정됨):</b> 점수를 낮게 반영하여 실제 실력과 매칭 보정 (-10%).</li>
+        <li><b>최근 휴면/강등 (실제보다 높게 추정됨):</b> 점수를 높게 반영하여 휴면 상태의 거품 보정 (+10%).</li>
         <li><b>생배 계정 보정:</b> 다이아5(3,000점) 기준 상하향 보정.</li>
         <li><b>그랜드마스터 이하 힐러 영향력 공정화:</b> 고티어 힐러의 영향력을 공정하게 보정.</li>
       </ul>
@@ -749,8 +752,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(!disableVariant){
-      if(variant === 'up') baseScore *= 0.90;
-      else if(variant === 'down') baseScore *= 1.10;
+      if(variant === 'up') baseScore *= 0.90; // 급상승: 실제보다 낮게 추정됨 -> 점수를 낮춤
+      else if(variant === 'down') baseScore *= 1.10; // 휴면: 실제보다 높게 추정됨 -> 점수를 높임
 
       if(isSmurf){
         const dia5Score = 3000;
@@ -985,7 +988,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateRowLockHighlight(activeDetailRow);
 
       const btnDetail = activeDetailRow.querySelector('.btn-detail');
-      if(variant !== 'normal' || isSmurf || lock !== 'none') btnDetail.classList.add('has-setting');
+      if(variant !== 'normal' || smurf || lock !== 'none') btnDetail.classList.add('has-setting');
       else btnDetail.classList.remove('has-setting');
     }
     detailModal.style.display = 'none';
@@ -1157,8 +1160,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ${team.map(p => {
         let badges = '';
         if(p.isSmurf) badges += `<span class="badge-smb">생배</span>`;
-        if(p.variant === 'up') badges += `<span class="badge-var up">급상승</span>`;
+        // 휴면 계정(실제보다 높게 추정됨): 푸른색 뱃지
         if(p.variant === 'down') badges += `<span class="badge-var down">휴면하락</span>`;
+        // 급상승(실제보다 낮게 추정됨): 붉은색 뱃지
+        if(p.variant === 'up') badges += `<span class="badge-var up">급상승</span>`;
         return `
         <div class="player-row">
           <span class="role-tag ${p.assignedPos}">${ROLE_LABEL[p.assignedPos]}</span>
@@ -1294,7 +1299,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const existingSignatures = new Set();
       const candidates = [];
 
-      // 5:5 모드: 탱1, 딜2, 힐2 / 6:6 모드: 탱2, 딜2, 힐(각 팀 6명씩 총 12명)
       const needTanks = is6v6Mode ? 2 : 2;
       const needDmg = is6v6Mode ? 4 : 4;
       const needSup = is6v6Mode ? 6 : 4;
@@ -1330,7 +1334,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const teamA = [...tA, ...dA, ...sA].map(p => ({...p, assignedPos: getPos(p, tA, dA, sA)}));
                 const teamB = [...tB, ...dB, ...sB].map(p => ({...p, assignedPos: getPos(p, tB, dB, sB)}));
 
-                // 라인별 맞밸 지정 모드 체크 시 포지션별 티어 차이 제어 (최대 3단계)
                 if(isRoleGapControlOn){
                   const dListA = teamA.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
                   const dListB = teamB.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
