@@ -36,7 +36,6 @@ header{display:flex; justify-content:space-between; align-items:flex-start; marg
 h1{font-size:26px; font-weight:700; margin:0 0 6px;}
 .sub{color:var(--dim); font-size:14px; line-height:1.5; margin:0;}
 .sub-highlight{display:block; margin-top:4px; color:var(--accent); font-weight:700; font-size:14.5px;}
-.sub-warning{display:block; margin-top:2px; color:#e8594f; font-weight:700; font-size:14px;}
 
 .header-demo-btn{
   position:absolute; top:0; right:0; width:36px; height:36px; border-radius:50%;
@@ -217,9 +216,7 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .badge-var{
   display:inline-block; font-size:10px; font-weight:700; padding:2px 5px; border-radius:3px; margin-left:4px; vertical-align:middle;
 }
-/* 급상승: 실제 티어보다 낮게 추정됨 (붉은색 포인트) */
 .badge-var.up{background:#c62828; color:#fff;}
-/* 휴면 계정: 실제 티어보다 높게 추정됨 (푸른색 포인트) */
 .badge-var.down{background:#1565c0; color:#fff;}
 
 #results{
@@ -395,7 +392,7 @@ footer{
 <header>
   <button class="header-demo-btn" id="demoBtn" title="예시 데이터 채우기">?</button>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.8.2</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.8.3</h1>
     <p class="sub">
       내전 인원에 맞춰 5:5 및 6:6 모드를 선택하여 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-highlight">⚠️ 아래 팀 구성은 참고용으로 사용해주십시오.</span>
@@ -541,7 +538,7 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.8.2)<br>
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.8.3)<br>
   <button class="footer-feedback-btn" id="feedbackBtn">💬 피드백 하기</button>
 </footer>
 
@@ -752,8 +749,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(!disableVariant){
-      if(variant === 'up') baseScore *= 0.90; // 급상승: 실제보다 낮게 추정됨 -> 점수를 낮춤
-      else if(variant === 'down') baseScore *= 1.10; // 휴면: 실제보다 높게 추정됨 -> 점수를 높임
+      if(variant === 'up') baseScore *= 0.90;
+      else if(variant === 'down') baseScore *= 1.10;
 
       if(isSmurf){
         const dia5Score = 3000;
@@ -897,10 +894,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const multi = data.multi || ['tank', 'damage', 'support'];
     const lock = data.lock || 'none';
     const variant = data.variant || 'normal';
-    const smurf = data.smurf ? 'true' : 'false';
+    const smurf = data.smurf === true || data.smurf === 'true';
 
     tr.dataset.variant = variant;
-    tr.dataset.smurf = smurf;
+    tr.dataset.smurf = smurf ? 'true' : 'false';
     tr.dataset.lock = lock;
     
     tr.innerHTML = `
@@ -918,7 +915,7 @@ document.addEventListener("DOMContentLoaded", () => {
      <td><input class="most most-tank" placeholder="" value="${data.mostT || ''}"></td>
      <td><input class="most most-damage" placeholder="" value="${data.mostD || ''}"></td>
      <td><input class="most most-support" placeholder="" value="${data.mostS || ''}"></td>
-     <td style="text-align:center;"><button type="button" class="btn-detail ${variant !== 'normal' || smurf === 'true' || lock !== 'none' ? 'has-setting' : ''}" title="상세 설정">⚙️</button></td>
+     <td style="text-align:center;"><button type="button" class="btn-detail ${variant !== 'normal' || smurf || lock !== 'none' ? 'has-setting' : ''}" title="상세 설정">⚙️</button></td>
     `;
     
     updateRowLockHighlight(tr);
@@ -988,7 +985,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateRowLockHighlight(activeDetailRow);
 
       const btnDetail = activeDetailRow.querySelector('.btn-detail');
-      if(variant !== 'normal' || smurf || lock !== 'none') btnDetail.classList.add('has-setting');
+      if(variant !== 'normal' || isSmurf || lock !== 'none') btnDetail.classList.add('has-setting');
       else btnDetail.classList.remove('has-setting');
     }
     detailModal.style.display = 'none';
@@ -1160,9 +1157,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ${team.map(p => {
         let badges = '';
         if(p.isSmurf) badges += `<span class="badge-smb">생배</span>`;
-        // 휴면 계정(실제보다 높게 추정됨): 푸른색 뱃지
         if(p.variant === 'down') badges += `<span class="badge-var down">휴면하락</span>`;
-        // 급상승(실제보다 낮게 추정됨): 붉은색 뱃지
         if(p.variant === 'up') badges += `<span class="badge-var up">급상승</span>`;
         return `
         <div class="player-row">
@@ -1334,6 +1329,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 const teamA = [...tA, ...dA, ...sA].map(p => ({...p, assignedPos: getPos(p, tA, dA, sA)}));
                 const teamB = [...tB, ...dB, ...sB].map(p => ({...p, assignedPos: getPos(p, tB, dB, sB)}));
 
+                // 포지션 고정 조건 반영 (강제 배정)
+                let skipCombination = false;
+                for(const p of [...teamA, ...teamB]){
+                  if(p.lockTank && p.assignedPos !== 'tank') { skipCombination = true; break; }
+                  if(p.lockDamage && p.assignedPos !== 'damage') { skipCombination = true; break; }
+                  if(p.lockSupport && p.assignedPos !== 'support') { skipCombination = true; break; }
+                }
+                if(skipCombination) continue;
+
                 if(isRoleGapControlOn){
                   const dListA = teamA.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
                   const dListB = teamB.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
@@ -1402,7 +1406,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(cachedSortedCandidates.length === 0){
-      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (맞밸 모드 조건이 너무 엄격하거나 가능 포지션 설정을 확인해 주세요)`;
+      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (포지션 고정 조건이나 맞밸 모드 조건이 너무 엄격한지 확인해 주세요)`;
       errEl.innerHTML = msg;
       errEl.style.display = 'block';
       alert(msg);
@@ -1570,7 +1574,7 @@ document.addEventListener("DOMContentLoaded", () => {
       slotsGrid.style.display = 'none';
       box.style.display = 'flex';
       box.innerHTML = `
-        <div style="font-size:12px; color:var(--accent); font-weight:700;">🚫 이번판 밴 영웅 (4개 조합 완료)</div>
+        <div style="font-size:12px; color:var(--accent); font-weight:700;">🚫 이번판 밴 영웅 (4개 조합 료)</div>
         <div class="ban-items" id="banItemsContainer"></div>
       `;
       const itemsCont = document.getElementById('banItemsContainer');
