@@ -392,7 +392,7 @@ footer{
 <header>
   <button class="header-demo-btn" id="demoBtn" title="예시 데이터 채우기">?</button>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.8.3</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.8.4</h1>
     <p class="sub">
       내전 인원에 맞춰 5:5 및 6:6 모드를 선택하여 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-highlight">⚠️ 아래 팀 구성은 참고용으로 사용해주십시오.</span>
@@ -415,7 +415,7 @@ footer{
     <label><input type="checkbox" id="roleGapControlCheck" checked> ⚖️ 라인별 맞밸 지정 모드</label>
     <label><input type="checkbox" id="mode6v6Check"> 👥 6:6 모드 지원 (6/6/6)</label>
     <label><input type="checkbox" id="forceMasterCheck"> 👑 마스터 이상 유저 포함 (기본 : 6명부터 가능)</label>
-    <label><input type="checkbox" id="tankGapAllowedCheck"> 🛡️ 탱커 차이 격차 없음 (기본 : 세부티어 3까지)</label>
+    <label><input type="checkbox" id="tankGapAllowedCheck"> 🛡️ 탱커 차이 격차 없음 (기본 : 세부티어 격차 제한 없음)</label>
     <label><input type="checkbox" id="disableAccountVariantCheck"> 🔓 생배 휴면 급상승 보정 제거</label>
   </div>
 </div>
@@ -538,7 +538,7 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.8.3)<br>
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.8.4)<br>
   <button class="footer-feedback-btn" id="feedbackBtn">💬 피드백 하기</button>
 </footer>
 
@@ -714,18 +714,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const MODE_NAMES = { payload: '🚚 화물', hybrid: '🏰 혼합', control: '🚩 쟁탈', flashpoint: '⚡ 플래시포인트', push: '🤖 밀기' };
 
   const DEMO_BASE = [
-    { bt: "망고", multi: ["tank", "damage"], t: "언랭", d: "다이아3", s: "에메랄드3", variant: "normal", smurf: false, lock: "none" },
-    { bt: "프로피", multi: ["damage", "support"], t: "골드3", d: "다이아1", s: "실버1", variant: "normal", smurf: true, lock: "none" },
-    { bt: "플레티", multi: ["damage", "tank"], t: "실버2", d: "다이아3", s: "언랭", variant: "down", smurf: false, lock: "none" },
-    { bt: "리푸", multi: ["damage"], t: "플래티넘1", d: "다이아1", s: "에메랄드4", variant: "normal", smurf: false, lock: "none" },
-    { bt: "스토커", multi: ["damage"], t: "골드1", d: "다이아2", s: "골드3", variant: "normal", smurf: false, lock: "none" },
-    { bt: "바이올", multi: ["support", "tank"], t: "실버3", d: "플래티넘4", s: "다이아2", variant: "normal", smurf: false, lock: "none" },
-    { bt: "슈우", multi: ["support", "damage"], t: "골드2", d: "플래티넘2", s: "다이아1", variant: "up", smurf: false, lock: "none" },
-    { bt: "스머프", multi: ["tank", "support"], t: "다이아3", d: "플래티넘3", s: "실버2", variant: "normal", smurf: false, lock: "none" },
-    { bt: "트와일", multi: ["support"], t: "실버1", d: "골드1", s: "다이아2", variant: "normal", smurf: false, lock: "none" },
-    { bt: "페코", multi: ["damage", "support"], t: "다이아4", d: "에메랄드2", s: "다이아3", variant: "normal", smurf: false, lock: "none" },
-    { bt: "추가유저1", multi: ["damage", "support"], t: "골드1", d: "플래티넘3", s: "실버1", variant: "normal", smurf: false, lock: "none" },
-    { bt: "추가유저2", multi: ["tank", "damage"], t: "실버1", d: "골드2", s: "다이아3", variant: "normal", smurf: false, lock: "none" }
+    { bt: "망고코코넛칵테일", multi: ["damage", "support"], t: "에메랄드3", d: "다이아5", s: "에메랄드1", variant: "normal", smurf: false, lock: "none" },
+    { bt: "Gratia", multi: ["tank", "damage", "support"], t: "마스터5", d: "다이아5", s: "마스터5", variant: "normal", smurf: false, lock: "none" },
+    { bt: "달리", multi: ["tank", "damage", "support"], t: "에메랄드2", d: "에메랄드1", s: "다이아5", variant: "normal", smurf: false, lock: "none" },
+    { bt: "MALANG", multi: ["damage", "support"], t: "언랭", d: "다이아4", s: "다이아5", variant: "normal", smurf: false, lock: "none" },
+    { bt: "RoRo8902", multi: ["tank", "damage", "support"], t: "에메랄드1", d: "에메랄드1", s: "에메랄드3", variant: "normal", smurf: false, lock: "none" },
+    { bt: "Pichinja", multi: ["damage", "support"], t: "골드2", d: "에메랄드1", s: "플래티넘2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "회피리", multi: ["damage", "support"], t: "플래티넘4", d: "에메랄드5", s: "에메랄드2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "햄찌몽찌", multi: ["tank", "support"], t: "실버5", d: "언랭", s: "브론즈3", variant: "normal", smurf: false, lock: "none" },
+    { bt: "DAMi", multi: ["support"], t: "골드2", d: "플래티넘3", s: "에메랄드2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "SAN", multi: ["tank", "damage", "support"], t: "플래티넘3", d: "플래티넘3", s: "골드4", variant: "normal", smurf: false, lock: "none" }
   ];
 
   function getRandomMosts(role){
@@ -1269,7 +1267,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const isForceMasterOn = document.getElementById('forceMasterCheck').checked;
-    const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked;
+    const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked; // 탱커 격차 없음 체크박스
     const isRoleGapControlOn = document.getElementById('roleGapControlCheck').checked;
 
     const masterUsers = players.filter(p => p.hasHighTier);
@@ -1329,7 +1327,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const teamA = [...tA, ...dA, ...sA].map(p => ({...p, assignedPos: getPos(p, tA, dA, sA)}));
                 const teamB = [...tB, ...dB, ...sB].map(p => ({...p, assignedPos: getPos(p, tB, dB, sB)}));
 
-                // 포지션 고정 조건 반영 (강제 배정)
+                // 포지션 고정 조건 반영
                 let skipCombination = false;
                 for(const p of [...teamA, ...teamB]){
                   if(p.lockTank && p.assignedPos !== 'tank') { skipCombination = true; break; }
@@ -1337,6 +1335,17 @@ document.addEventListener("DOMContentLoaded", () => {
                   if(p.lockSupport && p.assignedPos !== 'support') { skipCombination = true; break; }
                 }
                 if(skipCombination) continue;
+
+                // 🛡️ [수정됨] "탱커 격차 없음" 옵션이 켜져 있을 때 양 팀 탱커 세부티어 격차 0(동일 티어) 강제
+                const tankPlayerA = teamA.find(p => p.assignedPos === 'tank');
+                const tankPlayerB = teamB.find(p => p.assignedPos === 'tank');
+                const tankA_step = stepToTierInfo(tankPlayerA.tier.tank).step;
+                const tankB_step = stepToTierInfo(tankPlayerB.tier.tank).step;
+                const tankDiff = Math.abs(tankA_step - tankB_step);
+
+                if (isTankGapAllowedOn && tankDiff > 0) {
+                  continue; // 탱커 격차가 0이 아니면 이 조합은 아예 배제
+                }
 
                 if(isRoleGapControlOn){
                   const dListA = teamA.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
@@ -1372,14 +1381,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const tankDiffScore = Math.abs(tankSumA - tankSumB);
                 penalty += tankDiffScore * 0.5;
 
-                const tankA_step = stepToTierInfo(teamA.find(p => p.assignedPos === 'tank').tier.tank).step;
-                const tankB_step = stepToTierInfo(teamB.find(p => p.assignedPos === 'tank').tier.tank).step;
-                const tankDiff = Math.abs(tankA_step - tankB_step);
-
-                if(isTankGapAllowedOn && tankDiff > 0){
-                  penalty += tankDiff * 100;
-                }
-
                 [...teamA, ...teamB].forEach(p => {
                   if(!p.multi.includes(p.assignedPos)) penalty += 500;
                 });
@@ -1393,9 +1394,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       candidates.sort((a, b) => {
-        if (isTankGapAllowedOn && Math.abs(a.tankDiff - b.tankDiff) > 0) {
-          return a.tankDiff - b.tankDiff;
-        }
         if (Math.abs(a.scoreDiff - b.scoreDiff) > 0.01) {
           return a.scoreDiff - b.scoreDiff;
         }
@@ -1406,7 +1404,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(cachedSortedCandidates.length === 0){
-      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (포지션 고정 조건이나 맞밸 모드 조건이 너무 엄격한지 확인해 주세요)`;
+      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (탱커 격차 없음 옵션이 켜져 있거나 맞밸 모드 조건이 너무 엄격한지 확인해 주세요)`;
       errEl.innerHTML = msg;
       errEl.style.display = 'block';
       alert(msg);
@@ -1574,7 +1572,7 @@ document.addEventListener("DOMContentLoaded", () => {
       slotsGrid.style.display = 'none';
       box.style.display = 'flex';
       box.innerHTML = `
-        <div style="font-size:12px; color:var(--accent); font-weight:700;">🚫 이번판 밴 영웅 (4개 조합 료)</div>
+        <div style="font-size:12px; color:var(--accent); font-weight:700;">🚫 이번판 밴 영웅 (4개 조합 완료)</div>
         <div class="ban-items" id="banItemsContainer"></div>
       `;
       const itemsCont = document.getElementById('banItemsContainer');
