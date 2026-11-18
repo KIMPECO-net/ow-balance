@@ -31,30 +31,39 @@ body{
 h1,h2,.num,button{font-family:'Chakra Petch',system-ui,sans-serif;}
 main{max-width:1200px; margin:0 auto;}
 
-header{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:15px; flex-wrap:wrap;}
+header{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; gap:15px; flex-wrap:wrap; position:relative;}
 .header-titles{flex:1; min-width:280px;}
 h1{font-size:26px; font-weight:700; margin:0 0 6px;}
 .sub{color:var(--dim); font-size:14px; line-height:1.5; margin:0;}
 .sub-highlight{display:block; margin-top:4px; color:var(--accent); font-weight:700; font-size:14.5px;}
 .sub-warning{display:block; margin-top:2px; color:#e8594f; font-weight:700; font-size:14px;}
 
-.advanced-options-section{
-  background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent);
-  padding:14px 18px; border-radius:6px; margin-bottom:18px; font-size:13.5px;
+.header-demo-btn{
+  position:absolute; top:0; right:0; width:36px; height:36px; border-radius:50%;
+  background:var(--panel); border:1px solid var(--border); color:var(--accent);
+  font-size:16px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.05); transition:all 0.2s;
 }
-.advanced-options-section h3{margin:0 0 10px; font-size:15px; color:var(--accent);}
-.advanced-options-grid{display:flex; gap:20px; flex-wrap:wrap;}
-.advanced-options-grid label{
-  display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; cursor:pointer; user-select:none;
-}
-.advanced-options-grid input[type="checkbox"]{width:16px; height:16px; cursor:pointer; accent-color:var(--accent);}
+.header-demo-btn:hover{background:var(--accent); color:#17120a; border-color:var(--accent);}
 
 .guide-box{
   background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent);
-  padding:14px 18px; border-radius:6px; margin-bottom:18px; font-size:13.5px; line-height:1.6;
+  padding:16px 20px; border-radius:6px; margin-bottom:18px; font-size:15px; line-height:1.6;
 }
-.guide-box h3{margin:0 0 6px; font-size:15px; color:var(--accent);}
+.guide-box h3{margin:0 0 8px; font-size:17px; color:var(--accent);}
 .guide-box ul{margin:0; padding-left:20px; color:var(--dim);}
+.guide-box li{margin-bottom:6px;}
+
+.advanced-options-section{
+  background:var(--panel); border:1px solid var(--border); border-left:4px solid var(--accent);
+  padding:16px 20px; border-radius:6px; margin-bottom:18px; font-size:15px;
+}
+.advanced-options-section h3{margin:0 0 10px; font-size:17px; color:var(--accent);}
+.advanced-options-grid{display:flex; gap:20px; flex-wrap:wrap;}
+.advanced-options-grid label{
+  display:flex; align-items:center; gap:8px; font-size:14.5px; font-weight:600; cursor:pointer; user-select:none;
+}
+.advanced-options-grid input[type="checkbox"]{width:18px; height:18px; cursor:pointer; accent-color:var(--accent);}
 
 .toolbar{display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;}
 .toolbar-left{display:flex; gap:10px; flex-wrap:wrap;}
@@ -128,20 +137,10 @@ select.tier-select.tier-unranked { color: var(--dim); }
 .btn-detail:hover{background:var(--accent); color:#17120a; border-color:var(--accent);}
 .btn-detail.has-setting{background:rgba(201, 122, 31, 0.15); border-color:var(--accent);}
 
-.pref-role-group{display:flex; gap:1px; justify-content:center;}
-.pref-role-group label{
-  font-size:10px; font-weight:700; padding:3px 2px; border-radius:3px; border:1px solid var(--border);
-  background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s; width:22px; text-align:center;
-}
-.pref-role-group input[type="checkbox"]{display:none;}
-.pref-role-group input[value="tank"]:checked + label{background:var(--tank); color:#fff; border-color:var(--tank);}
-.pref-role-group input[value="damage"]:checked + label{background:var(--damage); color:#fff; border-color:var(--damage);}
-.pref-role-group input[value="support"]:checked + label{background:var(--support); color:#fff; border-color:var(--support);}
-
-.multi-role-group{display:flex; gap:1px; justify-content:center;}
+.multi-role-group{display:flex; gap:2px; justify-content:center;}
 .multi-role-group label{
-  font-size:10px; font-weight:700; padding:3px 2px; border-radius:3px; border:1px solid var(--border);
-  background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s; width:22px; text-align:center;
+  font-size:11px; font-weight:700; padding:4px 3px; border-radius:3px; border:1px solid var(--border);
+  background:var(--panel2); color:var(--dim); cursor:pointer; user-select:none; transition:all 0.15s; width:26px; text-align:center;
 }
 .multi-role-group input[type="checkbox"]{display:none;}
 .multi-role-group input[value="tank"]:checked + label{background:var(--tank); color:#fff; border-color:var(--tank);}
@@ -392,39 +391,40 @@ footer{
 <body>
 <main>
 <header>
+  <button class="header-demo-btn" id="demoBtn" title="예시 데이터 채우기">?</button>
   <div class="header-titles">
-    <h1>오버워치 내전 팀 밸런서 v1.7.5</h1>
+    <h1>오버워치 내전 팀 밸런서 v1.8.1</h1>
     <p class="sub">
-      탱커 2명, 딜러 4명, 힐러 4명(1/2/2 조합)을 기준으로 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
-      <span class="sub-warning">⚠️ 6:6 모드는 지원하지 않습니다.</span>
+      내전 인원에 맞춰 5:5 및 6:6 모드를 선택하여 양 팀의 포지션별 밸런스를 공정하게 맞춰주는 도구입니다.
       <span class="sub-highlight">⚠️ 아래 팀 구성은 참고용으로 사용해주십시오.</span>
     </p>
   </div>
 </header>
 
-<div class="advanced-options-section">
-  <h3>⚙️ 고급 제어 설정</h3>
-  <div class="advanced-options-grid">
-    <label><input type="checkbox" id="forceMasterCheck"> 👑 마스터 이상 유저 강제 포함 모드</label>
-    <label><input type="checkbox" id="tankGapAllowedCheck"> 🛡️ 탱커 간 티어 격차 허용 모드</label>
-    <label><input type="checkbox" id="disableAccountVariantCheck"> 🔓 생배·휴면·급상승 계정 보정 제한 해제</label>
-    <label><input type="checkbox" id="roleGapControlCheck"> ⚖️ 딜러·힐러 라인별 맞밸 모드</label>
-  </div>
-</div>
-
 <div class="guide-box">
   <h3>📋 데이터 입력 및 이용 팁</h3>
   <ul>
-    <li><b>[⚙️ 상세 설정]:</b> 각 유저 행의 톱니바퀴 아이콘을 눌러 포지션 고정, 역대 티어 변동(급상승/휴면하락), '생배' 여부를 설정할 수 있습니다. (고정된 포지션은 티어 칸 배경색이 은은하게 하이라이트됩니다.)</li>
-    <li><b>데이터 입력 방법:</b> 아래 표에서 배틀태그(이름)를 입력하고, 선호 및 가능 포지션(탱/딜/힐)을 체크한 뒤, 각 포지션별 티어(브론즈~챔피언 및 세부 단계 1~5)와 주요 모스트 영웅을 자유롭게 선택·입력하세요. (모스트에 쓸 만한 영웅이 없거나 모르겠다면 빈칸으로 비워두셔도 됩니다.)</li>
+    <li><b>데이터 입력 방법 :</b> ➕ 유저 직접 추가를 눌러서 인원수를 채워 넣을 수 있습니다.</li>
+    <li><b>입력 요령 :</b> 아래 표에서 이름(배틀태그)를 입력하시고, 가능(선호)포지션을 체크한 뒤, 각 포지션별 티어와 세부 단계(1~5)를 적어 주시고, 주요 모스트 및 선호 영웅을 입력해주세요 (모스트가 없으면 빈칸으로 두세요).</li>
+    <li><b>상세 설정 :</b> ⚙️ (톱니바퀴 아이콘)을 누르면 해당 유저의 상세 설정을 변경 할 수 있습니다. 포지션을 고정하거나, 역대 최고/최저 티어의 변동 보정을 지정 할 수 있습니다. 또한 생배 계정을 지정할 수 있습니다.</li>
   </ul>
+</div>
+
+<div class="advanced-options-section">
+  <h3>⚙️ 고급 제어 설정</h3>
+  <div class="advanced-options-grid" style="flex-direction: column; gap: 12px;">
+    <label><input type="checkbox" id="roleGapControlCheck" checked> ⚖️ 라인별 맞밸 지정 모드</label>
+    <label><input type="checkbox" id="mode6v6Check"> 👥 6:6 모드 지원 (6/6/6)</label>
+    <label><input type="checkbox" id="forceMasterCheck"> 👑 마스터 이상 유저 포함 (기본 : 6명부터 가능)</label>
+    <label><input type="checkbox" id="tankGapAllowedCheck"> 🛡️ 탱커 차이 격차 없음 (기본 : 세부티어 3까지)</label>
+    <label><input type="checkbox" id="disableAccountVariantCheck"> 🔓 생배 휴면 급상승 보정 제거</label>
+  </div>
 </div>
 
 <div class="toolbar">
   <div class="toolbar-left">
     <button class="btn" id="addRowBtn">➕ 유저 직접 추가</button>
     <button class="btn" id="openImportBtn">📋 메모장 데이터 일괄 입력</button>
-    <button class="btn" id="demoBtn">예시 데이터 채우기</button>
     <button class="btn" id="resetBtn">전체 초기화</button>
   </div>
   <button class="btn" id="openDeleteModal" style="background:#ffebee; color:#c62828; border:1px solid #ef9a9a; padding:6px 12px; font-size:12.5px;">🗑️ 유저 삭제</button>
@@ -433,7 +433,7 @@ footer{
 <div class="table-wrap" id="tableWrap">
   <div class="empty-placeholder" id="emptyPlaceholder">
     <h3>📌 입력된 플레이어 데이터가 없습니다</h3>
-    <p>여기에 데이터를 추가해 주세요! 위 버튼을 눌러 직접 추가하거나 메모장 데이터를 일괄 입력할 수 있습니다.</p>
+    <p>여기에 데이터를 추가해 주세요! 우측 상단 `?` 버튼으로 예시를 채우거나 직접 추가할 수 있습니다.</p>
     <div class="btn-group">
       <button class="btn" onclick="document.getElementById('addRowBtn').click()">➕ 유저 직접 추가</button>
       <button class="btn" onclick="document.getElementById('openImportBtn').click()" style="background:var(--accent); color:#17120a; border:none;">📋 메모장 데이터 일괄 입력</button>
@@ -442,9 +442,8 @@ footer{
 
   <table id="playerTable" style="display:none;">
     <thead><tr>
-    <th style="width:90px;">이름</th>
-    <th style="width:80px;">선호 포지션</th>
-    <th style="width:80px;">가능 포지션</th>
+    <th style="width:100px;">이름</th>
+    <th style="width:90px;">가능 포지션</th>
     <th style="width:130px;">탱커 티어</th>
     <th style="width:130px;">딜러 티어</th>
     <th style="width:130px;">힐러 티어</th>
@@ -540,7 +539,7 @@ footer{
 </div>
 
 <footer>
-  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.7.5)<br>
+  만든사람: 망고페코 / 망고코코넛칵테일#3574 (v1.8.1)<br>
   <button class="footer-feedback-btn" id="feedbackBtn">💬 피드백 하기</button>
 </footer>
 
@@ -585,30 +584,20 @@ footer{
     <div class="desc-modal-body">
       <h4>1. 🎯 기본 팀 구성 원칙</h4>
       <ul>
-        <li><b>1/2/2 조합 고정:</b> 양 팀은 각각 탱커 2명, 딜러 4명, 힐러 4명(총 10명)으로 구성됩니다.</li>
-        <li><b>팀 평균 평점:</b> 팀원들의 SR 점수 총합을 인원수(5명)로 나누고, **소수점은 내림**하여 표시합니다.</li>
-        <li><b>탐색 알고리즘:</b> 가능한 모든 조합의 경우의 수를 시뮬레이션하여 양 팀 간 평점 격차가 가장 적은 최적의 매칭을 찾아냅니다.</li>
+        <li><b>5:5 (탱1, 딜2, 힐2) 및 6:6 (탱2, 딜2, 힐) 모드 지원:</b> 선택한 모드에 따라 양 팀의 포지션 배분이 자동으로 적용됩니다.</li>
+        <li><b>팀 평균 평점:</b> 팀원들의 SR 점수 총합을 인원수로 나누고, **소수점은 내림**하여 표시합니다.</li>
       </ul>
 
       <h4>2. 📊 클래식 SR 티어별 점수 체계</h4>
       <ul>
-        <li><b>브론즈:</b> 100점 (Div 5) ~ 900점 (Div 1) [100, 300, 500, 700, 900]</li>
-        <li><b>실버:</b> 1,000 ~ 1,400점 (세부 구간별 100점 간격)</li>
-        <li><b>골드:</b> 1,500 ~ 1,900점</li>
-        <li><b>플래티넘:</b> 2,000 ~ 2,400점</li>
-        <li><b>에메랄드:</b> 2,500 ~ 2,900점</li>
-        <li><b>다이아몬드:</b> 3,000 ~ 3,400점</li>
-        <li><b>마스터:</b> 3,500 ~ 3,900점</li>
-        <li><b>그랜드마스터:</b> 4,000 ~ 4,400점</li>
-        <li><b>챔피언:</b> 4,500 ~ 4,900점</li>
+        <li><b>브론즈 ~ 챔피언:</b> 세부 단계(1~5)별 점수 체계 적용 (브론즈 100~900, 은/금/플/에/다/마/그/챔 1000~4900점)</li>
       </ul>
 
       <h4>3. ⚖️ 계정 및 포지션별 보정 규칙</h4>
       <ul>
-        <li><b>급상승 / 휴면 계정 보정:</b> 최근 급상승 계정은 점수의 10% 삭감(-10%), 휴면/강등 계정은 점수의 10% 가산(+10%)하여 보정합니다. (고급 설정에서 해제 가능)</li>
-        <li><b>생배 계정 보정:</b> 배치만 본 불확실한 계정은 다이아5(3,000점) 기준을 중심으로 상위 티어는 12% 하향, 하위 티어는 12% 상향 보정합니다.</li>
-        <li><b>힐러 고티어 할인 보정:</b> 마스터 이상 고티어 힐러의 영향력을 공정하게 맞추기 위해 마스터부터 티어가 내려갈 때마다 3%씩 추가 할인 적용 (마스터 3%, 다이아 6%, 에메랄드 9%, 플래티넘 12%).</li>
-        <li><b>딜러 성향 중복 페널티:</b> 한 팀에 메인딜러 혹은 서브딜러 성향이 겹칠 경우 밸런스 점수에 페널티가 부여됩니다.</li>
+        <li><b>급상승 / 휴면 계정 보정:</b> 최근 급상승(-10%), 휴면/강등(+10%) 보정 적용.</li>
+        <li><b>생배 계정 보정:</b> 다이아5(3,000점) 기준 상하향 보정.</li>
+        <li><b>그랜드마스터 이하 힐러 영향력 공정화:</b> 고티어 힐러의 영향력을 공정하게 보정.</li>
       </ul>
     </div>
     <div class="modal-btns">
@@ -654,23 +643,21 @@ footer{
     </p>
 
     <ul class="modal-desc-list">
-      <li>📌 <b>작성 형식:</b> <code>이름 / 선호포지션 / 가능포지션 / 탱커티어(모스트) / 딜러티어(모스트) / 힐러티어(모스트)</code></li>
-      <li>💡 <b>빈칸 처리법:</b> 입력하지 않거나 모르는 항목은 <b><code>(-)</code></b> 또는 <b><code>언랭(-)</code></b>으로 작성해 주세요. (모스트가 없으면 빈칸 가능)</li>
+      <li>📌 <b>작성 형식:</b> <code>이름 / 가능포지션 / 탱커티어(모스트) / 딜러티어(모스트) / 힐러티어(모스트)</code></li>
+      <li>💡 <b>빈칸 처리법:</b> 입력하지 않거나 모르는 항목은 <b><code>(-)</code></b> 또는 <b><code>언랭(-)</code></b>으로 작성해 주세요.</li>
     </ul>
 
     <div class="import-guide-wrap">
       <table class="import-guide-table">
         <tr>
           <th>1. 이름</th>
-          <th>2. 선호포지션</th>
-          <th>3. 가능포지션</th>
-          <th>4. 탱커티어(모스트)</th>
-          <th>5. 딜러티어(모스트)</th>
-          <th>6. 힐러티어(모스트)</th>
+          <th>2. 가능포지션</th>
+          <th>3. 탱커티어(모스트)</th>
+          <th>4. 딜러티어(모스트)</th>
+          <th>5. 힐러티어(모스트)</th>
         </tr>
         <tr>
           <td>망고</td>
-          <td>탱,딜</td>
           <td>탱,딜</td>
           <td>언랭(-)</td>
           <td>다이아3(메인딜러)</td>
@@ -681,11 +668,11 @@ footer{
 
     <p style="font-size:11.5px; color:var(--dim); margin:0 0 4px;">💡 아래 예시를 복사해서 수정 후 붙여넣으세요:</p>
     <div class="copy-example-box">
-      망고 / 탱,딜 / 탱,딜 / 언랭(-) / 다이아3(메인딜러) / 에메3(아나)<br>
-      페코 / 딜 / 탱,딜,힐 / 플래2(라인) / 에메1(서브딜러) / (-)
+      망고 / 탱,딜 / 언랭(-) / 다이아3(메인딜러) / 에메3(아나)<br>
+      페코 / 탱,딜,힐 / 플래2(라인) / 에메1(서브딜러) / (-)
     </div>
 
-    <textarea id="importText" placeholder="망고 / 탱,딜 / 탱,딜 / 언랭(-) / 다이아3(메인딜러) / 에메3(아나)&#10;페코 / 딜 / 탱,딜,힐 / 플래2(라인) / 에메1(서브딜러) / (-)"></textarea>
+    <textarea id="importText" placeholder="망고 / 탱,딜 / 언랭(-) / 다이아3(메인딜러) / 에메3(아나)&#10;페코 / 탱,딜,힐 / 플래2(라인) / 에메1(서브딜러) / (-)"></textarea>
     <div class="modal-btns">
       <button class="btn" id="closeImportBtn">취소</button>
       <button class="btn" id="applyImportBtn" style="background:var(--accent); color:#17120a; border:none;">추가 및 적용</button>
@@ -727,16 +714,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const MODE_NAMES = { payload: '🚚 화물', hybrid: '🏰 혼합', control: '🚩 쟁탈', flashpoint: '⚡ 플래시포인트', push: '🤖 밀기' };
 
   const DEMO_BASE = [
-    { bt: "망고", pref: ["tank", "damage"], multi: ["tank", "damage"], t: "언랭", d: "다이아3", s: "에메랄드3", variant: "normal", smurf: false, lock: "none" },
-    { bt: "프로피", pref: ["damage"], multi: ["damage", "support"], t: "골드3", d: "다이아1", s: "실버1", variant: "normal", smurf: true, lock: "none" },
-    { bt: "플레티", pref: ["damage", "tank"], multi: ["damage", "tank"], t: "실버2", d: "다이아3", s: "언랭", variant: "down", smurf: false, lock: "none" },
-    { bt: "리푸", pref: ["damage"], multi: ["damage"], t: "플래티넘1", d: "다이아1", s: "에메랄드4", variant: "normal", smurf: false, lock: "none" },
-    { bt: "스토커", pref: ["damage"], multi: ["damage"], t: "골드1", d: "다이아2", s: "골드3", variant: "normal", smurf: false, lock: "none" },
-    { bt: "바이올", pref: ["support"], multi: ["support", "tank"], t: "실버3", d: "플래티넘4", s: "다이아2", variant: "normal", smurf: false, lock: "none" },
-    { bt: "슈우", pref: ["support"], multi: ["support", "damage"], t: "골드2", d: "플래티넘2", s: "다이아1", variant: "up", smurf: false, lock: "none" },
-    { bt: "스머프", pref: ["tank"], multi: ["tank", "support"], t: "다이아3", d: "플래티넘3", s: "실버2", variant: "normal", smurf: false, lock: "none" },
-    { bt: "트와일", pref: ["support"], multi: ["support"], t: "실버1", d: "골드1", s: "다이아2", variant: "normal", smurf: false, lock: "none" },
-    { bt: "페코", pref: ["damage"], multi: ["damage", "support"], t: "다이아4", d: "에메랄드2", s: "다이아3", variant: "normal", smurf: false, lock: "none" }
+    { bt: "망고", multi: ["tank", "damage"], t: "언랭", d: "다이아3", s: "에메랄드3", variant: "normal", smurf: false, lock: "none" },
+    { bt: "프로피", multi: ["damage", "support"], t: "골드3", d: "다이아1", s: "실버1", variant: "normal", smurf: true, lock: "none" },
+    { bt: "플레티", multi: ["damage", "tank"], t: "실버2", d: "다이아3", s: "언랭", variant: "down", smurf: false, lock: "none" },
+    { bt: "리푸", multi: ["damage"], t: "플래티넘1", d: "다이아1", s: "에메랄드4", variant: "normal", smurf: false, lock: "none" },
+    { bt: "스토커", multi: ["damage"], t: "골드1", d: "다이아2", s: "골드3", variant: "normal", smurf: false, lock: "none" },
+    { bt: "바이올", multi: ["support", "tank"], t: "실버3", d: "플래티넘4", s: "다이아2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "슈우", multi: ["support", "damage"], t: "골드2", d: "플래티넘2", s: "다이아1", variant: "up", smurf: false, lock: "none" },
+    { bt: "스머프", multi: ["tank", "support"], t: "다이아3", d: "플래티넘3", s: "실버2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "트와일", multi: ["support"], t: "실버1", d: "골드1", s: "다이아2", variant: "normal", smurf: false, lock: "none" },
+    { bt: "페코", multi: ["damage", "support"], t: "다이아4", d: "에메랄드2", s: "다이아3", variant: "normal", smurf: false, lock: "none" },
+    { bt: "추가유저1", multi: ["damage", "support"], t: "골드1", d: "플래티넘3", s: "실버1", variant: "normal", smurf: false, lock: "none" },
+    { bt: "추가유저2", multi: ["tank", "damage"], t: "실버1", d: "골드2", s: "다이아3", variant: "normal", smurf: false, lock: "none" }
   ];
 
   function getRandomMosts(role){
@@ -851,8 +840,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tSel = parseInt(container.querySelector('.tier-select').value);
     const numInput = container.querySelector('.tier-num');
     if(tSel === -1) return -1;
-    const div = Math.min(5, Math.max(1, parseInt(numInput.value) || 3));
-    return (tSel * 5) + (5 - div);
+    const divVal = parseInt(numInput.value);
+    if(isNaN(divVal) || divVal < 1 || divVal > 5) return -999;
+    return (tSel * 5) + (5 - divVal);
   }
 
   let rowIdxCounter = 0;
@@ -901,7 +891,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function addPlayerRow(data = {}){
     const i = rowIdxCounter++;
     const tr = document.createElement('tr');
-    const pref = data.pref || ['tank'];
     const multi = data.multi || ['tank', 'damage', 'support'];
     const lock = data.lock || 'none';
     const variant = data.variant || 'normal';
@@ -913,13 +902,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     tr.innerHTML = `
      <td><input class="bt" placeholder="이름" value="${data.bt || ''}"></td>
-     <td>
-       <div class="pref-role-group">
-         <input type="checkbox" id="pref_${i}_t" name="pref_${i}" value="tank" ${pref.includes('tank')?'checked':''}><label for="pref_${i}_t">탱</label>
-         <input type="checkbox" id="pref_${i}_d" name="pref_${i}" value="damage" ${pref.includes('damage')?'checked':''}><label for="pref_${i}_d">딜</label>
-         <input type="checkbox" id="pref_${i}_s" name="pref_${i}" value="support" ${pref.includes('support')?'checked':''}><label for="pref_${i}_s">힐</label>
-       </div>
-     </td>
      <td>
        <div class="multi-role-group">
          <input type="checkbox" id="mu_${i}_t" name="multi_${i}" value="tank" ${multi.includes('tank')?'checked':''}><label for="mu_${i}_t">탱</label>
@@ -1028,7 +1010,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       const roleClass = e.target.closest('.tier-container').classList.contains('tier-tank') ? 'tier-tank' : e.target.closest('.tier-container').classList.contains('tier-damage') ? 'tier-damage' : 'tier-support';
       const currentStep = getStepFromRowSelects(row, roleClass);
-      updateSelectTierColor(e.target, currentStep);
+      if(currentStep !== -999) updateSelectTierColor(e.target, currentStep);
     }
   });
 
@@ -1036,19 +1018,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const parts = line.split('/').map(s => s.trim());
     const bt = parts[0] || '플레이어';
 
-    let pref = [];
-    const prefRaw = parts[1] || '탱';
-    if(prefRaw.includes('탱')) pref.push('tank');
-    if(prefRaw.includes('딜')) pref.push('damage');
-    if(prefRaw.includes('힐')) pref.push('support');
-    if(!pref.length) pref = ['tank'];
-
     let multi = [];
-    const multiRaw = parts[2] || '탱,딜,힐';
+    const multiRaw = parts[1] || '탱,딜,힐';
     if(multiRaw.includes('탱')) multi.push('tank');
     if(multiRaw.includes('딜')) multi.push('damage');
     if(multiRaw.includes('힐')) multi.push('support');
-    if(!multi.length) multi = [...pref, 'damage', 'support'];
+    if(!multi.length) multi = ['tank', 'damage', 'support'];
 
     const parseRoleBlock = (blockStr) => {
       if(!blockStr || blockStr === '-' || blockStr === '(-)') {
@@ -1061,12 +1036,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return { tierStr: blockStr, most: '' };
     };
 
-    const tankData = parseRoleBlock(parts[3]);
-    const damageData = parseRoleBlock(parts[4]);
-    const supportData = parseRoleBlock(parts[5]);
+    const tankData = parseRoleBlock(parts[2]);
+    const damageData = parseRoleBlock(parts[3]);
+    const supportData = parseRoleBlock(parts[4]);
 
     return {
-      bt, pref, multi,
+      bt, multi,
       tankStr: tankData.tierStr,
       damageStr: damageData.tierStr,
       supportStr: supportData.tierStr,
@@ -1103,8 +1078,10 @@ document.addEventListener("DOMContentLoaded", () => {
   
   document.getElementById('demoBtn').onclick = () => { 
     tbody.innerHTML = ''; 
-    DEMO_BASE.forEach(u => addPlayerRow({
-      bt: u.bt, pref: u.pref, multi: u.multi,
+    const is6v6 = document.getElementById('mode6v6Check').checked;
+    const count = is6v6 ? 12 : 10;
+    DEMO_BASE.slice(0, count).forEach(u => addPlayerRow({
+      bt: u.bt, multi: u.multi,
       tankStr: u.t, damageStr: u.d, supportStr: u.s,
       mostT: getRandomMosts('tank'),
       mostD: getRandomMosts('damage'),
@@ -1156,12 +1133,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked;
     const isDisableVariantOn = document.getElementById('disableAccountVariantCheck').checked;
     const isRoleGapControlOn = document.getElementById('roleGapControlCheck').checked;
+    const is6v6Mode = document.getElementById('mode6v6Check').checked;
 
     let badgeHtml = '';
-    if(isForceMasterOn) badgeHtml += `<span class="advanced-badge">👑 마스터 강제 포함 모드 활성화</span>`;
-    if(isTankGapAllowedOn) badgeHtml += `<span class="advanced-badge">🛡️ 탱커 격차 허용 모드 활성화</span>`;
-    if(isDisableVariantOn) badgeHtml += `<span class="advanced-badge">🔓 계정 보정 제한 해제 활성화</span>`;
-    if(isRoleGapControlOn) badgeHtml += `<span class="advanced-badge">⚖️ 딜러·힐러 라인별 맞밸 모드 활성화</span>`;
+    if(is6v6Mode) badgeHtml += `<span class="advanced-badge">👥 6:6 모드 활성화 (6/6/6)</span>`;
+    if(isRoleGapControlOn) badgeHtml += `<span class="advanced-badge">⚖️ 라인별 맞밸 지정 모드 활성화</span>`;
+    if(isForceMasterOn) badgeHtml += `<span class="advanced-badge">👑 마스터 이상 유저 포함 활성화</span>`;
+    if(isTankGapAllowedOn) badgeHtml += `<span class="advanced-badge">🛡️ 탱커 차이 격차 없음 활성화</span>`;
+    if(isDisableVariantOn) badgeHtml += `<span class="advanced-badge">🔓 보정 제거 활성화</span>`;
     document.getElementById('advancedModeBadgeContainer').innerHTML = badgeHtml;
 
     const renderTeamHTML = (team, name) => {
@@ -1208,13 +1187,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if(roundedDiff >= 200 && !terminationMsg){
       warnMsg += `<br><div class="warn-box" style="background:#f8d7da; color:#721c24; border-color:#f5c6cb;">⚠️ 양 팀 간의 평점 격차가 200점 이상(${roundedDiff}점) 발생하여 최적 팀 구성 탐색이 종결되었습니다.</div>`;
     }
-    if(best.tankDiff >= 4){
-      warnMsg += `<br><div class="warn-box" style="background:#fff3cd; color:#856404; border-color:#ffeeba;">⚠️ 탱커 간 티어 격차가 심합니다! (${best.tankDiff}단계 차이)</div>`;
-    }
-    const hasSmurfInTeams = [...best.teamA, ...best.teamB].some(p => p.isSmurf);
-    if(hasSmurfInTeams && !isDisableVariantOn){
-      warnMsg += `<br><div class="warn-box" style="background:#e8f4fd; color:#0d47a1; border-color:#bbdefb;">ℹ️ 생배 계정이 포함되어 있어 완벽한 밸런스가 맞춰지지 않았습니다.</div>`;
-    }
 
     const avgA = Math.floor(best.scoreA / best.teamA.length);
     const avgB = Math.floor(best.scoreB / best.teamB.length);
@@ -1228,19 +1200,18 @@ document.addEventListener("DOMContentLoaded", () => {
     errEl.style.display = 'none'; 
 
     const rows = [...tbody.querySelectorAll('tr')];
-    if(rows.length < 10){
-      const msg = `등록된 유저가 총 ${rows.length}명입니다. 최소 10명이 필요합니다.`;
+    const is6v6Mode = document.getElementById('mode6v6Check').checked;
+    const requiredTotal = is6v6Mode ? 12 : 10;
+
+    if(rows.length < requiredTotal){
+      const msg = `등록된 유저가 총 ${rows.length}명입니다. ${is6v6Mode ? '6:6 모드는 최소 12명' : '5:5 모드는 최소 10명'}이 필요합니다.`;
       errEl.textContent = msg;
       errEl.style.display = 'block';
       alert(msg);
       return;
     }
 
-    const isForceMasterOn = document.getElementById('forceMasterCheck').checked;
-    const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked;
-    const isDisableVariantOn = document.getElementById('disableAccountVariantCheck').checked;
-    const isRoleGapControlOn = document.getElementById('roleGapControlCheck').checked;
-
+    let hasInvalidTierInput = false;
     let players = rows.map(r => {
       const bt = r.querySelector('.bt').value.trim() || '플레이어';
       const lock = r.dataset.lock || 'none';
@@ -1255,11 +1226,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if(lockDamage && !multi.includes('damage')) multi.push('damage');
       if(lockSupport && !multi.includes('support')) multi.push('support');
 
-      const tier = {
-        tank: getStepFromRowSelects(r, 'tier-tank'),
-        damage: getStepFromRowSelects(r, 'tier-damage'),
-        support: getStepFromRowSelects(r, 'tier-support')
-      };
+      const tStep = getStepFromRowSelects(r, 'tier-tank');
+      const dStep = getStepFromRowSelects(r, 'tier-damage');
+      const sStep = getStepFromRowSelects(r, 'tier-support');
+
+      if(tStep === -999 || dStep === -999 || sStep === -999) hasInvalidTierInput = true;
+
+      const tier = { tank: tStep, damage: dStep, support: sStep };
       const most = {
         tank: r.querySelector('.most-tank').value.trim(),
         damage: r.querySelector('.most-damage').value.trim(),
@@ -1273,6 +1246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const dInfo = stepToTierInfo(tier.damage);
       const sInfo = stepToTierInfo(tier.support);
 
+      const isDisableVariantOn = document.getElementById('disableAccountVariantCheck').checked;
       const scores = {
         tank: tierToScore(tInfo.ti, tInfo.div, 'tank', variant, isSmurf, isDisableVariantOn),
         damage: tierToScore(dInfo.ti, dInfo.div, 'damage', variant, isSmurf, isDisableVariantOn),
@@ -1286,9 +1260,21 @@ document.addEventListener("DOMContentLoaded", () => {
       };
     });
 
+    if(hasInvalidTierInput){
+      const msg = `⚠️ 세부 티어 숫자는 1부터 5 사이의 올바른 값만 입력해야 합니다. 다시 확인해 주세요!`;
+      errEl.textContent = msg;
+      errEl.style.display = 'block';
+      alert(msg);
+      return;
+    }
+
+    const isForceMasterOn = document.getElementById('forceMasterCheck').checked;
+    const isTankGapAllowedOn = document.getElementById('tankGapAllowedCheck').checked;
+    const isRoleGapControlOn = document.getElementById('roleGapControlCheck').checked;
+
     const masterUsers = players.filter(p => p.hasHighTier);
     if(masterUsers.length < 6 && masterUsers.length > 0 && !isForceMasterOn){
-      const msg = `🛡️ 마스터 이상 티어 유저가 ${masterUsers.length}명이므로 밸런스 붕괴 방지를 위해 팀 구성을 진행할 수 없습니다. (강제 포함 모드를 켜면 진행 가능합니다)`;
+      const msg = `🛡️ 마스터 이상 티어 유저가 6명 미만이므로 밸런스 붕괴 방지를 위해 팀 구성을 진행할 수 없습니다. (마스터 이상 유저 포함 옵션을 켜면 진행 가능합니다)`;
       errEl.textContent = msg;
       errEl.style.display = 'block';
       alert(msg);
@@ -1296,31 +1282,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let filteredPlayers = [...players];
-
-    if(players.length > 10 && masterUsers.length <= 4 && masterUsers.length > 0 && !isForceMasterOn){
-      const nonMasterUsers = players.filter(p => !p.hasHighTier);
-      if(nonMasterUsers.length >= 10){
-        filteredPlayers = nonMasterUsers;
-      }
-    }
-
-    const lockedTanks = filteredPlayers.filter(p => p.lockTank);
-    const lockedDamages = filteredPlayers.filter(p => p.lockDamage);
-    const lockedSupports = filteredPlayers.filter(p => p.lockSupport);
-
-    if(lockedTanks.length > 2 || lockedDamages.length > 4 || lockedSupports.length > 4){
-      const msg = `포지션 고정 인원이 정원(탱2, 딜4, 힐4)을 초과했습니다.`;
-      errEl.textContent = msg;
-      errEl.style.display = 'block';
-      alert(msg);
-      return;
-    }
-
-    if(filteredPlayers.length > 10){
-      const totalLocked = [...lockedTanks, ...lockedDamages, ...lockedSupports];
-      const uniqueLocked = [...new Set(totalLocked)];
-      const unlocked = filteredPlayers.filter(p => !uniqueLocked.includes(p)).sort(() => Math.random() - 0.5);
-      filteredPlayers = [...uniqueLocked, ...unlocked.slice(0, 10 - uniqueLocked.length)];
+    if(filteredPlayers.length > requiredTotal){
+      filteredPlayers = filteredPlayers.slice(0, requiredTotal);
     }
 
     if(isNewFresh){
@@ -1331,77 +1294,59 @@ document.addEventListener("DOMContentLoaded", () => {
       const existingSignatures = new Set();
       const candidates = [];
 
-      const unselectedPlayers = filteredPlayers.filter(p => !lockedTanks.includes(p) && !lockedDamages.includes(p) && !lockedSupports.includes(p));
+      // 5:5 모드: 탱1, 딜2, 힐2 / 6:6 모드: 탱2, 딜2, 힐(각 팀 6명씩 총 12명)
+      const needTanks = is6v6Mode ? 2 : 2;
+      const needDmg = is6v6Mode ? 4 : 4;
+      const needSup = is6v6Mode ? 6 : 4;
 
-      const needTanksCount = 2 - lockedTanks.length;
-      const needDmgCount = 4 - lockedDamages.length;
-
-      const validTankPool = unselectedPlayers.filter(p => p.tier.tank !== -1);
-      const tankCombos = needTanksCount > 0 ? combinations(validTankPool, needTanksCount) : [[]];
+      const validTankPool = filteredPlayers.filter(p => p.tier.tank !== -1);
+      const tankCombos = combinations(validTankPool, needTanks);
 
       for(const chosenTanks of tankCombos){
-        const actualTanks = [...lockedTanks, ...chosenTanks];
-        if(actualTanks.length !== 2) continue;
-        const rem1 = unselectedPlayers.filter(p => !chosenTanks.includes(p));
-
+        const rem1 = filteredPlayers.filter(p => !chosenTanks.includes(p));
         const validDmgPool = rem1.filter(p => p.tier.damage !== -1);
-        const dmgCombos = needDmgCount > 0 ? combinations(validDmgPool, needDmgCount) : [[]];
+        const dmgCombos = combinations(validDmgPool, needDmg);
 
         for(const chosenDmg of dmgCombos){
-          const actualDamages = [...lockedDamages, ...chosenDmg];
-          if(actualDamages.length !== 4) continue;
           const rem2 = rem1.filter(p => !chosenDmg.includes(p));
+          const chosenSupports = rem2;
+          if(chosenSupports.length !== needSup) continue;
+          if(chosenSupports.some(p => p.tier.support === -1)) continue;
 
-          const actualSupports = [...lockedSupports, ...rem2];
-          if(actualSupports.length !== 4) continue;
-          if(actualSupports.some(p => p.tier.support === -1)) continue;
-
-          for(const tA of combinations(actualTanks, 1)){
-            const tB = actualTanks.filter(p => !tA.includes(p));
-            for(const dA of combinations(actualDamages, 2)){
-              const dB = actualDamages.filter(p => !dA.includes(p));
-              for(const sA of combinations(actualSupports, 2)){
-                const sB = actualSupports.filter(p => !sA.includes(p));
+          for(const tA of combinations(chosenTanks, needTanks / 2)){
+            const tB = chosenTanks.filter(p => !tA.includes(p));
+            for(const dA of combinations(chosenDmg, needDmg / 2)){
+              const dB = chosenDmg.filter(p => !dA.includes(p));
+              for(const sA of combinations(chosenSupports, needSup / 2)){
+                const sB = chosenSupports.filter(p => !sA.includes(p));
 
                 const getPos = (p, t, d, s) => {
-                  if(p.lockTank) return 'tank';
-                  if(p.lockDamage) return 'damage';
-                  if(p.lockSupport) return 'support';
                   if(t.includes(p)) return 'tank';
                   if(d.includes(p)) return 'damage';
                   if(s.includes(p)) return 'support';
                   return p.multi[0] || 'damage';
                 };
 
-                const teamA = [tA[0], dA[0], dA[1], sA[0], sA[1]].map(p => ({...p, assignedPos: getPos(p, tA, dA, sA)}));
-                const teamB = [tB[0], dB[0], dB[1], sB[0], sB[1]].map(p => ({...p, assignedPos: getPos(p, tB, dB, sB)}));
+                const teamA = [...tA, ...dA, ...sA].map(p => ({...p, assignedPos: getPos(p, tA, dA, sA)}));
+                const teamB = [...tB, ...dB, ...sB].map(p => ({...p, assignedPos: getPos(p, tB, dB, sB)}));
 
-                let invalidLock = false;
-                [...teamA, ...teamB].forEach(p => {
-                  if(p.lockTank && p.assignedPos !== 'tank') invalidLock = true;
-                  if(p.lockDamage && p.assignedPos !== 'damage') invalidLock = true;
-                  if(p.lockSupport && p.assignedPos !== 'support') invalidLock = true;
-                });
-                if(invalidLock) continue;
-
-                // 맞밸 모드: 딜러 2명, 힐러 2명 각각 1:1 대조했을 때 티어 차이가 최대 3단계 이하가 되도록 매칭
-                const dListA = teamA.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
-                const dListB = teamB.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
-                const maxDamagePairDiff = Math.max(
-                  Math.abs(stepToTierInfo(dListA[0].tier.damage).step - stepToTierInfo(dListB[0].tier.damage).step),
-                  Math.abs(stepToTierInfo(dListA[1].tier.damage).step - stepToTierInfo(dListB[1].tier.damage).step)
-                );
-
-                const sListA = teamA.filter(p => p.assignedPos === 'support').sort((p1, p2) => p2.tier.support - p1.tier.support);
-                const sListB = teamB.filter(p => p.assignedPos === 'support').sort((p1, p2) => p2.tier.support - p1.tier.support);
-                const maxSupportPairDiff = Math.max(
-                  Math.abs(stepToTierInfo(sListA[0].tier.support).step - stepToTierInfo(sListB[0].tier.support).step),
-                  Math.abs(stepToTierInfo(sListA[1].tier.support).step - stepToTierInfo(sListB[1].tier.support).step)
-                );
-
+                // 라인별 맞밸 지정 모드 체크 시 포지션별 티어 차이 제어 (최대 3단계)
                 if(isRoleGapControlOn){
-                  if(maxDamagePairDiff > 3) continue;
-                  if(maxSupportPairDiff > 3) continue;
+                  const dListA = teamA.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
+                  const dListB = teamB.filter(p => p.assignedPos === 'damage').sort((p1, p2) => p2.tier.damage - p1.tier.damage);
+                  let dPass = true;
+                  for(let idx = 0; idx < dListA.length; idx++){
+                    if(Math.abs(stepToTierInfo(dListA[idx].tier.damage).step - stepToTierInfo(dListB[idx].tier.damage).step) > 3) { dPass = false; break; }
+                  }
+                  if(!dPass) continue;
+
+                  const sListA = teamA.filter(p => p.assignedPos === 'support').sort((p1, p2) => p2.tier.support - p1.tier.support);
+                  const sListB = teamB.filter(p => p.assignedPos === 'support').sort((p1, p2) => p2.tier.support - p1.tier.support);
+                  let sPass = true;
+                  for(let idx = 0; idx < sListA.length; idx++){
+                    if(Math.abs(stepToTierInfo(sListA[idx].tier.support).step - stepToTierInfo(sListB[idx].tier.support).step) > 3) { sPass = false; break; }
+                  }
+                  if(!sPass) continue;
                 }
 
                 const sig = getNormalizedTeamSignature(teamA, teamB);
@@ -1415,23 +1360,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 const scoreDiff = Math.abs(avgA - avgB);
 
                 let penalty = 0;
+                const tankSumA = teamA.filter(p => p.assignedPos === 'tank').reduce((s, p) => s + p.scores.tank, 0);
+                const tankSumB = teamB.filter(p => p.assignedPos === 'tank').reduce((s, p) => s + p.scores.tank, 0);
+                const tankDiffScore = Math.abs(tankSumA - tankSumB);
+                penalty += tankDiffScore * 0.5;
+
                 const tankA_step = stepToTierInfo(teamA.find(p => p.assignedPos === 'tank').tier.tank).step;
                 const tankB_step = stepToTierInfo(teamB.find(p => p.assignedPos === 'tank').tier.tank).step;
                 const tankDiff = Math.abs(tankA_step - tankB_step);
 
-                if(!isTankGapAllowedOn){
-                  penalty += tankDiff * 25;
+                if(isTankGapAllowedOn && tankDiff > 0){
+                  penalty += tankDiff * 100;
                 }
-
-                if(dListA.length === 2 && dListA[0].damageStyle === dListA[1].damageStyle && dListA[0].damageStyle !== 'any') penalty += 150;
-                if(dListB.length === 2 && dListB[0].damageStyle === dListB[1].damageStyle && dListB[0].damageStyle !== 'any') penalty += 150;
 
                 [...teamA, ...teamB].forEach(p => {
                   if(!p.multi.includes(p.assignedPos)) penalty += 500;
                 });
 
                 const totalEval = scoreDiff + penalty;
-
                 candidates.push({ teamA, teamB, scoreA: sA_sum, scoreB: sB_sum, scoreDiff, totalEval, tankDiff, signature: sig });
               }
             }
@@ -1440,7 +1386,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       candidates.sort((a, b) => {
-        if (!isTankGapAllowedOn && Math.abs(a.tankDiff - b.tankDiff) > 0) {
+        if (isTankGapAllowedOn && Math.abs(a.tankDiff - b.tankDiff) > 0) {
           return a.tankDiff - b.tankDiff;
         }
         if (Math.abs(a.scoreDiff - b.scoreDiff) > 0.01) {
@@ -1453,7 +1399,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(cachedSortedCandidates.length === 0){
-      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (맞밸 모드 조건이 너무 엄격하거나 고정/가능 포지션 설정을 확인해 주세요)`;
+      let msg = `조건에 맞는 팀 조합을 찾지 못했습니다. (맞밸 모드 조건이 너무 엄격하거나 가능 포지션 설정을 확인해 주세요)`;
       errEl.innerHTML = msg;
       errEl.style.display = 'block';
       alert(msg);
@@ -1462,7 +1408,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const nextIndex = historyTeams.length;
     if(nextIndex >= cachedSortedCandidates.length){
-      let msg = `⚠️ 더 이상 새로운 팀 조합이 없습니다. (포지션 고정 및 가능한 모든 밸런스 구성이 탐색되었습니다.)`;
+      let msg = `⚠️ 더 이상 새로운 팀 조합이 없습니다. (가능한 모든 밸런스 구성이 탐색되었습니다.)`;
       errEl.innerHTML = msg;
       errEl.style.display = 'block';
       alert(msg);
@@ -1471,34 +1417,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const best = cachedSortedCandidates[nextIndex];
     const bestAvgDiff = Math.abs(Math.floor(best.scoreA / best.teamA.length) - Math.floor(best.scoreB / best.teamB.length));
-
-    if(!isNewFresh && historyTeams.length > 0){
-      const lastBest = historyTeams[historyTeams.length - 1];
-      const lastAvgDiff = Math.abs(Math.floor(lastBest.scoreA / lastBest.teamA.length) - Math.floor(lastBest.scoreB / lastBest.teamB.length));
-      if(lastAvgDiff >= 200){
-        const termMsg = `양 팀 평점 격차가 200점 이상(${lastAvgDiff}점) 벌어져 최적의 밸런스 구성을 종결합니다.`;
-        alert(termMsg);
-        renderResult(lastBest, termMsg);
-        return;
-      }
-    }
-
-    if(bestAvgDiff >= 200){
-      const termMsg = `양 팀 평점 격차가 200점 이상(${bestAvgDiff}점) 벌어져 최적의 밸런스 구성을 종결합니다.`;
-      if(!isNewFresh || historyTeams.length > 0) alert(termMsg);
-      const order = {tank:0, damage:1, support:2};
-      best.teamA.sort((a,b) => order[a.assignedPos] - order[b.assignedPos]);
-      best.teamB.sort((a,b) => order[b.assignedPos] - order[b.assignedPos]);
-      historyTeams.push(best);
-      const historyIndex = historyTeams.length - 1;
-      const opt = document.createElement('option');
-      opt.value = historyIndex;
-      opt.textContent = `구성 #${historyTeams.length} (격차: ${bestAvgDiff}점)`;
-      historySelect.appendChild(opt);
-      historySelect.value = historyIndex;
-      renderResult(best, termMsg);
-      return;
-    }
 
     const order = {tank:0, damage:1, support:2};
     best.teamA.sort((a,b) => order[a.assignedPos] - order[b.assignedPos]);
